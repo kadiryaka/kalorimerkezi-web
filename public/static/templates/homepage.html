@@ -1,0 +1,57 @@
+<div class="col-sm-12 turbo-toggle">
+    <div class="tile-normal bg-success gradient-diag1">
+        <div class="panel-heading">
+            <div class="panel-title">Hoşgeldiniz</div>
+        </div>
+        <div class="panel-body">
+            <table class="table-full push-bottom">
+                <tr>
+                    <td>
+                        <h5 class="base-header major">Kayıtlı Sporcu Sayınız</h5>
+                    </td>
+                    <td class="text-right">
+                        <h3 class="base-header text-right">
+                            <%= kullanici_sayisi %>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5 class="base-header major">Aktif Sporcu Sayınız</h5>
+                    </td>
+                    <td class="text-right">
+                        <h3 class="base-header text-right">
+                            <%= aktif %>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5 class="base-header major">Pasif Sporcu Sayınız</h5>
+                    </td>
+                    <td class="text-right">
+                        <h3 class="base-header text-right">
+                            <%= pasif %>
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5 class="base-header major">Aktif kullanıcı yüzdesi</h5>
+                    </td>
+                    <td class="text-right">
+                        <h3 class="base-header text-right">
+                            %<%= aktif_yuzde %>
+                        </h3>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="progress flat-progress" rel="tooltip" title="60% complete">
+                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: <%= aktif_yuzde %>%;">
+                    <span class="sr-only">60% Complete</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

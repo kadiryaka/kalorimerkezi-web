@@ -1,0 +1,57 @@
+{
+    "app"       :   {
+        "name"  :   "Campusca"
+    },
+    "button"    :   {
+        "exit"      :   "bye :(",
+        "register"  :   "Register",
+        "login"     :   "Login",
+        "tr"        :   "Turkish",
+        "en"        :   "English",
+        "home"      :   "home :)",
+        "about"     :   "About",
+        "save"      :   "Save"
+    },
+    "placeholder"   :   {
+        "username"  :   "your username",
+        "password"  :   "your password",
+        "mail"      :   "your mail"
+    },
+    "text"  :   {
+        "iamnew"            :   "New to #Campusca?",
+        "iamnotnew"         :   "Already registered to #Campusca?",
+        "hi"                :   "Hi",
+        "registeredDate"    :   "Registered",
+        "email"             :   "E-Mail",
+        "rememberPassword"  :   "Lost your password?",
+        "welcome"           :   "Welcome",
+        "mobile"            :   "Stay connected your campus with Campusca mobile app!",
+        "updateMail"        :   "Update E-Mail",
+        "updatePass"        :   "Update Password",
+        "updateMessage"     :   "Update Your Personal Message",
+        "updatePic"         :   "Update Your Profile Picture",
+        "availableEmail"    :   "Your available e-mail address on our database ",
+        "newMail"           :   "New E-Mail",
+        "updatePassDesc"    :   "You must enter your current password"
+
+    },
+    "message"   :   {
+        "welcome"   :   "How about meeting new people? Both your campus! And the interior of friends? Sign in for all that and more!",
+        "welcome_h" :   "A new way to interact on campus!"
+    },
+    "error" :   {
+        "server_error"                  :   "Server Unreachable",
+        "notfound_error"                :   "Request Router Not Found",
+        "fuckedup_error"                :   "Bilinmeyen Hata Oluştu",
+        "bad_token"                     :   "Wrong Cookie, Please Check It!",
+        "wrong_username_or_password"    :   "Wrong Username or Password",
+        "not_activated"                 :   "This account not activated!",
+        "not_found"                     :   "Not found!",
+        "validation_failed"             :   "Already taken :/"
+    },
+    "info"              :   {
+        "success" : "Success",
+        "register_success" : "Success! Check your mailbox for user activation",
+        "activate_success" : "Success! Join us"
+    }
+}

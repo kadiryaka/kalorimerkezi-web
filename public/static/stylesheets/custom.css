@@ -1,0 +1,70 @@
+html { overflow-y:scroll; }
+.navbar {
+	background-color: white;
+}
+
+.icon {
+	width: 30px;
+	height: 30px;
+}
+
+.oc-sidebar-content {
+	background-color: #43494d;
+}
+
+body {
+	background-color: white;
+}
+
+ul { list-style: none;}
+
+.menu {
+	cursor: pointer;
+}
+
+a {
+	cursor: pointer;
+}
+
+.col-md-8 {
+	border-radius: 2px;
+	height: 600px;
+}
+
+.sayfalama-a {
+    font-size: 15px;
+    color: #000000;
+    border: 2px;
+    padding: 0px 5px;
+}
+
+.sayfalama-current {
+    color: #ffffff;
+    background-color: #808080;
+}
+
+.sayfalama-a:hover {
+    background-color: #1abc9c;
+    color: #ffffff;
+}
+
+.egzersiz-kayit-div {
+    margin-top: 15px;
+    color: #ffffff;
+    background-color: #34495e;
+}
+
+.table-line-row:hover {
+    cursor:pointer;
+    background-color: rgb(189, 195, 199);
+}
+
+.content tr:hover {
+    cursor: pointer;
+    background-color: rgb(189, 195, 199);
+}
+
+#olculer-table tbody tr:hover {
+    background-color: rgb(189, 195, 199);
+    cursor: default;
+}

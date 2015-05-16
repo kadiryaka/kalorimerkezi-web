@@ -1,0 +1,43 @@
+
+    <table class="table table-striped" rel="floathead" data-scroll=".oc-scroll" id="rid690039f4aa0432318fd14c6e6bd1ea8510">
+        <thead>
+        <tr class="bg-primary">
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>Mail adresi</th>
+            <th>Telefon</th>
+            <th>Durum</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% if (users.length == 0) { %>
+        <tr><td colspan="5">Kullanıcı bulunamamıştır</td></tr>
+        <% }
+        for(var i=0; i < users.length; i++) {
+
+        %><tr data-id="<%= users[i].k_id %>">
+            <td><%= users[i].isim %></td>
+            <td><%= users[i].soyisim %></td>
+            <td><%= users[i].mail %></td>
+            <td><%= users[i].tel %></td>
+            <% if(users[i].yetki) %>
+            <td>aktif</td>
+            <% else %>
+            <td>pasif</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+
+<div class="sayfalama-div">
+    <tr id="b" class="sayfalama-tr">
+        <%
+        for (var j=1; j<= page; j++) {
+        if (j == currentPage) {
+        %> <td><a class="sayfalama-a sayfalama-current" data-page="<%= j %>"><%= j %></a></td> <% } else {
+        %> <td><a class="sayfalama-a" data-page="<%= j %>"><%= j %></a></td>
+        <% }
+        } %>
+    </tr>
+</div>

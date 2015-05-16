@@ -1,0 +1,56 @@
+{
+    "app"       :   {
+        "name"  :   "Kalori Merkezi"
+    },
+    "button"    :   {
+        "exit"      :   "çek git :(",
+        "register"  :   "Kaydol",
+        "login"     :   "Giris",
+        "tr"        :   "Türkçe",
+        "en"        :   "İngilizce",
+        "home"      :   "babiş sayfa :)",
+        "about"     :   "Hakkında",
+        "save"      :   "Kaydet"
+    },
+    "placeholder"   :   {
+        "username"  :   "kullanıcı adın",
+        "password"  :   "parolan",
+        "mail"      :   "epostan"
+    },
+    "text"  :   {
+        "iamnew"            :   "Hesabın yok mu?",
+        "iamnotnew"         :   "Zaten daha önceden kaydolmuştum! diyorsan",
+        "hi"                :   "Merhaba",
+        "registeredDate"    :   "Kayıt Anı",
+        "email"             :   "E-Mail",
+        "rememberPassword"  :   "Parolamı Unuttum",
+        "welcome"           :   "Hosgeldin",
+        "mobile"            :   "Campusca mobil uygulamasıyla cep telefonundayken de iletisime devam et!",
+        "updateMail"        :   "E-Posta Güncelle",
+        "updatePass"        :   "Parolanı Güncelle",
+        "updateMessage"     :   "Kişisel İletini Güncelle",
+        "updatePic"         :   "Profil Resmini Güncelle",
+        "availableEmail"    :   "Şu anda veritabanımızda kayıtlı e-posta adresin ",
+        "newMail"           :    "Yeni E-Mail",
+        "updatePassDesc"    :   "Parolanı değiştirmek için geçerli şifreni girmelisin"
+    },
+    "message"   :   {
+        "welcome"   :   "Yeni insanlarla tanışmaya ne dersin? Hem de sizin kampüsten! Peki ya içerideki arkadaşların? Hepsi ve daha fazlası için giriş yap!",
+        "welcome_h" :   "Kampüste etkileşimin yeni yolu!"
+    },
+    "error" :   {
+        "server_error"                  :   "Sunucuya Erişilemiyor",
+        "notfound_error"                :   "İstek Gönderdiğiniz Adres Hatalı",
+        "fuckedup_error"                :   "Bilinmeyen Hata Oluştu",
+        "bad_token"                     :   "Çerezlerinizde Sorun Var!",
+        "wrong_username_or_password"    :   "Kullanıcı Adı ya da Parolanız Hatalı",
+        "not_activated"                 :   "Hesabınız aktif edilmemiş, lütfen epostanızı kontrol ediniz!",
+        "not_found"                     :   "Bulunamadı!",
+        "validation_failed"             :   "Daha önceden alınmış :/"
+    },
+    "info"              :   {
+        "success" : "Başarılı",
+        "register_success" : "Son adım! Hesabının aktivasyonu için epostanı kontrol et",
+        "activate_success" : "Tamamdır artık bize katılabilirsin!"
+    }
+}

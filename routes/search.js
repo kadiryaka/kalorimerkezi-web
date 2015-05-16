@@ -49,7 +49,4 @@ router.get('/food/:key/:page' , function(req, res) {
 });
 });
 
-
-
-
 module.exports = router;

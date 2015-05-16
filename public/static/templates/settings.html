@@ -1,0 +1,107 @@
+<section id="wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-embossed" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="#">Campusca</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a style="cursor:pointer"  class="dropdown-toggle" data-toggle="dropdown">
+                        <%= user.get('username') %>
+                        <img class="user-mini-pic" src="https://avatars3.githubusercontent.com/u/6316032?s=460">
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-menu-left">
+                        <span class="fui-gear"></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-menu-right">
+                        <span class="fui-cross"></span>
+                    </a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+    <div class="row main-div">
+        <div class="col-md-3">
+            <h6>Active Conversations</h6>
+            <ul class="conversations">
+                <li>
+                    <span class="conv-pic-span"><img class="conv-pic-el" src="https://avatars2.githubusercontent.com/u/2081802?s=460"></span>
+                    <span class="conv-username-span"><a class="conv-username-el" href="#"> okanvurdu</a></span>
+                </li>
+                <li>
+                    <span class="conv-pic-span"><img class="conv-pic-el" src="https://avatars2.githubusercontent.com/u/1534649?s=460"></span>
+                    <span class="conv-username-span"><a class="conv-username-el" href="#"> erayarslan</a></span>
+                </li>
+                <li>
+                    <span class="conv-pic-span"><img class="conv-pic-el" src="https://avatars1.githubusercontent.com/u/304654?s=140"></span>
+                    <span class="conv-username-span"><a class="conv-username-el" href="#"> aslanon</a></span>
+                </li>
+                <li>
+                    <span class="conv-pic-span"><img class="conv-pic-el" src="https://avatars0.githubusercontent.com/u/6499172?s=140"></span>
+                    <span class="conv-username-span"><a class="conv-username-el" href="#"> altunsoy</a></span>
+                </li>
+                <li>
+                    <span class="conv-pic-span"><img class="conv-pic-el" src="https://avatars0.githubusercontent.com/u/6938857?s=460"></span>
+                    <span class="conv-username-span"><a class="conv-username-el" href="#"> gormelof</a></span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+
+            <div class="settings">
+                <h6>Settings</h6>
+                <p class="description"> You can change your personal settings and informations here</p>
+                <h7 data-i18n="text.updatePic"></h7>
+                <h7 data-i18n="text.updateMail"></h7>
+                <p class="description"><span data-i18n="text.availableEmail"></span><b>furkan.basaran@ogr.sakarya.edu.tr</b></p>
+                <input type="email" class="form-control input-sm updateMail" placeholder="yeni email" />
+                <h7 data-i18n="text.updatePass"></h7>
+                <p class="description"><span data-i18n="text.updatePassDesc"></span></p>
+                <input type="password" class="form-control input-sm updatePass1" placeholder="geçerli" />
+                <input type="password" class="form-control input-sm updatePass2" placeholder="yeni" />
+                <h7 data-i18n="text.updateMessage"></h7>
+                <p class="description" data-i18n="text.updateMessageDesc"></p>
+                <input type="text" class="form-control input-sm updatePass2" placeholder="kişisel ileti" />
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <span class="shuffle-button fui-play" style="float:left"></span><h6 style="float:left;text-align: right;">Meet new friends</h6>
+            <div style="clear:both"></div>
+            <ul class="suggested-user">
+                <li>
+                    <span class="su-pic"><img class="su-pic-content" src="https://avatars0.githubusercontent.com/u/6938857?s=460"></span>
+                    <span class="su-username"> gormelof</span>
+                    <div style="clear:both"></div>
+                </li>
+                <li>
+                    <span class="su-pic"><img class="su-pic-content" src="https://avatars1.githubusercontent.com/u/7755616?s=140"></span>
+                    <span class="su-username"> barankaraoguz</span>
+                    <div style="clear:both"></div>
+                </li>
+                <li>
+                    <span class="su-pic"><img class="su-pic-content" src="https://avatars0.githubusercontent.com/u/7766347?s=140"></span>
+                    <span class="su-username"> batu</span>
+                    <div style="clear:both"></div>
+                </li>
+                <li>
+                    <span class="su-pic"><img class="su-pic-content" src="https://avatars1.githubusercontent.com/u/7755616?s=140"></span>
+                    <span class="su-username"> barankaraoguz</span>
+                    <div style="clear:both"></div>
+                </li>
+                <li>
+                    <span class="su-pic"><img class="su-pic-content" src="https://avatars0.githubusercontent.com/u/7766347?s=140"></span>
+                    <span class="su-username"> batu</span>
+                    <div style="clear:both"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,225 @@
+.brand{
+    margin-top: 30px;
+}
+.mobile-pic{
+    height: 300px;
+    margin-top: 25px;
+}
+.mobile-text{
+    margin-top: 75px;
+}
+.footer-el{
+    cursor:pointer;
+    margin-left: 10px;
+}
+.footer{
+    margin-top: 50px;
+}
+.login-link{
+    margin-bottom: -15px;
+}
+
+.clear{
+    clear:both;
+}
+
+.icerik {
+    margin-top:60px;
+}
+
+.description{
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    padding: 2px;
+}
+
+.icon-menu-right{
+    margin-right: 15px;
+}
+
+.updateMail{
+    width: 60%;
+}
+
+.updatePass1{
+    width: 60%;
+    margin-bottom: 10px;
+}
+
+.updatePass2{
+    width: 60%;
+    margin-bottom: 10px;
+}
+
+.settings{
+    width: 100%;
+    height: 500px;
+
+}
+
+.chat{
+    margin-top: 30px;
+    width: 100%;
+    height: 500px;
+    background-color: #ecf0f1;
+}
+
+.user-mini-pic{
+
+    width: 20px;
+    height:20px;
+    margin-left: 10px;
+}
+.main-input{
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 10px;
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    padding: 2px;
+}
+.follow{
+    width: 80px;
+    padding-right: 15px;
+    float:right;
+    margin-right:15px;
+    margin-top: 5px;
+}
+
+.message-area{
+    width: 96%;
+    height: 370px;
+    background: white;
+    margin-left: 2%;
+}
+.user-opt{
+    float: right;
+    margin-top: 15px;
+}
+
+.user{
+    float:left;
+    width: 80%;
+}
+
+.user-desc{
+    font-family: "Lato", sans-serif;
+    font-size: 14px;
+    line-height: 1.231;
+}
+
+.chat-user-mini-pic{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    float:left;
+}
+
+.main-div{
+    margin-top: 50px;
+}
+
+.conversations > li{
+    margin-left: -10px;
+    list-style: none;
+    width: 96%;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.suggested-user > li{
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.suggested-user{
+    width: 96%;
+}
+
+.shuffle-button{
+    margin-top: 13px;
+    margin-right: 20px;
+}
+
+.su-pic{
+    float:left;
+}
+.su-username{
+    float:left;
+    margin-left: 10px;
+}
+.su-desc{
+    margin-top: 5px;
+    font-family: "Lato", sans-serif;
+    font-size: 10px;
+    line-height: 1.231;
+    float:left;
+}
+
+.su-pic-content{
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+}
+
+.conv-pic-el{
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+
+}
+.conv-username-el{
+    margin-left: 25px;
+}
+.shuffle-pic{
+    width: 25%;
+    height: 50px;
+}
+
+.suggest-pic-span{
+
+}
+
+@media screen and (max-width: 720px) {
+
+    .brand{
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .mobile-pic{
+        height: 300px;
+        margin-top: 25px;
+        display: none;
+    }
+
+    .mobile-text{
+        display: none;
+        margin-top: 75px;
+    }
+
+    .footer-el{
+        cursor:pointer;
+        margin-left: 10px;
+    }
+
+    .footer{
+        margin-top: 50px;
+    }
+
+    .sub-header{
+        text-align: center;
+    }
+
+}
+
+#sol-menu {
+    position: fixed;
+    margin-top:60px;
+}
+
+@media screen and (max-width: 991px) {
+    #collapseNavbarLeft2 > li {
+        text-align: center;
+    }
+}

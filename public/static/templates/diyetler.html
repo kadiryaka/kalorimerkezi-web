@@ -1,0 +1,49 @@
+<script>
+    $('dinamik-alan').hide();
+</script>
+
+<div class="table-line">
+
+    <div class="row push-bottom egzersiz-kayit-div">
+        <div class="col-sm-3 text-center-xs">
+            <h4>Diyet Programı</h4>
+        </div>
+        <div class="col-sm-3 text-center">
+            <h4>Başlangıç</h4>
+        </div>
+        <div class="col-sm-3 text-center">
+            <h4>Bitiş</h4>
+        </div>
+        <div class="col-sm-3 text-center">
+            <h4>Durumu</h4>
+        </div>
+    </div>
+    <% for (var i = 0; i < liste.length; i++) { %>
+    <div data-dgr="<%= liste[i].temp_id %>" data-index="<%= i %>" class="row table-line-row diyet-kayit-table" style="padding: 2px;">
+        <div class="col-sm-3 push-bottom-xs text-center-xs">
+            <h4 class="fa fa-arrow-up" style="font-size: 14px"> <%= liste[i].temp_adi %></h4>
+        </div>
+        <div class="col-sm-3 text-center push-bottom-xs">
+            <h4 style="font-size: 14px">
+                <i style="float: left;" class="fa fa-calendar-o text-success v-mid"></i> <span><%= liste[i].bas_tarihi %></span>
+            </h4>
+        </div>
+        <div class="col-sm-3 text-center push-bottom-xs">
+            <h4 style="font-size: 14px">
+                <i style="float: left;" class="fa fa-calendar text-success v-mid"></i> <span><%= liste[i].bitis_tarihi %></span>
+            </h4>
+        </div>
+        <div class="col-sm-3 text-center">
+            <% if (currentDiyet == 0 && i == 0) { %>
+            <i class="fa fa-check-square fa-2x text-success"></i>
+            <div>Geçerli Egzersiz</div>
+            <% } else { %>
+            <i class="fa badge badge-danger-lt badge-empty fa-2x text-success"></i>
+            <div>Geçersiz Egzersiz</div>
+            <% } %>
+        </div>
+    </div>
+    <div id="dinamik-alan<%= i %>" style="display: none;"></div>
+    <% }  %>
+
+</div>

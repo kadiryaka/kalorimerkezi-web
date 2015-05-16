@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title data-i18n="app.name"></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <meta charset="utf-8">
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <!-- Apple Touch -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="images/apple-touch-icon-57-precomposed.png">
+    <!-- Favicon -->
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Admin Paneli</title>
+    <link href="static/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <link href="static/stylesheets/custom.css" rel="stylesheet" type="text/css" />
+
+
+
+    <link rel="stylesheet" href="static/css/progressjs.min.css">
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/notify-flat.css">
+    <link href="static/css/core.bundle.css" rel="stylesheet">
+    <script src="static/script/libs/progress.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body class="high emerald-default htmls htmls_dashboard">
+
+    <div id="notes"></div>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-static-top navbar-inplace navbar-fixed-top" role="navigation">
+            <ul class="nav navbar-nav navbar-left pull-left hidden-sm hidden-md hidden-lg">
+                <li>
+                    <a id="oc-left-toggle-xs" href="#oc-wrapper"
+                       class="btn-nav pull-left"
+                       data-toggle="offcanvas" data-control="left"
+                       data-states="open,hidden"
+                       data-persist="lg,md,sm"
+                       data-parent="body" data-sibling="right">
+                        <i class="icm icm-menu6"></i>
+                    </a>
+                </li>
+            </ul>
+            <a class="navbar-brand" href="/#homepage">
+                <img class="icon" src="static/images/barbell.png" />
+                <span class="text-gradient-success-dk">Yönetim Paneli</span>
+            </a>
+            <ul class="nav navbar-nav navbar-right pull-right">
+                <li id="oc-right-toggle-container">
+                    <a id="oc-right-toggle" href="#oc-wrapper"
+                       class="btn-nav sidebar-toggle-right"
+                       rel="tooltip" title="Toggle chat"
+                       data-placement="bottom"
+                       data-container="#oc-right-toggle-container"
+                       data-toggle="offcanvas" data-control="right"
+                       data-states="open,hidden"
+                       data-persist="lg,md,sm">
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right pull-right hidden-xs">
+                <li class="dropdown">
+                    <a href="#">
+                        <i class="fa fa-user"> ahmet mehmet </i>
+                        <span class="hidden-xs hidden-sm hidden-md"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="dashboard_logout">
+                        <span class="hidden-xs hidden-sm hidden-md">Çıkış</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="row">
+            <div id="sol-menu" class="col-md-2">
+                <ul class="nav nav-stacked oc-sidebar-nav" id="collapseNavbarLeft2">
+                    <li class="">
+                        <a href="/#homepage">
+                            <i class="oc-partial-icon icm icm-screen4"></i>
+                            <span class="oc-partial-menu-item">Ana Sayfa</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/#dashboard">
+                            <i class="oc-partial-icon icm icm-user"></i>
+                            <span class="oc-partial-menu-item">Sporcular</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/#register">
+                            <i class="oc-partial-icon icm icm-user-plus"></i>
+                            <span class="oc-partial-menu-item">Sporcu Kayıt</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/#egzersizhazirla">
+                            <i class="oc-partial-icon icm icm-envelope"></i>
+                            <span class="oc-partial-menu-item">Program Hazırla</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#diyethazirla">
+                            <i class="oc-partial-icon icm icm-envelope"></i>
+                            <span class="oc-partial-menu-item">Diyet Hazırla</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="dashboard.html">
+                            <i class="oc-partial-icon icm icm-envelope"></i>
+                            <span class="oc-partial-menu-item">İletişim</span>
+                        </a>
+                    </li>
+                    <li class="open-menu">
+                        <a>
+                            <i class="oc-partial-icon icm icm-list"></i>
+                            <span class="oc-partial-menu-item">Açılır Menü</span>
+                        </a>
+                        <ul class="menu">
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Diyet Ekle</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Diyet Şablon</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Diyet Göster</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Egzersiz Ekle</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Egzersiz Şablon</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Egzersizi Göster</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="dashboard.html">
+                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
+                                    <span class="oc-partial-menu-item">Ölçü ekle</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-10 icerik">
+                <!-- Bu alan dinamik olarak değişecek alandır -->
+            </div>
+        </div>
+	</div>
+
+    <div id="error-div"><!-- Bu alan error sayfası içindir --></div>
+    <div class="login"><!-- Bu alan login sayfası içindir --></div>
+
+    <script src="static/script/libs/utils/ps.js"></script>
+    <link rel="stylesheet" href="static/script/libs/jquery-ui.css">
+    <script src="static/script/libs/jquery-1.10.2.js"></script>
+    <script src="static/script/libs/jquery.ui.js"></script>
+    <script src="static/script/libs/moment.js"></script>
+    <script src="static/script/libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="static/script/libs/bootstrap.min.js"></script>
+    <script src="static/script/libs/bootstrap-select.js"></script>
+    <script src="static/script/libs/bootstrap-switch.js"></script>
+    <script src="static/script/libs/flatui-checkbox.js"></script>
+    <script src="static/script/libs/flatui-radio.js"></script>
+    <script src="static/script/libs/jquery.tagsinput.js"></script>
+    <script src="static/script/libs/jquery.placeholder.js"></script>
+    <script src="static/script/libs/jquery-ui-tr.js"></script>
+    <script src="static/script/libs/application.js"></script>
+    <script type="text/javascript">
+        $(".menu").hide(0);
+
+        var width = $('#sol-menu').width();
+        $('.icerik').css('margin-left',width+'px');
+       /** $("body").on('click','.hide-menu',function() {
+            $(".menu").hide(0);
+            $(this).attr('class','open-menu');
+        });
+
+        $("body").on('click', '.open-menu', function() {
+            $(".menu").show(100);
+            $(this).attr('class','hide-menu');
+        });
+        **/
+        $('.container').hide(0);
+    </script>
+
+</body>
+</html>

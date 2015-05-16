@@ -1,0 +1,103 @@
+
+<div class="panel-body-collapse collapse in">
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <!-- eski ve yeni butonlar -->
+
+            <div class="form-group tercih-butonlari">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" id="egzersiz-template-eski">ESKİ EGZERSİZ ŞABLONU DÜZENLE</button>
+                    <button style="margin-left: 3%" class="btn btn-default" id="egzersiz-template-yeni">YENİ EGZERSİZ ŞABLON EKLE</button>
+                </div>
+            </div>
+            <!-- eski ve yeni butonlar -->
+
+
+            <!-- yeni - baslik  -->
+            <div id="yeni-sablon-baslik">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Başlık</label>
+                    <div class="col-sm-3">
+                        <input maxlength="200" required type="text" value="" class="form-control" id="template_baslik" placeholder="Başlık   (örn: Zayıflama Programı)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-default" id="egzersiz-baslik-button">KAYDET</button>
+                    </div>
+                </div>
+            </div>
+            <!-- yeni - baslik  -->
+
+            <!-- eskiyi düzenlemek isterse -> dropdown -->
+            <div id="eski-sablonlar">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Program</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="egz-temp-list">
+                            <% for (var i = 0; i < veri.length; i++) { %>
+                            <option data-dgr="<%= veri[i].temp_id %>"><%= veri[i].temp_adi %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-default" id="template-getir">GETİR</button>
+                    </div>
+                </div>
+            </div>
+            <div  class="text-center form-group col-sm-offset-2 col-sm-5" id="feedback-panel"></div>
+            <!-- eski -> dropdown -->
+            <div id="ekleme-listesi">
+                <div class="panel-body-collapse collapse in">
+                    <div class="panel-body ">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="row-mid">
+                                        <th>Egzersiz Adı</th>
+                                        <th>Adet/Set</th>
+                                        <th>Ağırlık</th>
+                                        <th>Makina No</th>
+                                        <th>İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="row-mid">
+                                        <td>
+                                            <select class="form-control" id="egz-dropdown">
+                                                <% for (var i = 0; i < egz_data.length; i++) { %>
+                                                <option data-dgr="<%= egz_data[i].egz_id %>"><%= egz_data[i].egz_ad %></option>
+                                                <% } %>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div >
+                                                <input style="background-color: white" required maxlength="29" type="text" value="" class="form-control" id="egz-set" placeholder="Set (örn : 4x12)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input style="background-color: white" required type="number" value="" class="form-control" id="egz-agirlik" placeholder="Agırlık (örn : 18)">
+                                        </td>
+                                        <td>
+                                            <input style="background-color: white" required type="text" maxlength="29" value="" class="form-control" id="egz-makina" placeholder="Makina (örn:5 numara)">
+                                        </td>
+                                        <td><button id="egz-kaydet-button">KAYDET</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                    </div>
+                </div>
+            </div>
+            <div id="yeni-egz-list">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="egz-data-list">
+
+</div>

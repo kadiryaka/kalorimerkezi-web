@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="panel panel-default gradient-diag1" id="rid690039f4aa0432318fd14c6e6bd1ea8513">
+            <div class="panel-heading panel-handle panel-colorize">
+                <div class="panel-title">
+      <span class="panel-title-edtitable" data-type="text">
+        Sporcu Ölçüleri
+      </span>
+                </div>
+            </div>
+            <div class="panel-body-collapse collapse in">
+                <div class="panel-body ">
+                    <table class="table table-clean datatable" data-scroll=".oc-scroll" id="olculer-table">
+                        <thead>
+                        <% if(liste.length == 0) { %>
+                        <tr>Sporcunun ölçü kaydı henüz bulunmamaktadır...</tr>
+                        <% } else { %>
+                        <tr>
+                            <th>Başlık</th>
+                            <th>Tarih</th>
+                            <th>Kilo</th>
+                            <th>Omuz</th>
+                            <th>Sağ Pazu</th>
+                            <th>Sol Pazu</th>
+                            <th>Göğüs</th>
+                            <th>Karın</th>
+                            <th>Bel</th>
+                            <th>Kalça</th>
+                            <th>Sağ Bacak</th>
+                            <th>Sol Bacak</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for (var i = 0; i < liste.length; i++) { %>
+                        <tr>
+                            <td><%= liste[i].baslik %></td>
+                            <td><%= moment(liste[i].tarih).format('YYYY-MM-DD') %></td>
+                            <td><%= liste[i].kilo %> kg</td>
+                            <td><%= liste[i].omuz %> cm</td>
+                            <td><%= liste[i].sag_pazu %> cm</td>
+                            <td><%= liste[i].sol_pazu %> cm</td>
+                            <td><%= liste[i].gogus %> cm</td>
+                            <td><%= liste[i].karin %> cm</td>
+                            <td><%= liste[i].bel %> cm</td>
+                            <td><%= liste[i].kalca %> cm</td>
+                            <td><%= liste[i].sag_bacak %> cm</td>
+                            <td><%= liste[i].sol_bacak %> cm</td>
+                        </tr>
+                        <% }
+                        }%>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

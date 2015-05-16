@@ -1,0 +1,31 @@
+<div class="panel-body-collapse collapse in">
+    <div class="panel-body ">
+
+        <table class="table table-striped">
+            <thead>
+            <% if(veri.length == 0) { %>
+            <tr>Egzersiz bulunmamaktadır...</tr>
+            <% } else { %>
+            <tr class="row-mid">
+                <th>Egzersiz Adı</th>
+                <th>Adet/Set</th>
+                <th>Ağırlık</th>
+                <th>Makina No</th>
+                <th>İşlem</th>
+            </tr>
+            <% } %>
+            </thead>
+            <tbody>
+            <% for (var i = 0; i < veri.length; i++) { %>
+            <tr class="row-mid">
+                <td><%= veri[i].egz_ad %></td>
+                <td><%= veri[i].adet %></td>
+                <td><%= veri[i].agirlik %></td>
+                <td><%= veri[i].makina_no %></td>
+                <td><button id="egz-sil" data-dgr="<%= veri[i].id %>">SİL</button></td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

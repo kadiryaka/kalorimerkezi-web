@@ -1,0 +1,30 @@
+
+<div class="panel-body-collapse collapse in">
+    <div class="panel-body">
+
+
+        <div class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Tarih Seçiniz</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="dateList">
+                        <% for (var i = 0; i < liste.length; i++) { %>
+                        <option data-dgr="<%= date[i].tarih %>"><%= liste[i].tarih %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" id="yap-egz-button">Getir</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="yap-egz-data-list">
+
+</div>

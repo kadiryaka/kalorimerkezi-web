@@ -11,10 +11,11 @@ connection.connect();
 module.exports = {
 	/**
 		token kontrolü yapar
+        params : req.headers.kalori_token
 	*/
 	"secure" : function(req, res, next) {
-		var token = req.headers.token;
-		console.log("secureye girdi");
+		var token = req.headers.kalori_token;
+		console.log("secureye girdi token : " + token);
 		connection.query('SELECT * from tokens where token = ?', [token], function(err, result) {
 	  		if (result.length === 0) {
 	  			//token var mı yok mu kontrolü
@@ -50,10 +51,27 @@ module.exports = {
 			if (result[0].yetki == 2) next(); 
 			else {
 				res.status(401).send({"status":"error", "message":"unauthorized_connection"});
-				console.log("yetkisiz giriş siktir git göt");
 			}
 		});
-	}
+	},
+
+    "haveUser" : function(req,res,next) {
+        console.log("haveUsera girdi");
+        var salon_id = req.user_id;
+        var user_id = req.headers.k_id;
+        console.log("salon_id : " + salon_id);
+        console.log("user_id : " + user_id);
+        connection.query('SELECT salon_id FROM kullanici WHERE k_id = ?', [user_id], function(err, result) {
+            console.log(result);
+            if (result[0].salon_id  != null && result[0].salon_id == salon_id) {
+                next();
+            } else {
+                res.status(401).send({"status":"error", "message":"unauthorized_connection"});
+                console.log("yetkisiz bi kullanıcı atanmak istendi");
+            }
+
+        });
+    }
 
 
 

@@ -1,4 +1,5 @@
 var express = require('express');
+var app = module.exports = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,11 +8,13 @@ var bodyParser = require('body-parser');
 var auth = require('./core/auth');
 var routes = require('./routes/index');
 var user = require('./routes/user');
+var admin = require('./routes/admin');
 var services = require('./routes/services');
 var token = require('./routes/token');
 var search = require('./routes/search');
+var constants = require('./core/constants');
+var io = require('socket.io').listen(4141);
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,14 +29,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+//api nin altında herhangi bir url ' e gidersen önce secure ye uğra
 app.all('/api/*', auth.secure);
+
+//aşağıdaki url lere girersen admin mi diye kontrol ettir
 app.all([
+    '/api/user/userList',
     '/api/user/list',
     '/api/user/add'
     ], auth.isAdmin);
+app.all([
+    '/api/services/setTemplateForUser',
+    '/api/services/setDiyetTemplateForUser',
+    '/api/services/getExcersizeListByUser',
+    '/api/services/getDiyetListByUser',
+    '/api/services/sporcuOlcuKayit',
+    '/api/services/getUserSize',
+    '/api/services/getUserExersizeDateList',
+    '/api/services/getEgzersizByDate'
+], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services',services);
 app.use('/token',token);
+app.use('/api/admin',admin);
 app.use('/api/search',search);
 
 // catch 404 and forward to error handler
@@ -55,6 +73,11 @@ if (app.get('env') === 'development') {
     });
 }
 
+//socket bağlantısı
+io.on('connection', function(socket){
+    global.socket = socket;
+});
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -64,6 +87,3 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-
-module.exports = app;

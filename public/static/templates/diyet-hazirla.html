@@ -1,0 +1,67 @@
+
+<div class="panel-body-collapse collapse in">
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <!-- eski ve yeni butonlar -->
+
+            <div class="form-group tercih-butonlari">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" id="diyet-template-eski">ESKİ DİYET ŞABLONU DÜZENLE</button>
+                    <button style="margin-left: 3%" class="btn btn-default" id="diyet-template-yeni">YENİ DİYET ŞABLONU EKLE</button>
+                </div>
+            </div>
+            <!-- eski ve yeni butonlar -->
+
+
+            <!-- yeni - baslik  -->
+            <div id="yeni-sablon-baslik">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">Başlık Giriniz</label>
+                    <div class="col-sm-3">
+                        <input maxlength="200" required type="text" value="" class="form-control" id="template_baslik" placeholder="Başlık   (örn: Zayıflama Programı)">
+                    </div>
+                </div>
+            </div>
+            <!-- yeni - baslik  -->
+
+            <!-- eskiyi düzenlemek isterse -> dropdown -->
+            <div id="eski-sablonlar">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Program</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="diyet-temp-list">
+                            <% for (var i = 0; i < veri.length; i++) { %>
+                            <option data-dgr="<%= veri[i].temp_id %>"><%= veri[i].temp_adi %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-default" id="diyet-template-getir">GETİR</button>
+                    </div>
+                </div>
+            </div>
+            <!-- eski -> dropdown -->
+            <div id="diyet-ekleme-listesi">
+                <div  class="text-center form-group col-sm-offset-2 col-sm-5" id="diyet-feedback-panel"></div>
+                <br/>
+                <div class="panel-body-collapse collapse in">
+                    <div class="panel-body " style="float: left;">
+
+                        <textarea style="resize:none" name="" id="diyet-text-area" cols=100" rows="20" placeholder="Diyet Listesini Yazınız"></textarea>
+                        <br/><br/>
+                        <button class="btn btn-default" id="diyet-kaydet-button">KAYDET</button>
+                    </div>
+                </div>
+            </div>
+            <div id="yeni-diyet-list">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="diyet-data-list">
+
+</div>
