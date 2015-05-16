@@ -14,6 +14,18 @@ var token = require('./routes/token');
 var search = require('./routes/search');
 var constants = require('./core/constants');
 
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'kalorimerkezi3'
+});
+
+connection.connect();
+
+global.connection = connection; // ;)
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());

@@ -2,16 +2,9 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var auth = require('../core/auth');
-var mysql = require('mysql');
 var crypto = require('crypto');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'kalorimerkezi3'
-});
 
-connection.connect();
+connection = global.connection;
 
 /*
  Post

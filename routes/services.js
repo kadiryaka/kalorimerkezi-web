@@ -2,15 +2,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment')
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'kalorimerkezi3'
-});
-
-connection.connect();
+connection = global.connection;
 
 /*
  GET

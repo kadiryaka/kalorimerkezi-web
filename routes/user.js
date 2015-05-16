@@ -3,18 +3,10 @@ var router = express.Router();
 var constants = require('../core/constants');
 var crypto = require('crypto');
 var moment = require('moment');
-var mysql = require('mysql');
 var app = require('../app');
 var mailer = require('../core/mailHelper');
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'kalorimerkezi3'
-});
-
-connection.connect();
+connection = global.connection;
 
 /**
  * TEST DATA
