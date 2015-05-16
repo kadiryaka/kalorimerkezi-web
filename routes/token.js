@@ -18,7 +18,7 @@ router.post('/login', function (req, res) {
   var mail = req.body.username;
   var password = crypto.createHash('md5').update(req.body.password).digest('hex');
   console.log("mail : " + mail + "pass : " + password);
-  connection.query('select k_id,isim from kullanici where mail = ? and password = ?', [mail, password], function (err, user) {
+  connection.query('select k_id,isim,soyisim from kullanici where mail = ? and password = ?', [mail, password], function (err, user) {
     //girilen mail ve şifreyle eşleşen kullanıcı var mı kontrolü yapılıyor
     console.log(user);
     if (user.length === 0) {
@@ -33,10 +33,12 @@ router.post('/login', function (req, res) {
       connection.query('select * from tokens where user_id = ?', [user[0].k_id], function (err, result) {
         if (result.length > 0) {
           console.log("eski token bulundu ve döndürüldü");
+
           res.json({
             "result": "success",
             "data": result[0].token,
-            "username": user[0].isim
+            "username": user[0].isim,
+            "surname": user[0].soyisim
           });
         } else {
           //token yoksa yeni token veriliyor.
@@ -46,10 +48,12 @@ router.post('/login', function (req, res) {
           console.log("buraya geldiyse burda token'ı kaydedecek demektir k_id = " + user[0].k_id + " token = " + token);
           connection.query('insert into tokens (user_id, token) values (?, ?)', [user[0].k_id, token], function (err, result) {
             if (err) throw err;
+
             res.json({
               "result": "success",
               "data": token,
-              "username": user[0].isim
+              "username": user[0].isim,
+              "surname": user[0].soyisim
             });
           });
           console.log("kaydetmiş olması lazım");
