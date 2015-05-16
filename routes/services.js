@@ -266,6 +266,21 @@ router.get('/getUserSize', function (req, res) {
 
 /*
  GET
+ kullanıcı id sine göre sporcu ölçü başlıklarını getirir
+ @requestParams    : user_id
+ */
+router.get('/getSizeNameList', function (req, res) {
+    var user_id = req.headers.k_id;
+    connection.query('select baslik from olculer where k_id = ? order by tarih desc', [user_id], function (err, sizeNameList) {
+        if (err) throw err;
+        res.json({
+            'sizeNameList': sizeNameList
+        });
+    });
+});
+
+/*
+ GET
  kullanıcı id sine göre sporcunun egzersiz yaptığı günleri getirir
  @requestParams    : user_id
  */
