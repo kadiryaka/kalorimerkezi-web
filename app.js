@@ -13,18 +13,9 @@ var services = require('./routes/services');
 var token = require('./routes/token');
 var search = require('./routes/search');
 var constants = require('./core/constants');
-var io = require('socket.io').listen(4141);
 
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -34,56 +25,50 @@ app.all('/api/*', auth.secure);
 
 //aşağıdaki url lere girersen admin mi diye kontrol ettir
 app.all([
-    '/api/user/userList',
-    '/api/user/list',
-    '/api/user/add'
-    ], auth.isAdmin);
+  '/api/user/userList',
+  '/api/user/list',
+  '/api/user/add'
+], auth.isAdmin);
 app.all([
-    '/api/services/setTemplateForUser',
-    '/api/services/setDiyetTemplateForUser',
-    '/api/services/getExcersizeListByUser',
-    '/api/services/getDiyetListByUser',
-    '/api/services/sporcuOlcuKayit',
-    '/api/services/getUserSize',
-    '/api/services/getUserExersizeDateList',
-    '/api/services/getEgzersizByDate'
+  '/api/services/setTemplateForUser',
+  '/api/services/setDiyetTemplateForUser',
+  '/api/services/getExcersizeListByUser',
+  '/api/services/getDiyetListByUser',
+  '/api/services/sporcuOlcuKayit',
+  '/api/services/getUserSize',
+  '/api/services/getUserExersizeDateList',
+  '/api/services/getEgzersizByDate'
 ], auth.haveUser);
 app.use('/api/user', user);
-app.use('/api/services',services);
-app.use('/token',token);
-app.use('/api/admin',admin);
-app.use('/api/search',search);
+app.use('/api/services', services);
+app.use('/token', token);
+app.use('/api/admin', admin);
+app.use('/api/search', search);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({
+      message: err.message,
+      error: err
     });
+  });
 }
-
-//socket bağlantısı
-io.on('connection', function(socket){
-    global.socket = socket;
-});
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json('error', {
+    message: err.message,
+    error: {}
+  });
 });
