@@ -20,6 +20,54 @@ router.get('/information', function (req, res) {
   });
 });
 
+/*
+ GET
+ kullanıcı id sine göre sporcu ölçülerini getirir
+ @requestParams    : user_id
+ */
+router.get('/getUserSize', function (req, res) {
+    var user_id = req.user_id;
+    connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
+        if (err) throw err;
+        res.json({
+            'sizeList': list
+        });
+    });
+});
+
+/*
+ GET
+ kullanıcının o güne kadar eklenmiş diyet templatelerinin tamamını getirir
+ @requestParams    : user_id
+ */
+router.get('/getDiyetListByUser', function (req, res) {
+    moment.locale('tr');
+    var user_id = req.user_id;
+    connection.query('SELECT k.temp_id, u.bas_tarihi, u.bitis_tarihi, k.temp_adi from diyet_kullanici_kayit u inner join diyettemplate k ON u.diyet_temp_id = k.temp_id where u.k_id = ? order by u.eklenis_tarihi desc', [user_id], function (err, list) {
+        if (err) throw err;
+        console.log(list)
+        var currentDiyet = 1;
+        if (list.length != 0) {
+            var date = moment().format('YYYY-MM-DD');
+            if ((date.valueOf() <= moment(list[0].bitis_tarihi).format('YYYY-MM-DD').valueOf()) && (date.valueOf() >= moment(list[0].bas_tarihi).format('YYYY-MM-DD').valueOf())) {
+                //geçerli bir diyet programının olduğu belirtiliyor
+                currentDiyet = 0;
+            } else {
+                currentDiyet = 1;
+            }
+            for (var i = 0; i < list.length; i++) {
+                //tarihlerin format tipi ayarlanıyor
+                list[i].bas_tarihi = moment(list[i].bas_tarihi).format('DD MMMM YYYY dddd');
+                list[i].bitis_tarihi = moment(list[i].bitis_tarihi).format('DD MMMM YYYY dddd');
+            }
+        }
+        res.json({
+            'diyetList': list,
+            "currentDiyet": currentDiyet
+        });
+    });
+});
+
 /*  
  GET
  ölçüler ekranındaki ilk açılışta çalıştırılması lazım
@@ -49,21 +97,6 @@ router.get('/information/size/:tarih', function (req, res) {
     if (err) throw err;
     res.json(size);
   });
-});
-
-/*
- GET
- kullanıcı id sine göre sporcu ölçülerini getirir
- @requestParams    : user_id
- */
-router.get('/getUserSize', function (req, res) {
-    var user_id = req.user_id;
-    connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
-        if (err) throw err;
-        res.json({
-            'sizeList': list
-        });
-    });
 });
 
 /**

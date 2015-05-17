@@ -46,7 +46,8 @@ define(['jquery',
                     type: 'POST',
                     url: '/token/login',
                     dataType : 'json',
-                    data: {'username' : mail, 'password' : pass, 'platform' : 2},
+                    headers: { 'platform' : "2"},
+                    data: {'username' : mail, 'password' : pass},
                     success: function (response) {
                         console.log(response);
                         if(response.result == "success") {
