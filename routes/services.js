@@ -224,7 +224,6 @@ router.get('/setTemplateForUser', function (req, res) {
  @requestParams    : user_id
  */
 router.get('/sporcuOlcuKayit', function (req, res) {
-  var salon_id = req.user_id;
   var baslik = req.headers.baslik;
   var kilo = req.headers.kilo;
   var omuz = req.headers.omuz;
@@ -238,7 +237,6 @@ router.get('/sporcuOlcuKayit', function (req, res) {
   var sol_bacak = req.headers.sol_bacak;
   var k_id = req.headers.k_id;
   var date = moment().format('YYYY-MM-DD');
-  console.log("karin : " + karin);
 
   connection.query('insert into olculer (sag_pazu,sol_pazu,gogus,karin,bel,kalca,sag_bacak,sol_bacak,omuz,kilo,tarih,k_id,baslik) values (?,?,?,?,?,?,?,?,?,?,?,?,?)', [sag_pazu, sol_pazu, gogus, karin, bel, kalca, sag_bacak, sol_bacak, omuz, kilo, date, k_id, baslik], function (err, cevap) {
     if (err) throw err;
@@ -251,7 +249,7 @@ router.get('/sporcuOlcuKayit', function (req, res) {
 
 /*
  GET
- kullanıcı id sine göre sporcu ölçülerini getirir
+ salon için kullanıcı id sine göre sporcu ölçülerini getirir
  @requestParams    : user_id
  */
 router.get('/getUserSize', function (req, res) {

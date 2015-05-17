@@ -46,7 +46,7 @@ define(['jquery',
                     type: 'POST',
                     url: '/token/login',
                     dataType : 'json',
-                    data: {'username' : mail, 'password' : pass},
+                    data: {'username' : mail, 'password' : pass, 'platform' : 2},
                     success: function (response) {
                         console.log(response);
                         if(response.result == "success") {
@@ -55,8 +55,10 @@ define(['jquery',
                             $.cookie(constants.cookie_username, response.username);
                             console.log("cookie at")
                             window.location = constants.hash + 'dashboard';
-                        } else if (response.result == "error") {
+                        } else if (response.data == "user_not_found") {
                             $("#feedback-panel").text("Kullanıcı adı veya şifre yanlış").css("color", "red");
+                        } else if (response.data == "unauthorized_login") {
+                            $("#feedback-panel").text("Yetkisiz giriş engellendi").css("color", "red");
                         }
                     },
                     error: function(response) {

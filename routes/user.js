@@ -8,17 +8,6 @@ var mailer = require('../core/mailHelper');
 
 connection = global.connection;
 
-/**
- * TEST DATA
- */
-router.get('/list', function (req, res) {
-  console.log("/list'e istek geldi çünkü adminsin kanki admin olmasan gelmezdi");
-  connection.query('SELECT * FROM kullanici', function (err, result) {
-    if (err) throw err;
-    res.json(result);
-  });
-});
-
 /*  
  GET
  kullanıcı profilini getirir.
@@ -60,6 +49,21 @@ router.get('/information/size/:tarih', function (req, res) {
     if (err) throw err;
     res.json(size);
   });
+});
+
+/*
+ GET
+ kullanıcı id sine göre sporcu ölçülerini getirir
+ @requestParams    : user_id
+ */
+router.get('/getUserSize', function (req, res) {
+    var user_id = req.user_id;
+    connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
+        if (err) throw err;
+        res.json({
+            'sizeList': list
+        });
+    });
 });
 
 /**
@@ -153,6 +157,5 @@ router.get('/kullaniciKontrol/:mail', function (req, res) {
   });
 
 });
-
 
 module.exports = router;
