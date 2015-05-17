@@ -68,29 +68,6 @@ router.get('/save/food/:time/:foodId/:quantity', function (req, res) {
 });
 
 /*  
- GET
- Kullanıcının  eklediği egzersizi kaydeder
- @param   	   : time  	Açıklama : time formatı bugün  için = 0, dün için = 1
- @param         : id	 	Açıklama : egzersiz id si
- @param 	       : set
- @param 	       : agirlik
- @param 	       : no
- @requestParams : user_id
- */
-
-router.get('/save/training/:time/:trainingId/:adet/:agirlik/:no', function (req, res) {
-    if (req.params.time == 0) {
-        var date = moment().format('YYYY-MM-DD');
-    } else if (req.params.time == 1) {
-        var date = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    }
-    connection.query("Insert into kayitlar_egz (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [req.user_id, req.params.trainingId, date, req.params.adet, req.params.no, req.params.agirlik], function (err) {
-        if (err) throw err;
-        res.status(200).send();
-    });
-});
-
-/*  
  get
  Kullanıcının besin kaydını siler
  @param         : recordId
@@ -154,8 +131,8 @@ router.get('/getExcersizeListByUser', function (req, res) {
                 currentExcersize = 1;
             }
             for (var i = 0; i < list.length; i++) {
-                list[i].bas_tarihi = moment(list[i].bas_tarihi).format('DD MMMM YYYY dddd');
-                list[i].bitis_tarihi = moment(list[i].bitis_tarihi).format('DD MMMM YYYY dddd');
+                list[i].bas_tarihi = moment(list[i].bas_tarihi).format('DD MMM ddd YYYY');
+                list[i].bitis_tarihi = moment(list[i].bitis_tarihi).format('DD MMM ddd YYYY');
             }
         }
 
@@ -421,8 +398,8 @@ router.get('/getDiyetListByUser', function (req, res) {
             }
             for (var i = 0; i < list.length; i++) {
                 //tarihlerin format tipi ayarlanıyor
-                list[i].bas_tarihi = moment(list[i].bas_tarihi).format('DD MMMM YYYY dddd');
-                list[i].bitis_tarihi = moment(list[i].bitis_tarihi).format('DD MMMM YYYY dddd');
+                list[i].bas_tarihi = moment(list[i].bas_tarihi).format('DD MMM ddd YYYY');
+                list[i].bitis_tarihi = moment(list[i].bitis_tarihi).format('DD MMM ddd YYYY');
             }
         }
         res.json({
