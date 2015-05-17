@@ -26,6 +26,7 @@ router.get('/information', function (req, res) {
  @requestParams    : user_id
  */
 router.get('/getUserSize', function (req, res) {
+    moment.locale('tr');
     var user_id = req.user_id;
     connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
         if (err) throw err;
