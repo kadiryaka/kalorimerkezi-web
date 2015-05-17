@@ -18,7 +18,7 @@ router.post('/login', function (req, res) {
     //platform 2 = web (yani sadece admin girebilir)
     //platform 1 = mobil (yani sadece kullanıcı girebilir)
     var mail = req.body.username;
-    var platformControl = req.body.platform;
+    var platformControl = req.headers.platform;
     var password = crypto.createHash('md5').update(req.body.password).digest('hex');
     console.log("mail : " + mail + "pass : " + password);
     connection.query('select k_id,isim,soyisim,yetki from kullanici where mail = ? and password = ?', [mail, password], function (err, user) {
