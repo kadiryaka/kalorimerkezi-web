@@ -79,7 +79,7 @@ router.get('/getExcersizeListByUser', function (req, res) {
 router.get('/getDiyetListByUser', function (req, res) {
     moment.locale('tr');
     var user_id = req.user_id;
-    connection.query('SELECT k.temp_id, u.bas_tarihi, u.bitis_tarihi, k.temp_adi from diyet_kullanici_kayit u inner join diyettemplate k ON u.diyet_temp_id = k.temp_id where u.k_id = ? order by u.eklenis_tarihi desc', [user_id], function (err, list) {
+    connection.query('SELECT k.icerik, k.temp_id, u.bas_tarihi, u.bitis_tarihi, k.temp_adi from diyet_kullanici_kayit u inner join diyettemplate k ON u.diyet_temp_id = k.temp_id where u.k_id = ? order by u.eklenis_tarihi desc', [user_id], function (err, list) {
         if (err) throw err;
         console.log(list)
         var currentDiyet = 1;
