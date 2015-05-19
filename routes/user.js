@@ -111,10 +111,15 @@ router.get('/getDiyetListByUser', function (req, res) {
  */
 router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
     var temp_id = req.headers.temp_id;
+    var user_id = req.user_id;
+    var date = moment().format('YYYY-MM-DD');
     connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
-        if (err) throw err;
-        res.json({
-            'excersizeList': list
+        connection.query('select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?', [user_id,date], function (err, doList) {
+            if (err) throw err;
+            res.json({
+                'excersizeList': list,
+                'doList' : doList
+            });
         });
     });
 });
