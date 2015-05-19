@@ -114,11 +114,11 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
     var user_id = req.user_id;
     var date = moment().format('YYYY-MM-DD');
     connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
-        connection.query('select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?', [user_id,date], function (err, doList) {
+        connection.query('select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?', [user_id, date], function (err, doList) {
             if (err) throw err;
             res.json({
                 'excersizeList': list,
-                'doList' : doList
+                'doList': doList
             });
         });
     });
@@ -128,21 +128,21 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
 /*
  GET
  Kullanıcının  eklediği egzersizi kaydeder
- @param   	   : time  	Açıklama : time formatı bugün  için = 0, dün için = 1
- @param         : id	 	Açıklama : egzersiz id si
- @param 	       : set
- @param 	       : agirlik
- @param 	       : no
+ @body         : id	 	Açıklama : egzersiz id si
+ @body 	       : set
+ @body 	       : agirlik
+ @body 	       : makina_no
  @requestParams : user_id
  */
 
-router.get('/save/training/:time/:trainingId/:adet/:agirlik/:no', function (req, res) {
-    if (req.params.time == 0) {
-        var date = moment().format('YYYY-MM-DD');
-    } else if (req.params.time == 1) {
-        var date = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    }
-    connection.query("Insert into kayitlar_egz (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [req.user_id, req.params.trainingId, date, req.params.adet, req.params.no, req.params.agirlik], function (err) {
+router.post('/save/excercize', function (req, res) {
+    var date = moment().format('YYYY-MM-DD');
+    var egz_id = req.body.egz_id;
+    var adet = req.body.adet;
+    var agirlik = req.body.agirlik;
+    var makina_no = req.body.makina_no;
+    var user_id = req.user_id;
+    connection.query("Insert into egz_kullanici_kayitlari (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [user_id, egz_id, date, adet, makina_no, agirlik], function (err) {
         if (err) throw err;
         res.status(200).send();
     });
