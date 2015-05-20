@@ -136,16 +136,31 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
  */
 
 router.post('/save/excercize', function (req, res) {
-    var date = moment().format('YYYY-MM-DD');
-    var egz_id = req.body.egz_id;
-    var adet = req.body.adet;
-    var agirlik = req.body.agirlik;
-    var makina_no = req.body.makina_no;
+
+    var deleteData = req.body.doDelete;
+    var addData = req.body.doAdd;
     var user_id = req.user_id;
-    connection.query("Insert into egz_kullanici_kayitlari (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [user_id, egz_id, date, adet, makina_no, agirlik], function (err) {
-        if (err) throw err;
-        res.status(200).send();
-    });
+    var date = moment().format('YYYY-MM-DD');
+
+    //gelen dizi datasındakileri tek tek ekliyor
+    for (var i = 0 ; i<addData.length; i++) {
+        var egz_id = addData[i].egz_id;
+        var adet = addData[i].adet;
+        var agirlik = addData[i].agirlik;
+        var makina_no = addData[i].makina_no;
+        connection.query("Insert into egz_kullanici_kayitlari (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [user_id, egz_id, date, adet, makina_no, agirlik], function (err) {
+            if (err) throw err;
+        });
+    }
+
+    //gelen dizi datasındakileri tek tek siliyor
+    for (var i = 0 ; i<deleteData.length; i++) {
+        var egz_id = deleteData[i].egz_id;
+        connection.query("delete from egz_kullanici_kayitlari where egz_id = ?", [egz_id], function (err) {
+            if (err) throw err;
+            res.status(200).send();
+        });
+    }
 });
 
 
