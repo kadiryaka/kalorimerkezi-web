@@ -113,7 +113,7 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
     var temp_id = req.headers.temp_id;
     var user_id = req.user_id;
     var date = moment().format('YYYY-MM-DD');
-    connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
+    connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad, egz.egz_id from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
         connection.query('select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?', [user_id, date], function (err, doList) {
             if (err) throw err;
             res.json({
@@ -155,12 +155,12 @@ router.post('/save/excercize', function (req, res) {
 
     //gelen dizi datasındakileri tek tek siliyor
     for (var i = 0 ; i<deleteData.length; i++) {
-        var egz_id = deleteData[i].egz_id;
-        connection.query("delete from egz_kullanici_kayitlari where egz_id = ?", [egz_id], function (err) {
+        connection.query("delete from egz_kullanici_kayitlari where id = ?", [deleteData[i]], function (err) {
             if (err) throw err;
-            res.status(200).send();
         });
     }
+
+    res.status(200).send();
 });
 
 
