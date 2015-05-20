@@ -143,7 +143,7 @@ router.post('/save/excercize', function (req, res) {
     var date = moment().format('YYYY-MM-DD');
 
     //gelen dizi datasındakileri tek tek ekliyor
-    for (var i = 0 ; i<addData.length; i++) {
+    for (var i = 0; i < addData.length; i++) {
         var egz_id = addData[i].egz_id;
         var adet = addData[i].adet;
         var agirlik = addData[i].agirlik;
@@ -154,13 +154,39 @@ router.post('/save/excercize', function (req, res) {
     }
 
     //gelen dizi datasındakileri tek tek siliyor
-    for (var i = 0 ; i<deleteData.length; i++) {
+    for (var i = 0; i < deleteData.length; i++) {
         connection.query("delete from egz_kullanici_kayitlari where id = ?", [deleteData[i]], function (err) {
             if (err) throw err;
         });
     }
 
     res.status(200).send();
+});
+
+/*
+ GET
+ Kullanıcının elden eklediği egzersizi kaydeder
+ @body         : id	 	Açıklama : egzersiz id si
+ @body 	       : set
+ @body 	       : agirlik
+ @body 	       : makina_no
+ @requestParams : user_id
+ */
+
+router.post('/save/other/excercize', function (req, res) {
+
+    var egz_id = req.body.egz_id;
+    var agirlik = req.body.agirlik;
+    var makina_no = req.body.makina_no;
+    var adet = req.body.doAdd;
+    var user_id = req.user_id;
+    var date = moment().format('YYYY-MM-DD');
+
+    connection.query("Insert into egz_kullanici_kayitlari (k_id, egz_id, tarih, adet, makina_no, agirlik) values (?,?,?,?,?,?)", [user_id, egz_id, date, adet, makina_no, agirlik], function (err) {
+        if (err) throw err;
+        res.status(200).send();
+    });
+
 });
 
 
