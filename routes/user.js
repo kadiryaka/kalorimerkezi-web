@@ -178,7 +178,7 @@ router.post('/save/other/excercize', function (req, res) {
     var egz_id = req.body.egz_id;
     var agirlik = req.body.agirlik;
     var makina_no = req.body.makina_no;
-    var adet = req.body.doAdd;
+    var adet = req.body.adet;
     var user_id = req.user_id;
     var date = moment().format('YYYY-MM-DD');
 
@@ -186,14 +186,78 @@ router.post('/save/other/excercize', function (req, res) {
         if (err) throw err;
         res.status(200).send();
     });
-
 });
 
+/*
+ GET kullanıcı ölçülerini getirir
+ @requestParams    : user_id
+ */
+router.get('/getUserSize', function (req, res) {
+    moment.locale('tr');
+    var user_id = req.user_id;
+    connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
+        if (err) throw err;
+        for (var i = 0; i < list.length; i++) {
+            //tarihlerin format tipi ayarlanıyor
+            list[i].tarih = moment(list[i].tarih).format('DD MMM ddd YYYY');
+        }
+        res.json({
+            'sizeList': list
+        });
+    });
+});
+
+/*
+ GET
+ kullanıcının egzersiz eklenmiş tarihlerini getirir.
+ ekran ilk açılışta burası çalışır.
+ */
+
+router.get('/dateListAndEgzersizList', function (req, res) {
+    moment.locale('tr');
+    var user_id = req.user_id;
+    var date = moment().format('YYYY-MM-DD');
+    connection.query("select tarih from egz_kullanici_kayitlari where k_id = ? group by tarih", [user_id], function (err, dateList) {
+        connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
+            if (err) throw err;
+            console.log(dateList)
+            var dateFormatList = [{}];
+            for (var i = 0; i < dateList.length; i++) {
+                //tarihlerin format tipi ayarlanıyor
+                dateFormatList.push({"tarih" : moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
+            }
+            if (dateFormatList.length != 1)
+                dateFormatList.shift();
+            res.json({
+                "dateList": dateList,
+                "dateFormatList": dateFormatList,
+                'egzersizList': egzList
+            });
+        });
+    });
+});
+
+/*
+ GET
+ verilen tarihe göre kullanıcının yaptığı egzersiz listesini döndürür.
+ */
+
+router.get('/excersizListByDate', function (req, res) {
+    moment.locale('tr');
+    var user_id = req.user_id;
+    var date = moment(req.headers.date).format('YYYY-MM-DD');
+    connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
+        if (err) throw err;
+        res.json({
+            'egzersizList': egzList
+        });
+    });
+});
 
 //buradan sonrasına yeniden bakılacak
 
 
-/*  
+/*
  GET
  ölçüler ekranındaki ilk açılışta çalıştırılması lazım
  burada kullanıcının o ana kadar giriş yapılmış tarihleri ve en son girilmiş ölçüleri getirilir
@@ -211,7 +275,7 @@ router.get('/information/datesAndSize', function (req, res) {
     });
 });
 
-/*  
+/*
  GET
  istenilen tarihe göre kullanıcı ölçülerini getirir
  @params           : tarih Açıklama tarih formatı YYYY-AA-GG şeklinde olmalıdır. örn : 2015-02-18

@@ -46,52 +46,8 @@ router.get('/getrecord/:date', function (req, res) {
     });
 });
 
-/*  
- GET
- Kullanıcının  eklediği besini kaydeder
- @param   	   : time  	Açıklama : time formatı bugün  için = 0, dün için = 1
- @param         : foodId
- @param 	       : quantity
- @requestParams : user_id
- */
 
-router.get('/save/food/:time/:foodId/:quantity', function (req, res) {
-    if (req.params.time == 0) {
-        var date = moment().format('YYYY-MM-DD');
-    } else if (req.params.time == 1) {
-        var date = moment().subtract(1, 'days').format('YYYY-MM-DD');
-    }
-    connection.query("Insert into kayitlar (k_id, b_id, tarih, miktar) values (?,?,?,?)", [req.user_id, req.params.foodId, date, req.params.quantity], function (err) {
-        if (err) throw err;
-        res.status(200).send();
-    });
-});
 
-/*  
- get
- Kullanıcının besin kaydını siler
- @param         : recordId
- */
-
-router.get('/delete/food/:foodId', function (req, res) {
-    connection.query("DELETE FROM kayitlar where id = ? and k_id = ?", [req.params.foodId, req.user_id], function (err) {
-        if (err) throw err;
-        res.status(200).send();
-    });
-});
-
-/*  
- GET
- kullanıcının besin eklenmiş tarihlerini getirir.
- @requestParams : user_id
- */
-
-router.get('/dateList', function (req, res) {
-    connection.query("select tarih from kayitlar where k_id = ? group by tarih", [req.user_id], function (err, result) {
-        if (err) throw err;
-        res.json(result);
-    });
-});
 
 
 /*
