@@ -260,7 +260,7 @@ router.get('/excersizListByDate', function (req, res) {
     moment.locale('tr');
     var user_id = req.user_id;
     var date = moment(req.headers.date).format('YYYY-MM-DD');
-    connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
+    connection.query("select k.adet,k.agirlik,k.makina_no,e.egz_ad from egz_kullanici_kayitlari k  inner join egzersiz e ON e.egz_id = k.egz_id where k.k_id = ? and k.tarih = ? order by k.tarih desc", [user_id, date], function (err, egzList) {
         if (err) throw err;
         res.json({
             'egzersizList': egzList
