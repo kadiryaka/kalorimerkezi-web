@@ -217,7 +217,20 @@ router.get('/dateListAndEgzersizList', function (req, res) {
     moment.locale('tr');
     var user_id = req.user_id;
     var date = moment().format('YYYY-MM-DD');
-    connection.query("select tarih from egz_kullanici_kayitlari where k_id = ? group by tarih", [user_id], function (err, dateList) {
+    connection.query("select tarih from egz_kullanici_kayitlari where k_id = ? group by tarih order by tarih desc", [user_id], function (err, dateList) {
+        var dateFormatList = [{}];
+        for (var i = 0; i < dateList.length; i++) {
+            //tarihlerin format tipi ayarlanıyor
+            dateFormatList.push({"tarih" : moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
+        }
+        if (dateFormatList.length != 1)
+            dateFormatList.shift();
+
+        res.json({
+            "dateList": dateList,
+            "dateFormatList": dateFormatList
+        });
+        /*
         connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
             if (err) throw err;
             console.log(dateList)
@@ -234,6 +247,7 @@ router.get('/dateListAndEgzersizList', function (req, res) {
                 'egzersizList': egzList
             });
         });
+        */
     });
 });
 
