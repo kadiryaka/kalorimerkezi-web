@@ -77,8 +77,7 @@ define(['jquery',
                             else if (response.sayi <= constants.page_size) {
                                 page = 1;
                                 userSize = response.result.length;
-                            }
-                            else {
+                            } else {
                                 page = Math.ceil((response.sayi / constants.page_size));
                                 console.log("page : " +page + "page : " + response.sayi) ;
                             }

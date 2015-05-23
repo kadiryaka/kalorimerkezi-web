@@ -47,9 +47,6 @@ router.get('/getrecord/:date', function (req, res) {
 });
 
 
-
-
-
 /*
  GET
  Salon için kullanıcı profilini getirir.
@@ -109,6 +106,24 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
     var salon_id = req.user_id;
     var temp_id = req.headers.temp_id;
     connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
+        if (err) throw err;
+        res.json({
+            'excersizeList': list
+        });
+    });
+});
+
+/*
+ GET
+ verilen template id'sine ve verilen güne göre o template içerisindeki egzersiz programını getirir
+ @requestParams    : user_id
+ */
+router.get('/getExcersizeByExcersizeTemplateAndDayId', function (req, res) {
+    var salon_id = req.user_id;
+    var temp_id = req.headers.temp_id;
+    var day_id = req.headers.day_id;
+    console.log("day_id : " + day_id);
+    connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id, day_id], function (err, list) {
         if (err) throw err;
         res.json({
             'excersizeList': list
@@ -235,7 +250,7 @@ router.get('/getUserExersizeDateList', function (req, res) {
 });
 
 /*
- GET
+ POST
  kullanıcı id sine ve tarihe göre yapılan egzersiz listesini getirir
  @requestParams    : user_id
  */
@@ -245,16 +260,9 @@ router.post('/getEgzersizByDate', function (req, res) {
     connection.query("select k.adet,k.agirlik,k.makina_no,e.egz_ad from egz_kullanici_kayitlari k  inner join egzersiz e ON e.egz_id = k.egz_id where k.k_id = ? and k.tarih = ? order by k.tarih desc", [user_id, tarih], function (err, egzersizList) {
         console.log(egzersizList);
         if (err) throw err;
-        if (egzersizList != null && egzersizList.length != 0) {
-            console.log(egzersizList)
-            res.json({
-                'egzersizList': egzersizList
-            });
-        } else {
-            res.json({
-                'egzersizList': egzersizList
-            });
-        }
+        res.json({
+            'egzersizList': egzersizList
+        });
     });
 });
 
@@ -304,8 +312,9 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
     var agirlik = req.body.agirlik;
     var makina = req.body.makina;
     var temp_id = req.body.temp_id;
-    console.log(egz_id + " " + set + " " + agirlik + " " + makina + " " + temp_id);
-    connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id) values (?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id], function (err, cevap) {
+    var day_id = req.body.day_id;
+    console.log("day : " + day_id);
+    connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id,day_id], function (err, cevap) {
         if (err) throw err;
         res.json({
             'result': "success"
@@ -321,9 +330,10 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
 router.get('/deleteExersizeById', function (req, res) {
     var temp_id = req.headers.temp_id;
     var egz_id = req.headers.egz_id;
+    var day_id = req.headers.day_id;
     console.log(egz_id);
     connection.query("delete from egzersiz_template_icerik where id = ?", [egz_id], function (err, cevap) {
-        connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ?', [temp_id], function (err, list) {
+        connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id,day_id], function (err, list) {
             if (err) throw err;
             res.json({
                 'excersizeList': list

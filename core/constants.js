@@ -10,7 +10,7 @@
             "logout_res"        :   "http://localhost:5454/logout",
             "register_res"      :   "http://localhost:5454/register",
             "user_res"          :   "http://localhost:5454/user",
-            "page_size"         :   3,
+            "page_size"         :   6,
             "user"              :   "user",
             "error"             :   {
                 "bad_token" : "bad_token",
