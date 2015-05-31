@@ -49,12 +49,9 @@ define(['jquery',
                     headers: { 'platform' : "2"},
                     data: {'username' : mail, 'password' : pass},
                     success: function (response) {
-                        console.log(response);
                         if(response.result == "success") {
-                            console.log("cookie atıycak username : " +response.username)
                             $.cookie(constants.token_name, response.data);
                             $.cookie(constants.cookie_username, response.username);
-                            console.log("cookie at")
                             window.location = constants.hash + 'dashboard';
                         } else if (response.data == "user_not_found") {
                             $("#feedback-panel").text("Kullanıcı adı veya şifre yanlış").css("color", "red");

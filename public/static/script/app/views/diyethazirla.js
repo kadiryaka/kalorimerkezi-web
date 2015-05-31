@@ -62,7 +62,6 @@ define(['jquery',
                 var tempname = $("#template_baslik").val();
                 var icerik = $("#diyet-text-area").val();
                 if (tikKontrol) {
-                    console.log("true ya girdi");
                     if (tempname == undefined || tempname == null || tempname == "") {
                         $("#diyet-feedback-panel").text("Lütfen başlık giriniz").css("color" , "red");
                     } else {
@@ -92,7 +91,6 @@ define(['jquery',
                         dataType : 'json',
                         data : datas,
                         success : function() {
-                            console.log("true ya girdi success döndü");
                             $("#diyet-feedback-panel").text("Kayıt Başarılı").css("color" , "green");
                         },
                         error : function() {

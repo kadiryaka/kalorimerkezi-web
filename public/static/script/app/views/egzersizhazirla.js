@@ -76,9 +76,10 @@ define(['jquery',
             },
             yeniEgzListButton: function () {
                 tempName = $("#template_baslik").val();
-                console.log(tempName)
                 if (tempName == undefined || tempName == null || tempName == "") {
+                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color" , "red");
                 } else {
+                    $("#feedback-panel").text("");
                     $.ajax({
                         type: 'GET',
                         url: '/api/services/saveExersizeTemplateName',
@@ -119,13 +120,10 @@ define(['jquery',
             egzIcerikKaydet: function () {
 
                 var agirlik = $("#egz-agirlik").val();
-                console.log("agirlik : " + agirlik);
                 if (isInt(agirlik)) {
-                    console.log("if içine girdi ");
                     $("#feedback-panel").text("");
                     var egz_id = $('#egz-dropdown option:selected').attr('data-dgr');
                     var set = $("#egz-set").val();
-                    console.log("set : " + set);
 
                     var makina = $("#egz-makina").val();
                     if (set == null || set == "")
@@ -143,7 +141,6 @@ define(['jquery',
                         "temp_id": temp_id,
                         "day_id": temp_day_id
                     };
-                    console.log(datas);
                     $.ajax({
                         type: 'POST',
                         url: '/api/services/saveExersizeTemplateContent',
@@ -188,7 +185,6 @@ define(['jquery',
             },
             templateGetir: function () {
                 temp_id = $('#egz-temp-list option:selected').attr('data-dgr');
-                console.log("template id : " + temp_id);
                 tempName = $('#egz-temp-list option:selected').val();
                 $.ajax({
                     type: 'GET',

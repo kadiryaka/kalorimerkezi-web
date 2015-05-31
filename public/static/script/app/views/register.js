@@ -19,7 +19,6 @@ define(['jquery',
                         url  : '/api/user/userName',
                         headers: { 'kalori_token' : $.cookie(constants.token_name)},
                         success : function(e) {
-                            console.log("register render success");
                             $('.container').show(0);
                             $(".icerik").empty().html(registerTemplate);
                             $("html").i18n();
@@ -47,7 +46,6 @@ define(['jquery',
                 if (name == "" || surname == "" || mail == "" || password == "" || password2 == "" || tel == ""
                     || name == undefined || surname == undefined || mail == undefined || password == undefined || password2 == undefined || tel == undefined
                 ) {
-                    console.log(name + surname + mail + password + password2);
                     $("#feedback-panel").text("Lütfen bilgileri eksiksiz ve doğru giriniz").show(500).css("color", "red");
                 } else {
 
@@ -64,9 +62,7 @@ define(['jquery',
                             url: 'api/user/kullaniciKontrol/'+mail,
                             headers: {'kalori_token': $.cookie("kalori_token")},
                             success: function (data) {
-                                console.log(data.durum);
                                 if (data.durum == "success") {
-                                    console.log("true döndü");
                                     $.ajax({
                                         type: 'POST',
                                         url: 'api/user/register',

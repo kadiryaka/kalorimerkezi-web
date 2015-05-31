@@ -122,7 +122,6 @@ router.get('/getExcersizeByExcersizeTemplateAndDayId', function (req, res) {
     var salon_id = req.user_id;
     var temp_id = req.headers.temp_id;
     var day_id = req.headers.day_id;
-    console.log("day_id : " + day_id);
     connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id, day_id], function (err, list) {
         if (err) throw err;
         res.json({
@@ -234,7 +233,6 @@ router.get('/getUserExersizeDateList', function (req, res) {
     var user_id = req.headers.k_id;
     connection.query("select DISTINCT id,tarih from egz_kullanici_kayitlari where k_id = ? group by tarih desc", [user_id], function (err, dateList) {
         connection.query("select DISTINCT id,tarih from egz_kullanici_kayitlari where k_id = ? group by tarih desc", [user_id], function (err, normalDateList) {
-            console.log(dateList);
             if (normalDateList != null && normalDateList.length != 0) {
                 for (var i = 0; i < dateList.length; i++) {
                     normalDateList[i].tarih = moment(normalDateList[i].tarih).format('DD MMMM YYYY dddd');
@@ -258,7 +256,6 @@ router.post('/getEgzersizByDate', function (req, res) {
     var user_id = req.headers.k_id;
     var tarih = req.body.tarih;
     connection.query("select k.adet,k.agirlik,k.makina_no,e.egz_ad from egz_kullanici_kayitlari k  inner join egzersiz e ON e.egz_id = k.egz_id where k.k_id = ? and k.tarih = ? order by k.tarih desc", [user_id, tarih], function (err, egzersizList) {
-        console.log(egzersizList);
         if (err) throw err;
         res.json({
             'egzersizList': egzersizList
@@ -286,9 +283,7 @@ router.get('/getAllExcersize', function (req, res) {
  @requestParams    :
  */
 router.get('/saveExersizeTemplateName', function (req, res) {
-    console.log("saveExersizeTemplateName e girdi");
     var tempName = req.headers.temp_name;
-    console.log(tempName);
     var salon_id = req.user_id;
     connection.query("insert into egzersiztemplate (temp_adi, salon_id) values (?,?)", [tempName, salon_id], function (err, cevap) {
         if (err) throw err;
@@ -305,7 +300,6 @@ router.get('/saveExersizeTemplateName', function (req, res) {
  @requestParams    :
  */
 router.post('/saveExersizeTemplateContent', function (req, res) {
-    console.log("saveExersizeTemplateContent ' e girdi");
     var salon_id = req.user_id;
     var egz_id = req.body.egz_id;
     var set = req.body.set;
@@ -313,7 +307,6 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
     var makina = req.body.makina;
     var temp_id = req.body.temp_id;
     var day_id = req.body.day_id;
-    console.log("day : " + day_id);
     connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id,day_id], function (err, cevap) {
         if (err) throw err;
         res.json({
@@ -331,7 +324,6 @@ router.get('/deleteExersizeById', function (req, res) {
     var temp_id = req.headers.temp_id;
     var egz_id = req.headers.egz_id;
     var day_id = req.headers.day_id;
-    console.log(egz_id);
     connection.query("delete from egzersiz_template_icerik where id = ?", [egz_id], function (err, cevap) {
         connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id,day_id], function (err, list) {
             if (err) throw err;
@@ -352,7 +344,6 @@ router.get('/getDiyetListByUser', function (req, res) {
     var salon_id = req.user_id;
     connection.query('SELECT k.temp_id, u.bas_tarihi, u.bitis_tarihi, k.temp_adi from diyet_kullanici_kayit u inner join diyettemplate k ON u.diyet_temp_id = k.temp_id where u.k_id = ? order by u.eklenis_tarihi desc', [req.headers.k_id], function (err, list) {
         if (err) throw err;
-        console.log(list)
         var currentDiyet = 1;
         if (list.length != 0) {
             var date = moment().format('YYYY-MM-DD');
@@ -384,7 +375,6 @@ router.get('/getDiyetByDiyetTemplate', function (req, res) {
     var temp_id = req.headers.temp_id;
     connection.query('select * from diyettemplate where temp_id = ?', [temp_id], function (err, list) {
         if (err) throw err;
-        console.log(list);
         res.json({
             'diyetList': list
         });

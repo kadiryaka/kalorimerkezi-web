@@ -81,7 +81,6 @@ router.get('/getDiyetListByUser', function (req, res) {
     var user_id = req.user_id;
     connection.query('SELECT k.icerik, k.temp_id, u.bas_tarihi, u.bitis_tarihi, k.temp_adi from diyet_kullanici_kayit u inner join diyettemplate k ON u.diyet_temp_id = k.temp_id where u.k_id = ? order by u.eklenis_tarihi desc', [user_id], function (err, list) {
         if (err) throw err;
-        console.log(list)
         var currentDiyet = 1;
         if (list.length != 0) {
             var date = moment().format('YYYY-MM-DD');
@@ -307,7 +306,6 @@ router.get('/information/size/:tarih', function (req, res) {
  */
 router.get('/userList', function (req, res) {
     var salon_id = req.user_id;
-    console.log("/userList'e istek geldi çünkü adminsin kanki admin olmasan gelmezdi");
     connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? order by uyelik_tarihi desc limit ?', [salon_id, constants.page_size], function (err, result) {
         connection.query('SELECT isim from kullanici where salon_id = ?', [salon_id], function (err, sayi) {
             if (err) throw err;
@@ -342,10 +340,8 @@ router.get('/userList/:page', function (req, res) {
  */
 router.get('/userName', function (req, res) {
     var salon_id = req.user_id;
-    console.log("userName girdim. salon_id : " + salon_id);
     connection.query('SELECT isim from kullanici where k_id = ?', [salon_id], function (err, result) {
         if (err) throw err;
-        console.log(result);
         res.json(result);
     });
 });
@@ -354,16 +350,13 @@ router.get('/userName', function (req, res) {
  * Salon için kullanıcı kaydı yapar
  */
 router.post('/register', function (req, res) {
-    console.log("/register girdi");
     var salon_id = req.user_id;
     var name = req.body.name;
     var surname = req.body.surname;
     var mail = req.body.mail;
     var tel = req.body.tel;
     var password = crypto.createHash('md5').update(req.body.password).digest('hex');
-    console.log('pass : ' + password);
     var date = moment().format('YYYY-MM-DD');
-    console.log('pass : ' + password + " data : " + date);
     connection.query('insert into kullanici (isim,uyelik_tarihi,password,mail,salon_id,soyisim,tel,yetki) values (?,?,?,?,?,?,?,?)', [name, date, password, mail, salon_id, surname, tel, 1], function (err, result) {
         if (err) {
             throw err;
@@ -382,12 +375,9 @@ router.get('/kullaniciKontrol/:mail', function (req, res) {
     var mail = req.params.mail;
     connection.query('select mail from kullanici where mail = ? ', [mail], function (err, result) {
         if (err) throw err;
-        console.log(result);
         if (result.length == 0) {
-            console.log("success");
             res.json({"durum": "success"});
         } else {
-            console.log("failed");
             res.json({"durum": "failed"});
         }
     });

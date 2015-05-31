@@ -6,7 +6,6 @@ define(['jquery',
 
         //çıkışa basıldığı zaman
         var logout = function() {
-            console.log("logout'a basıldı");
             $.ajax({
                 type : 'GET',
                 url  : 'token/logout',

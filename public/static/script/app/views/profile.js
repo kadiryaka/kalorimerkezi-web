@@ -20,6 +20,8 @@ define(['jquery',
         'jquery.cookie'],
     function($,Backbone,_,i18n,User,profileTemplate,excersizeTemplate,excersizeTable,egzersizGir,olcuGirTemplate,olcuTemplate,yapEgzLisTemplate,yapEgzDataList,diyetlerTemplate,diyetTableTemplate,diyetAtaTemplate,constants,logoutMdl,moment) {
 
+        var days = [{"gun" : "Pazartesi", "dgr" : "0"},{"gun" : "Salı", "dgr" : "1"},{"gun" : "Çarşamba", "dgr" : "2"},{"gun" : "Perşembe", "dgr" : "3"}, {"gun" : "Cuma", "dgr" : "4"}, {"gun" : "Cumartesi", "dgr" : "5"}, {"gun" : "Pazar", "dgr" : "6"}];
+        var day_id = 0;
         return Backbone.View.extend({
             el: $('.container'),
             initialize: function(){
@@ -42,7 +44,8 @@ define(['jquery',
                 "click #yap-egz-button" : "yap_egz_data_list",
                 "click #diyet_pro_listele" : diyetProgramiGetir,
                 "click #diyet_pro_ata" : "diyet_prog_ata",
-                "click #diyet_pro_gir_kaydet" : "diyet_temp_kaydet"
+                "click #diyet_pro_gir_kaydet" : "diyet_temp_kaydet",
+                "change .egz-dropdown" : "gun_degisti"
             },
             egzTemplateIciniGetir : function(e) {
                 var temp_id = $(e.currentTarget).attr('data-dgr');
@@ -52,15 +55,17 @@ define(['jquery',
                         $(e.currentTarget).css('background-color', '#bdc3c7');
                         $.ajax({
                             type : 'GET',
-                            url  : '/api/services/getExcersizeByExcersizeTemplate',
-                            headers: { 'kalori_token' : $.cookie(constants.token_name), 'temp_id' : temp_id},
+                            url  : '/api/services/getExcersizeByExcersizeTemplateAndDayId',
+                            headers: { 'kalori_token' : $.cookie(constants.token_name), 'temp_id' : temp_id, 'day_id' : 1},
                             dataType : 'json',
                             success : function(liste) {
                                 var data = {
-                                    veri : liste.excersizeList
+                                    veri : liste.excersizeList,
+                                    temp_id : temp_id,
+                                    temp_index : temp_index,
+                                    day_id : day_id,
+                                    days : days
                                 }
-                                console.log("birazdan toggle yapmalı");
-                                console.log("dsaas : " + temp_index)
                                 $("#dinamik-alan"+temp_index).toggle();
                                 $("#dinamik-alan"+temp_index).html(_.template(excersizeTable,data));
                             }
@@ -89,7 +94,6 @@ define(['jquery',
                                 var data = {
                                     veri : liste.diyetList
                                 }
-                                console.log(liste.diyetList[0].icerik);
                                 $("#dinamik-alan"+temp_index).toggle();
                                 $("#dinamik-alan"+temp_index).html(_.template(diyetTableTemplate,data));
                             }
@@ -144,7 +148,6 @@ define(['jquery',
                     var sag_bacak = $("#olcu_sag_bacak").val();
                     var sol_bacak = $("#olcu_sol_bacak").val();
                     var k_id = $.cookie(constants.user);
-                    console.log("karin : " + karin);
 
                     var veri = {
                         'kalori_token' : $.cookie(constants.token_name),
@@ -208,7 +211,6 @@ define(['jquery',
                     headers: {'kalori_token' : $.cookie(constants.token_name), 'k_id' : id},
                     dataType : 'json',
                     success : function(liste) {
-                        console.log(liste);
                         var data = {
                             date : liste.dateList,
                             liste : liste.normalDateList
@@ -235,7 +237,6 @@ define(['jquery',
                     headers: { 'kalori_token' : $.cookie(constants.token_name)},
                     dataType : 'json',
                     success : function(liste) {
-                        console.log(liste.diyetTemplateList)
                         var data = {
                             veri : liste.diyetTemplateList
                         }
@@ -245,6 +246,28 @@ define(['jquery',
             },
             diyet_temp_kaydet : function() {
                 kullaniciyaTemplateAta("setDiyetTemplateForUser")
+            },
+            gun_degisti : function(e) {
+                var id_name = $(e.currentTarget).attr('id');
+                var temp = id_name.split("-");
+                //0 ismi, 1 id si, 2 indexi (0,1,2,3)
+                var day_id = e.target.selectedIndex;
+                $.ajax({
+                    type : 'GET',
+                    url  : '/api/services/getExcersizeByExcersizeTemplateAndDayId',
+                    headers: { 'kalori_token' : $.cookie(constants.token_name), 'temp_id' : temp[1], 'day_id' : (day_id+1)},
+                    dataType : 'json',
+                    success : function(liste) {
+                        var data = {
+                            veri : liste.excersizeList,
+                            temp_index : temp[2],
+                            temp_id : temp[1],
+                            day_id : day_id,
+                            days : days
+                        }
+                        $("#dinamik-alan"+temp[2]).html(_.template(excersizeTable,data));
+                    }
+                });
             }
         });
 
@@ -340,7 +363,6 @@ define(['jquery',
                             headers: { 'kalori_token' : $.cookie(constants.token_name), 'k_id' : id, "user_id" : id},
                             dataType : 'json',
                             success : function(liste) {
-                                console.log(liste.diyetList)
                                 var data = {
                                     liste : liste.diyetList,
                                     currentDiyet : liste.currentDiyet
@@ -361,7 +383,6 @@ define(['jquery',
             var bit_tarihi = $("#inputBitTarihi").val();
             var program =  $(":selected").attr('data-dgr');
             var user_id =  $.cookie(constants.user);
-            console.log("k.id : " + user_id);
 
             if (bas_tarihi < moment().format('YYYY-MM-DD')) {
                 $("#feedback-panel").text("Başlangıç tarihi bugünden itibaren başlayabilir").css("color", "red");

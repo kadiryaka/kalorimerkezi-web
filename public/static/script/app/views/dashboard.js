@@ -12,7 +12,6 @@ define(['jquery',
 
         //saydalama da tıklanıldığı zaman
         $('body').on('click','.sayfalama-a', function() {
-            console.log("sayfalama çalıştı");
             var pageCount = $(this).attr('data-page');
             $.ajax({
                 type: 'GET',
@@ -51,7 +50,6 @@ define(['jquery',
         $('body').on('click','#users-table tr', function (e) {
             console.log("kullanıcıya basıldı");
             var id = $(this).attr('data-id');
-            console.log(id);
             $.cookie(constants.user, id);
             window.location = constants.hash+constants.user+"/profile";
         });
@@ -90,8 +88,6 @@ define(['jquery',
                                 currentPage : 1,
                                 totalUser : response.sayi
                             };
-
-                            console.log("çalıştım lan işte");
                             $('.container').show(0);
                             $(".icerik").html(_.template(dashboardTemplate , data));
                             $(".login").html("");
