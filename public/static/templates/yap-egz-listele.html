@@ -10,7 +10,7 @@
                 <div class="col-sm-3">
                     <select class="form-control" id="dateList">
                         <% for (var i = 0; i < liste.length; i++) { %>
-                        <option data-dgr="<%= date[i].tarih %>"><%= liste[i].tarih %></option>
+                        <option data-dgr="<%- date[i].tarih %>"><%- liste[i].tarih %></option>
                         <% } %>
                     </select>
                 </div>

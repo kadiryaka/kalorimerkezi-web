@@ -11,7 +11,7 @@
                     </td>
                     <td class="text-right">
                         <h3 class="base-header text-right">
-                            <%= kullanici_sayisi %>
+                            <%- kullanici_sayisi %>
                         </h3>
                     </td>
                 </tr>
@@ -21,7 +21,7 @@
                     </td>
                     <td class="text-right">
                         <h3 class="base-header text-right">
-                            <%= aktif %>
+                            <%- aktif %>
                         </h3>
                     </td>
                 </tr>
@@ -31,7 +31,7 @@
                     </td>
                     <td class="text-right">
                         <h3 class="base-header text-right">
-                            <%= pasif %>
+                            <%- pasif %>
                         </h3>
                     </td>
                 </tr>
@@ -41,14 +41,14 @@
                     </td>
                     <td class="text-right">
                         <h3 class="base-header text-right">
-                            %<%= aktif_yuzde %>
+                            %<%- aktif_yuzde %>
                         </h3>
                     </td>
                 </tr>
             </table>
 
             <div class="progress flat-progress" rel="tooltip" title="60% complete">
-                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: <%= aktif_yuzde %>%;">
+                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: <%- aktif_yuzde %>%;">
                     <span class="sr-only">60% Complete</span>
                 </div>
             </div>

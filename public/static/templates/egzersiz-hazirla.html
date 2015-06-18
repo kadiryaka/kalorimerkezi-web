@@ -36,7 +36,7 @@
                     <div class="col-sm-3">
                         <select class="form-control" id="egz-temp-list">
                             <% for (var i = 0; i < veri.length; i++) { %>
-                            <option data-dgr="<%= veri[i].temp_id %>"><%= veri[i].temp_adi %></option>
+                            <option data-dgr="<%- veri[i].temp_id %>"><%- veri[i].temp_adi %></option>
                             <% } %>
                         </select>
                     </div>
@@ -68,7 +68,7 @@
                                         <td>
                                             <select class="form-control" id="egz-dropdown">
                                                 <% for (var i = 0; i < egz_data.length; i++) { %>
-                                                <option data-dgr="<%= egz_data[i].egz_id %>"><%= egz_data[i].egz_ad %></option>
+                                                <option data-dgr="<%- egz_data[i].egz_id %>"><%- egz_data[i].egz_ad %></option>
                                                 <% } %>
                                             </select>
                                         </td>

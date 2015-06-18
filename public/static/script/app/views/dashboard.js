@@ -39,7 +39,6 @@ define(['jquery',
                         currentPage : pageCount,
                         totalUser : response.sayi
                     };
-                    $('.content').empty();
                     $(".content").html(_.template(tableTemplate , data));
                 }
             });

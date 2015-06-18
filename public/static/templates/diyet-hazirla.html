@@ -31,7 +31,7 @@
                     <div class="col-sm-3">
                         <select class="form-control" id="diyet-temp-list">
                             <% for (var i = 0; i < veri.length; i++) { %>
-                            <option data-dgr="<%= veri[i].temp_id %>"><%= veri[i].temp_adi %></option>
+                            <option data-dgr="<%- veri[i].temp_id %>"><%- veri[i].temp_adi %></option>
                             <% } %>
                         </select>
                     </div>

@@ -34,18 +34,18 @@
                         <tbody>
                         <% for (var i = 0; i < liste.length; i++) { %>
                         <tr>
-                            <td><%= liste[i].baslik %></td>
-                            <td><%= moment(liste[i].tarih).format('YYYY-MM-DD') %></td>
-                            <td><%= liste[i].kilo %> kg</td>
-                            <td><%= liste[i].omuz %> cm</td>
-                            <td><%= liste[i].sag_pazu %> cm</td>
-                            <td><%= liste[i].sol_pazu %> cm</td>
-                            <td><%= liste[i].gogus %> cm</td>
-                            <td><%= liste[i].karin %> cm</td>
-                            <td><%= liste[i].bel %> cm</td>
-                            <td><%= liste[i].kalca %> cm</td>
-                            <td><%= liste[i].sag_bacak %> cm</td>
-                            <td><%= liste[i].sol_bacak %> cm</td>
+                            <td><%- liste[i].baslik %></td>
+                            <td><%- moment(liste[i].tarih).format('YYYY-MM-DD') %></td>
+                            <td><%- liste[i].kilo %> kg</td>
+                            <td><%- liste[i].omuz %> cm</td>
+                            <td><%- liste[i].sag_pazu %> cm</td>
+                            <td><%- liste[i].sol_pazu %> cm</td>
+                            <td><%- liste[i].gogus %> cm</td>
+                            <td><%- liste[i].karin %> cm</td>
+                            <td><%- liste[i].bel %> cm</td>
+                            <td><%- liste[i].kalca %> cm</td>
+                            <td><%- liste[i].sag_bacak %> cm</td>
+                            <td><%- liste[i].sol_bacak %> cm</td>
                         </tr>
                         <% }
                         }%>

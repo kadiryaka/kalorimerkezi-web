@@ -1,7 +1,7 @@
 
 <div class="form-group">
     <div style="color: blue" class="col-sm-3 control-label">
-        Eklenen Program : <%= egz_ad %>
+        Eklenen Program : <%- egz_ad %>
     </div>
 </div>
 <div id="day_list_div" class="form-group">
@@ -13,9 +13,9 @@
             console.log("i : " + i + " selected_day  : " + selected_day);
             var deger = i - 1;
                 if (i == selected_day) { %>
-                    <option selected data-dgr="<%=days[deger].dgr %>"><%=days[deger].gun %></option>
+                    <option selected data-dgr="<%-days[deger].dgr %>"><%-days[deger].gun %></option>
                 <% } else { %>
-                    <option data-dgr="<%=days[deger].dgr%>"><%=days[deger].gun %></option>
+                    <option data-dgr="<%-days[deger].dgr%>"><%-days[deger].gun %></option>
             <% }
             }
             %>
@@ -42,12 +42,12 @@
             <tbody>
             <% for (var i = 0; i < veri.length; i++) { %>
             <tr class="row-mid">
-                <td><%= veri[i].egz_ad %></td>
-                <td><%= veri[i].adet %></td>
-                <td><%= veri[i].agirlik %></td>
-                <td><%= veri[i].makina_no %></td>
+                <td><%- veri[i].egz_ad %></td>
+                <td><%- veri[i].adet %></td>
+                <td><%- veri[i].agirlik %></td>
+                <td><%- veri[i].makina_no %></td>
                 <td>
-                    <button id="egz-sil" data-dgr="<%= veri[i].id %>">SİL</button>
+                    <button id="egz-sil" data-dgr="<%- veri[i].id %>">SİL</button>
                 </td>
             </tr>
             <% } %>

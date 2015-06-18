@@ -19,18 +19,18 @@
         </div>
     </div>
     <% for (var i = 0; i < liste.length; i++) { %>
-    <div data-dgr="<%= liste[i].temp_id %>" data-index="<%= i %>" class="row table-line-row diyet-kayit-table" style="padding: 2px;">
+    <div data-dgr="<%- liste[i].temp_id %>" data-index="<%- i %>" class="row table-line-row diyet-kayit-table" style="padding: 2px;">
         <div class="col-sm-3 push-bottom-xs text-center-xs">
-            <h4 class="fa fa-arrow-up" style="font-size: 14px"> <%= liste[i].temp_adi %></h4>
+            <h4 class="fa fa-arrow-up" style="font-size: 14px"> <%- liste[i].temp_adi %></h4>
         </div>
         <div class="col-sm-3 text-center push-bottom-xs">
             <h4 style="font-size: 14px">
-                <i style="float: left;" class="fa fa-calendar-o text-success v-mid"></i> <span><%= liste[i].bas_tarihi %></span>
+                <i style="float: left;" class="fa fa-calendar-o text-success v-mid"></i> <span><%- liste[i].bas_tarihi %></span>
             </h4>
         </div>
         <div class="col-sm-3 text-center push-bottom-xs">
             <h4 style="font-size: 14px">
-                <i style="float: left;" class="fa fa-calendar text-success v-mid"></i> <span><%= liste[i].bitis_tarihi %></span>
+                <i style="float: left;" class="fa fa-calendar text-success v-mid"></i> <span><%- liste[i].bitis_tarihi %></span>
             </h4>
         </div>
         <div class="col-sm-3 text-center">
@@ -43,7 +43,7 @@
             <% } %>
         </div>
     </div>
-    <div id="dinamik-alan<%= i %>" style="display: none;"></div>
+    <div id="dinamik-alan<%- i %>" style="display: none;"></div>
     <% }  %>
 
 </div>
