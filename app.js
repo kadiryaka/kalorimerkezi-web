@@ -52,7 +52,8 @@ app.all([
   '/api/services/sporcuOlcuKayit',
   '/api/services/getUserSize',
   '/api/services/getUserExersizeDateList',
-  '/api/services/getEgzersizByDate'
+  '/api/services/getEgzersizByDate',
+  '/api/services/deleteUserSizeById'
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);

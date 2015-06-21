@@ -123,6 +123,28 @@ router.get('/getExcersizeByExcersizeTemplate', function (req, res) {
     });
 });
 
+/*
+ GET
+ verilen template id'sine ve verilen güne göre o template içerisindeki egzersiz programını getirir ve kullanıcının yaptığı egzersizlere karşılaştırmak üzere doList döndürür
+ @requestParams    : user_id
+ */
+router.get('/getExcersizeByExcersizeTemplateAndDayId', function (req, res) {
+    var salon_id = req.user_id;
+    var temp_id = req.headers.temp_id;
+    var day_id = req.headers.day_id;
+    var user_id = req.user_id;
+    var date = moment().format('YYYY-MM-DD');
+    connection.query('select icerik.egz_id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id, day_id], function (err, list) {
+        connection.query('select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?', [user_id, date], function (err, doList) {
+            if (err) throw err;
+            res.json({
+                'excersizeList': list,
+                'doList': doList
+            });
+        });
+    });
+});
+
 
 /*
  GET
@@ -220,7 +242,7 @@ router.get('/dateListAndEgzersizList', function (req, res) {
         var dateFormatList = [{}];
         for (var i = 0; i < dateList.length; i++) {
             //tarihlerin format tipi ayarlanıyor
-            dateFormatList.push({"tarih" : moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
+            dateFormatList.push({"tarih": moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
         }
         if (dateFormatList.length != 1)
             dateFormatList.shift();
@@ -230,23 +252,23 @@ router.get('/dateListAndEgzersizList', function (req, res) {
             "dateFormatList": dateFormatList
         });
         /*
-        connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
-            if (err) throw err;
-            console.log(dateList)
-            var dateFormatList = [{}];
-            for (var i = 0; i < dateList.length; i++) {
-                //tarihlerin format tipi ayarlanıyor
-                dateFormatList.push({"tarih" : moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
-            }
-            if (dateFormatList.length != 1)
-                dateFormatList.shift();
-            res.json({
-                "dateList": dateList,
-                "dateFormatList": dateFormatList,
-                'egzersizList': egzList
-            });
-        });
-        */
+         connection.query("select * from egz_kullanici_kayitlari where k_id = ? and tarih = ?", [user_id, date], function (err, egzList) {
+         if (err) throw err;
+         console.log(dateList)
+         var dateFormatList = [{}];
+         for (var i = 0; i < dateList.length; i++) {
+         //tarihlerin format tipi ayarlanıyor
+         dateFormatList.push({"tarih" : moment(dateList[i].tarih).format('DD MMMM dddd YYYY')});
+         }
+         if (dateFormatList.length != 1)
+         dateFormatList.shift();
+         res.json({
+         "dateList": dateList,
+         "dateFormatList": dateFormatList,
+         'egzersizList': egzList
+         });
+         });
+         */
     });
 });
 
@@ -320,18 +342,47 @@ router.get('/userList', function (req, res) {
 /**
  * Salon için sayfalamalı olarak kullanıcı listesini getirir.
  */
-router.get('/userList/:page', function (req, res) {
+router.post('/userList/:page', function (req, res) {
     var salon_id = req.user_id;
     var page = req.params.page;
+    var kriter = req.body.ad;
     var minSize = (page - 1) * constants.page_size;
-    connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? order by uyelik_tarihi desc limit ?,?', [salon_id, minSize, constants.page_size], function (err, result) {
-        connection.query('SELECT isim from kullanici where salon_id = ?', [salon_id], function (err, sayi) {
+    connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc limit ?,?', [salon_id, '%' + kriter + '%', minSize, constants.page_size], function (err, result) {
+        connection.query('SELECT isim from kullanici where salon_id = ? and isim like ?', [salon_id, '%' + kriter + '%'], function (err, sayi) {
             if (err) throw err;
             res.json({
                 "result": result,
                 "sayi": sayi.length
             });
         });
+    });
+});
+
+
+/**
+ * Arama kriterine göre Salon için kullanıcı listesini ve toplam kullanıcı sayısını getirir.
+ */
+router.post('/userList', function (req, res) {
+    var salon_id = req.user_id;
+    var kriter = req.body.ad;
+    connection.query("SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc", [salon_id, '%' + kriter + '%'], function (err, result) {
+        if (err) throw err;
+        var dizi = [];
+        if (result.length >= constants.page_size) {
+            for (var i = 0; i<constants.page_size; i++) {
+                dizi.push(result[i]);
+            }
+        } else {
+            for (var i = 0; i<result.length; i++) {
+                dizi.push(result[i]);
+            }
+        }
+
+        res.json({
+            "result": dizi,
+            "sayi": result.length
+        });
+
     });
 });
 

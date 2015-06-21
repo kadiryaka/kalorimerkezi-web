@@ -29,11 +29,12 @@
                             <th>Kalça</th>
                             <th>Sağ Bacak</th>
                             <th>Sol Bacak</th>
+                            <th>İşlem</th>
                         </tr>
                         </thead>
                         <tbody>
                         <% for (var i = 0; i < liste.length; i++) { %>
-                        <tr>
+                        <tr id="<%- liste[i].id %>">
                             <td><%- liste[i].baslik %></td>
                             <td><%- moment(liste[i].tarih).format('YYYY-MM-DD') %></td>
                             <td><%- liste[i].kilo %> kg</td>
@@ -46,6 +47,7 @@
                             <td><%- liste[i].kalca %> cm</td>
                             <td><%- liste[i].sag_bacak %> cm</td>
                             <td><%- liste[i].sol_bacak %> cm</td>
+                            <td><button data-dgr="<%- liste[i].id %>" id="olcu-sil">SİL</button></td>
                         </tr>
                         <% }
                         }%>

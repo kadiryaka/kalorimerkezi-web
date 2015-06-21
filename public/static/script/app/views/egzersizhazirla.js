@@ -149,31 +149,33 @@ define(['jquery',
                         data: datas,
                         success: function (listeler) {
                             //datalistesi yenileniyor
-                            console.log("saveExersizeTemplateContent temp_id : " + temp_id);
-                            $.ajax({
-                                type: 'GET',
-                                url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
-                                headers: {
-                                    'kalori_token': $.cookie(constants.token_name),
-                                    "temp_id": temp_id,
-                                    'day_id': temp_day_id
-                                },
-                                dataType: 'json',
-                                success: function (egzListesi) {
-                                    var data = {
-                                        veri: egzListesi.excersizeList,
-                                        egz_ad: tempName,
-                                        selected_day : temp_day_id,
-                                        days : days
+                            if (listeler.result == "success") {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
+                                    headers: {
+                                        'kalori_token': $.cookie(constants.token_name),
+                                        "temp_id": temp_id,
+                                        'day_id': temp_day_id
+                                    },
+                                    dataType: 'json',
+                                    success: function (egzListesi) {
+                                        var data = {
+                                            veri: egzListesi.excersizeList,
+                                            egz_ad: tempName,
+                                            selected_day : temp_day_id,
+                                            days : days
+                                        }
+                                        $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
+                                    },
+                                    error: function (err) {
+                                        alert("bir hata oluştu");
                                     }
-                                    $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
-                                },
-                                error: function (err) {
-                                    alert("bir hata oluştu");
-                                }
-                            });
-                            //alttaki egzersiz listesi yenilenecek
-
+                                });
+                                //alttaki egzersiz listesi yenilenecek
+                            } else if (listeler.result == "failed") {
+                                $("#feedback-panel").text(listeler.message).css("color", "red");
+                            }
                         },
                         error: function (err) {
                             alert("bir hata oluştu");

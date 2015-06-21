@@ -51,6 +51,7 @@ define(['jquery',
                 "click #diyet_pro_listele": diyetProgramiGetir,
                 "click #diyet_pro_ata": "diyet_prog_ata",
                 "click #diyet_pro_gir_kaydet": "diyet_temp_kaydet",
+                "click #olcu-sil": "olcu_sil",
                 "change .egz-dropdown": "gun_degisti"
             },
             egzTemplateIciniGetir: function (e) {
@@ -206,7 +207,7 @@ define(['jquery',
                     dataType: 'json',
                     success: function (liste) {
                         var data = {
-                            liste: liste.sizeList
+                            liste : liste.sizeList
                         };
                         $("#dinamik-icerik").html(_.template(olcuTemplate, data));
                     },
@@ -214,7 +215,6 @@ define(['jquery',
                         alert("hata oluştu");
                     }
                 });
-                //$("#dinamik-icerik").html(_.template(olcuTemplate));
             },
             yap_egz_listele: function () {
                 var id = $.cookie(constants.user);
@@ -283,6 +283,23 @@ define(['jquery',
                             days: days
                         }
                         $("#dinamik-alan" + temp[2]).html(_.template(excersizeTable, data));
+                    }
+                });
+            },
+            olcu_sil : function(e) {
+                var olcu_id = $(e.currentTarget).attr('data-dgr');
+                var id = $.cookie(constants.user);
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/services/deleteUserSizeById',
+                    headers: {
+                        'kalori_token': $.cookie(constants.token_name),
+                        'olcu_id': olcu_id,
+                        'k_id': id
+                    },
+                    dataType: 'json',
+                    success: function (liste) {
+                        $("#"+olcu_id).remove();
                     }
                 });
             }

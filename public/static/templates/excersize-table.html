@@ -24,20 +24,20 @@
             <tr>Egzersiz bulunmamaktadır...</tr>
             <% } else { %>
             <tr class="row-mid">
+                <th>Egzersiz Adı</th>
                 <th>Adet/Set</th>
                 <th>Ağırlık</th>
                 <th>Makina No</th>
-                <th>Egzersiz Adı</th>
             </tr>
             <% } %>
             </thead>
             <tbody>
             <% for (var i = 0; i < veri.length; i++) { %>
             <tr class="row-mid">
+                <td><%- veri[i].egz_ad %></td>
                 <td><%- veri[i].adet %></td>
                 <td><%- veri[i].agirlik %></td>
                 <td><%- veri[i].makina_no %></td>
-                <td><%- veri[i].egz_ad %></td>
             </tr>
             <% } %>
             </tbody>

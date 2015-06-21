@@ -201,11 +201,24 @@ router.get('/sporcuOlcuKayit', function (req, res) {
  */
 router.get('/getUserSize', function (req, res) {
     var user_id = req.headers.k_id;
-    connection.query('select * from olculer where k_id = ? order by tarih desc', [user_id], function (err, list) {
+    connection.query('select * from olculer where k_id = ? order by id desc', [user_id], function (err, list) {
         if (err) throw err;
         res.json({
             'sizeList': list
         });
+    });
+});
+
+/*
+ GET
+ id si verilen ölçü elemanını siler ve listeyi geri döndürür
+ @requestParams    :
+ */
+router.get('/deleteUserSizeById', function (req, res) {
+    var olcu_id = req.headers.olcu_id;
+    connection.query("delete from olculer where id = ?", [olcu_id], function (err, cevap) {
+        if (err) throw err;
+        res.json({ });
     });
 });
 
@@ -307,11 +320,20 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
     var makina = req.body.makina;
     var temp_id = req.body.temp_id;
     var day_id = req.body.day_id;
-    connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id,day_id], function (err, cevap) {
-        if (err) throw err;
-        res.json({
-            'result': "success"
-        });
+    connection.query("select * from egzersiz_template_icerik where temp_id = ? and gun = ? and adet = ? and egz_id = ?",[temp_id,day_id, set, egz_id],function(err, veriList) {
+        if (veriList == null || veriList.length == 0) {
+            connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id,day_id], function (err, cevap) {
+                if (err) throw err;
+                res.json({
+                    'result': "success"
+                });
+            });
+        } else {
+            res.json({
+                'result': "failed",
+                'message' : "Lütfen aynı egzersiz ve set bilgisini birden fazla giriş yapmayınız."
+            });
+        }
     });
 });
 
