@@ -8,9 +8,15 @@
         <div class="col-sm-3">
             <input maxlength="10" type="text" value="" class="form-control" id="ara_input" placeholder="Ad">
         </div>
-        <button class="btn btn-default" id="sporcu_ara">ARA</button>
     </div>
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                <input type="checkbox" class="checkable-dark" id="checkControl" checked> Sadece Aktif Kullanıcıları Listele
+            </div>
+            <button class="btn btn-default" id="sporcu_ara">ARA</button>
+        </div>
     </div>
+    <div id="feedback-panel" hidden></div>
     <div class="content">
 
         <table class="table table-striped" rel="floathead" data-scroll=".oc-scroll" id="users-table">
@@ -30,15 +36,22 @@
             <% }
             for(var i=0; i < users.length; i++) {
 
-            %><tr data-id="<%- users[i].k_id %>">
-                <td><%- users[i].isim %></td>
-                <td><%- users[i].soyisim %></td>
-                <td><%- users[i].mail %></td>
-                <td><%- users[i].tel %></td>
-                <% if(users[i].yetki) %>
-                <td>aktif</td>
-                <% else %>
-                <td>pasif</td>
+            %><tr>
+                <td data-id="<%- users[i].k_id %>"><%- users[i].isim %></td>
+                <td data-id="<%- users[i].k_id %>"><%- users[i].soyisim %></td>
+                <td data-id="<%- users[i].k_id %>"><%- users[i].mail %></td>
+                <td data-id="<%- users[i].k_id %>"><%- users[i].tel %></td>
+                <td data-id="-1">
+                    <select class="form-control" name="" id="durum_combobox" veri-id="<%- users[i].k_id %>">
+                        <% if(users[i].yetki) { %>
+                        <option value="1" selected>Aktif</option>
+                        <option value="0">Pasif</option>
+                        <% } else { %>
+                        <option value="1">Aktif</option>
+                        <option value="0" selected>Pasif</option>
+                        <% } %>
+                    </select>
+                </td>
             </tr>
             <% } %>
             </tbody>

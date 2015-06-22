@@ -326,63 +326,137 @@ router.get('/information/size/:tarih', function (req, res) {
 /**
  * Salon için kullanıcı listesini ve toplam kullanıcı sayısını getirir.
  */
-router.get('/userList', function (req, res) {
+router.post('/getUserList', function (req, res) {
     var salon_id = req.user_id;
-    connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? order by uyelik_tarihi desc limit ?', [salon_id, constants.page_size], function (err, result) {
-        connection.query('SELECT isim from kullanici where salon_id = ?', [salon_id], function (err, sayi) {
-            if (err) throw err;
-            res.json({
-                "result": result,
-                "sayi": sayi.length
+    var checkControl = req.body.checkControl;
+    if (checkControl == "true") {
+        connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and yetki = 1 order by uyelik_tarihi desc limit ?', [salon_id, constants.page_size], function (err, result) {
+            connection.query('SELECT isim from kullanici where salon_id = ? and yetki = 1', [salon_id], function (err, sayi) {
+                if (err) throw err;
+                res.json({
+                    "result": result,
+                    "sayi": sayi.length
+                });
             });
         });
-    });
+    } else {
+        connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? order by uyelik_tarihi desc limit ?', [salon_id, constants.page_size], function (err, result) {
+            connection.query('SELECT isim from kullanici where salon_id = ?', [salon_id], function (err, sayi) {
+                if (err) throw err;
+                res.json({
+                    "result": result,
+                    "sayi": sayi.length
+                });
+            });
+        });
+    }
+
 });
 
 /**
  * Salon için sayfalamalı olarak kullanıcı listesini getirir.
  */
-router.post('/userList/:page', function (req, res) {
+router.post('/getUserListForPage/:page', function (req, res) {
     var salon_id = req.user_id;
     var page = req.params.page;
     var kriter = req.body.ad;
+    var checkControl = req.body.checkControl;
     var minSize = (page - 1) * constants.page_size;
-    connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc limit ?,?', [salon_id, '%' + kriter + '%', minSize, constants.page_size], function (err, result) {
-        connection.query('SELECT isim from kullanici where salon_id = ? and isim like ?', [salon_id, '%' + kriter + '%'], function (err, sayi) {
-            if (err) throw err;
-            res.json({
-                "result": result,
-                "sayi": sayi.length
+    if (checkControl == "true") {
+        connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? and yetki = 1 order by uyelik_tarihi desc limit ?,?', [salon_id, '%' + kriter + '%', minSize, constants.page_size], function (err, result) {
+            connection.query('SELECT isim from kullanici where salon_id = ? and isim like ? and yetki = 1', [salon_id, '%' + kriter + '%'], function (err, sayi) {
+                if (err) throw err;
+                res.json({
+                    "result": result,
+                    "sayi": sayi.length
+                });
             });
         });
-    });
+    } else {
+        connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc limit ?,?', [salon_id, '%' + kriter + '%', minSize, constants.page_size], function (err, result) {
+            connection.query('SELECT isim from kullanici where salon_id = ? and isim like ?', [salon_id, '%' + kriter + '%'], function (err, sayi) {
+                if (err) throw err;
+                res.json({
+                    "result": result,
+                    "sayi": sayi.length
+                });
+            });
+        });
+    }
+
 });
 
 
 /**
  * Arama kriterine göre Salon için kullanıcı listesini ve toplam kullanıcı sayısını getirir.
  */
-router.post('/userList', function (req, res) {
+router.post('/getUserListForSearch', function (req, res) {
     var salon_id = req.user_id;
     var kriter = req.body.ad;
-    connection.query("SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc", [salon_id, '%' + kriter + '%'], function (err, result) {
-        if (err) throw err;
-        var dizi = [];
-        if (result.length >= constants.page_size) {
-            for (var i = 0; i<constants.page_size; i++) {
-                dizi.push(result[i]);
+    var checkControl = req.body.checkControl;
+    if (checkControl == "true") {
+        connection.query("SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? and yetki = 1 order by uyelik_tarihi desc", [salon_id, '%' + kriter + '%'], function (err, result) {
+            if (err) throw err;
+            var dizi = [];
+            //ekranda kaç data listeleneceğiyle alakalı işlem
+            if (result.length >= constants.page_size) {
+                for (var i = 0; i<constants.page_size; i++) {
+                    dizi.push(result[i]);
+                }
+            } else {
+                for (var i = 0; i<result.length; i++) {
+                    dizi.push(result[i]);
+                }
             }
-        } else {
-            for (var i = 0; i<result.length; i++) {
-                dizi.push(result[i]);
-            }
-        }
 
-        res.json({
-            "result": dizi,
-            "sayi": result.length
+            res.json({
+                "result": dizi,
+                "sayi": result.length
+            });
+
         });
+    } else {
+        connection.query("SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? order by uyelik_tarihi desc", [salon_id, '%' + kriter + '%'], function (err, result) {
+            if (err) throw err;
+            var dizi = [];
+            //ekranda kaç data listeleneceğiyle alakalı işlem
+            if (result.length >= constants.page_size) {
+                for (var i = 0; i<constants.page_size; i++) {
+                    dizi.push(result[i]);
+                }
+            } else {
+                for (var i = 0; i<result.length; i++) {
+                    dizi.push(result[i]);
+                }
+            }
 
+            res.json({
+                "result": dizi,
+                "sayi": result.length
+            });
+
+        });
+    }
+
+});
+
+/*
+ POST
+ kullanıcının aktif pasiflik durumunu değiştiri
+ aktif 1 pasif 0
+ @requestParams    :
+ */
+router.post('/durumuDegistir', function (req, res) {
+    var salon_id = req.user_id;
+    var durum = req.body.durum;
+    var k_id = req.headers.k_id;
+    console.log(salon_id);
+    console.log("dsfs : " + k_id);
+    connection.query("update kullanici set yetki = ? where salon_id = ? and k_id = ?", [durum, salon_id, k_id], function (err, cevap) {
+        if (err) throw err;
+        res.json({
+            'durum': "success"
+        });
     });
 });
 

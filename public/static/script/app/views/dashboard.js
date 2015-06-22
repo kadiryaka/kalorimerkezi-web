@@ -10,6 +10,37 @@ define(['jquery',
         'jquery.cookie'],
     function ($, Backbone, _, i18n, User, dashboardTemplate, tableTemplate, constants, logoutMdl) {
 
+        var checkControl = true;
+        var k_id = -1;
+
+        //check tiki değiştirildiğinde tetiklenir
+        $('body').on('click', '#checkControl', function () {
+            if (checkControl) {
+                checkControl = false;
+            } else {
+                checkControl = true;
+            }
+        });
+
+        //aktif pasif değiştiğinde tetiklenir
+        $('body').on('change', '#durum_combobox', function () {
+            var val = $(this).val();
+            var k_id = $(this).attr('veri-id');
+            $.ajax({
+                type: 'POST',
+                url: '/api/user/durumuDegistir',
+                data: {'durum' : val},
+                headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
+                dataType: 'json',
+                success: function (veri) {
+                    $("#feedback-panel").text("Kullanıcı durumu başarıyla değiştirildi").css("color", "green").toggle(1000).toggle(1000);
+                },
+                error: function () {
+                    alert("bir hata oluştu");
+                }
+            });
+        });
+
         //saydalama da tıklanıldığı zaman
         $('body').on('click', '.sayfalama-a', function () {
             var pageCount = $(this).attr('data-page');
@@ -22,9 +53,9 @@ define(['jquery',
             }
             $.ajax({
                 type: 'POST',
-                url: '/api/user/userList/' + pageCount,
+                url: '/api/user/getUserListForPage/' + pageCount,
                 headers: {'kalori_token': $.cookie(constants.token_name)},
-                data: {'ad': kriter},
+                data: {'ad': kriter, 'checkControl' : checkControl},
                 success: function (response) {
                     var page = 0;
                     var userSize = constants.page_size;
@@ -54,11 +85,15 @@ define(['jquery',
         });
 
         //kullanıcı seçildiği zaman
-        $('body').on('click', '#users-table tr', function (e) {
+        $('body').on('click', '#users-table tr td', function (e) {
             console.log("kullanıcıya basıldı");
             var id = $(this).attr('data-id');
-            $.cookie(constants.user, id);
-            window.location = constants.hash + constants.user + "/profile";
+            if(id == undefined || id == "-1") {
+
+            } else {
+                $.cookie(constants.user, id);
+                window.location = constants.hash + constants.user + "/profile";
+            }
         });
 
         //dashboard açılırken burası çalışıyor
@@ -70,9 +105,10 @@ define(['jquery',
                 $("#error-div").hide();
                 if ($.cookie(constants.token_name)) {
                     $.ajax({
-                        type: 'GET',
-                        url: '/api/user/userList',
+                        type: 'POST',
+                        url: '/api/user/getUserList',
                         headers: {'kalori_token': $.cookie(constants.token_name)},
+                        data : {'checkControl' : checkControl},
                         success: function (response) {
                             var page = 0;
                             var userSize = constants.page_size;
@@ -112,9 +148,9 @@ define(['jquery',
                 var ad = $("#ara_input").val();
                 $.ajax({
                     type: 'POST',
-                    url: '/api/user/userList',
+                    url: '/api/user/getUserListForSearch',
                     headers: {'kalori_token': $.cookie(constants.token_name)},
-                    data: {'ad': ad},
+                    data: {'ad': ad, 'checkControl' : checkControl},
                     success: function (response) {
                         var page = 0;
                         var userSize = constants.page_size;
@@ -143,9 +179,6 @@ define(['jquery',
                     }
                 });
             }
-
-
         });
-
     }
 );

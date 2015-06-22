@@ -53,7 +53,8 @@ app.all([
   '/api/services/getUserSize',
   '/api/services/getUserExersizeDateList',
   '/api/services/getEgzersizByDate',
-  '/api/services/deleteUserSizeById'
+  '/api/services/deleteUserSizeById',
+  '/api/user/durumuDegistir'
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);
