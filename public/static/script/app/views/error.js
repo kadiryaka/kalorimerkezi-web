@@ -11,6 +11,7 @@ define(['jquery',
         return Backbone.View.extend({
             el: $('.icerik'),
             initialize: function(){
+                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
             },
             render: function(){
                 $('.container').hide(0);

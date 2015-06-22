@@ -73,7 +73,7 @@
             <ul class="nav navbar-nav navbar-right pull-right hidden-xs">
                 <li class="dropdown">
                     <a href="#">
-                        <i class="fa fa-user"> ahmet mehmet </i>
+                        <i class="fa fa-user" id="user_name_index">  </i>
                         <span class="hidden-xs hidden-sm hidden-md"></span>
                     </a>
                 </li>
@@ -123,56 +123,6 @@
                             <span class="oc-partial-menu-item">İletişim</span>
                         </a>
                     </li>
-                    <li class="open-menu">
-                        <a>
-                            <i class="oc-partial-icon icm icm-list"></i>
-                            <span class="oc-partial-menu-item">Açılır Menü</span>
-                        </a>
-                        <ul class="menu">
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Diyet Ekle</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Diyet Şablon</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Diyet Göster</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Egzersiz Ekle</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Egzersiz Şablon</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Egzersizi Göster</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="dashboard.html">
-                                    <i class="oc-partial-icon icm icm-arrow-right2"></i>
-                                    <span class="oc-partial-menu-item">Ölçü ekle</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
 
@@ -205,16 +155,6 @@
 
         var width = $('#sol-menu').width();
         $('.icerik').css('margin-left',width+'px');
-       /** $("body").on('click','.hide-menu',function() {
-            $(".menu").hide(0);
-            $(this).attr('class','open-menu');
-        });
-
-        $("body").on('click', '.open-menu', function() {
-            $(".menu").show(100);
-            $(this).attr('class','hide-menu');
-        });
-        **/
         $('.container').hide(0);
     </script>
 

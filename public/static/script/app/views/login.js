@@ -14,6 +14,7 @@ define(['jquery',
         return Backbone.View.extend({
             el: $('.login'),
             initialize: function(){
+                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
             },
             render: function(){
                 if($.cookie(constants.token_name)) {
