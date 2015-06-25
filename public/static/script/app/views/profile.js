@@ -35,6 +35,7 @@ define(['jquery',
             },
             render: function () {
                 $("#error-div").hide();
+                //egzersizProgramiGir();
                 excersizeProgram();
             },
             events: {
@@ -115,20 +116,7 @@ define(['jquery',
                 }
             },
             egz_pro_gir: function () {
-                $("#dinamik-icerik").html("");
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/services/getAllExcersizeTemplate',
-                    headers: {'kalori_token': $.cookie(constants.token_name)},
-                    dataType: 'json',
-                    success: function (liste) {
-                        var data = {
-                            veri: liste.excersizeTemplateList
-                        }
-                        $("#dinamik-icerik").html(_.template(egzersizGir, data));
-                    }
-                });
-
+                egzersizProgramiGir();
             },
             egz_pro_gir_kaydet: function () {
                 kullaniciyaTemplateAta("setTemplateForUser");
@@ -343,6 +331,22 @@ define(['jquery',
             } else {
                 window.location = constants.hash;
             }
+        }
+
+        function egzersizProgramiGir() {
+            $("#dinamik-icerik").html("");
+            $.ajax({
+                type: 'GET',
+                url: '/api/services/getAllExcersizeTemplate',
+                headers: {'kalori_token': $.cookie(constants.token_name)},
+                dataType: 'json',
+                success: function (liste) {
+                    var data = {
+                        veri: liste.excersizeTemplateList
+                    }
+                    $("#dinamik-icerik").html(_.template(egzersizGir, data));
+                }
+            });
         }
 
         function getEgzersizByDate(tarih, liste) {

@@ -70,7 +70,7 @@ define(['jquery',
                                         headers: {'kalori_token': $.cookie(constants.token_name)},
                                         data: datas,
                                         dataType: 'json',
-                                        success: function () {
+                                        success: function (data) {
                                             $("#feedback-panel").text("Kayıt Başarılı").show(0).css("color", "green");
                                             $("#name").val("");
                                             $("#surname").val("");
@@ -78,7 +78,10 @@ define(['jquery',
                                             $("#tel").val("");
                                             $("#password").val("");
                                             $("#password2").val("");
-                                            //TODO burada 2 sn sonra kullanıcı profiline yönlendirilmesi lazım
+                                            setTimeout(function(){
+                                                $.cookie(constants.user, data.insertId);
+                                                window.location = constants.hash + constants.user + "/profile";
+                                            }, 2000);
                                         },
                                         error: function () {
                                             $("#feedback-panel").text("Kayıt Başarısız!").show(0).css("color", "red");

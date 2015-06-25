@@ -86,7 +86,6 @@ define(['jquery',
 
         //kullanıcı seçildiği zaman
         $('body').on('click', '#users-table tr td', function (e) {
-            console.log("kullanıcıya basıldı");
             var id = $(this).attr('data-id');
             if(id == undefined || id == "-1") {
 
