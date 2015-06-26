@@ -63,7 +63,7 @@ define(['jquery',
                 var tempname = $("#template_baslik").val();
                 var icerik = $("#diyet-text-area").val();
                 if (tikKontrol) {
-                    if (tempname == undefined || tempname == null || tempname == "") {
+                    if (tempname == undefined || tempname == null || tempname == "" || tempname.trim() == "") {
                         $("#diyet-feedback-panel").text("Lütfen başlık giriniz").css("color" , "red");
                     } else {
                         var datas = {"icerik" : icerik, 'temp_name' : tempname};

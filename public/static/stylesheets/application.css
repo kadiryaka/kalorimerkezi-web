@@ -36348,11 +36348,13 @@ body .ui-tooltip {
 
 /* line 835, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-people:before {
-  content: "\e317"; }
+  content: "\e317"; font-size: 30px; }
 
 /* line 836, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-man:before {
-  content: "\e318"; }
+  content: "\e318";
+    font-size: 25px;
+}
 
 /* line 837, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-male:before {

@@ -31,22 +31,7 @@ a {
 	height: 600px;
 }
 
-.sayfalama-a {
-    font-size: 15px;
-    color: #000000;
-    border: 2px;
-    padding: 0px 5px;
-}
 
-.sayfalama-current {
-    color: #ffffff;
-    background-color: #808080;
-}
-
-.sayfalama-a:hover {
-    background-color: #1abc9c;
-    color: #ffffff;
-}
 
 .egzersiz-kayit-div {
     margin-top: 15px;

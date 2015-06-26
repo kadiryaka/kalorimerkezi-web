@@ -1,10 +1,10 @@
 
     <div class="header">
-        <h2>Sporcular</h2>
+        <h2><i class="oc-partial-icon icm icm-people"></i> Sporcular</h2>
     </div>
     <div class="form-horizontal">
     <div class="form-group">
-        <label class="col-sm-1 control-label">Arama </label>
+        <label class="col-sm-1 control-label"><i class="oc-partial-icon icm icm-spinner2"></i> Arama </label>
         <div class="col-sm-3">
             <input maxlength="10" type="text" value="" class="form-control" id="ara_input" placeholder="Ad">
         </div>
@@ -57,6 +57,20 @@
             </tbody>
         </table>
 
+        <div class="panel-body sayfalama-div">
+            <ul class="pagination sayfalama-tr">
+                <%
+                for (var j=1; j<= page; j++) {
+                if (j == currentPage) {
+                %>
+                <li class="active"><a class="sayfalama-a sayfalama-current" data-page="<%- j %>"><%- j %> <span class="sr-only">(current)</span></a></li> <% } else {
+                %>
+                <li><a class="sayfalama-a" data-page="<%- j %>"><%- j %></a></li>
+                <% }
+                } %>
+            </ul>
+        </div>
+<!--
         <div class="sayfalama-div">
             <tr id="b" class="sayfalama-tr">
                 <%
@@ -68,4 +82,5 @@
                 } %>
             </tr>
         </div>
+-->
     </div>

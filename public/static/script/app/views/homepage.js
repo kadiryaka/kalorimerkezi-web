@@ -30,7 +30,7 @@ define(['jquery',
                             kullanici_sayisi : liste.users.length,
                             aktif            : liste.aktifSayisi,
                             pasif            : liste.pasifSayisi,
-                            aktif_yuzde      : ((liste.aktifSayisi)/(liste.users.length))*100
+                            aktif_yuzde      : Math.floor(((liste.aktifSayisi)/(liste.users.length))*100)
                         }
                         $(".icerik").html(_.template(homePageTemplate,data));
                     }

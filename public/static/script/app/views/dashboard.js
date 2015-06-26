@@ -41,6 +41,14 @@ define(['jquery',
             });
         });
 
+        //arama inputundayken entera basılması
+        $('body').on('keyup','#ara_input', function (e) {
+            if(e.keyCode == 13)
+            {
+                sporcuAra();
+            }
+        });
+
         //saydalama da tıklanıldığı zaman
         $('body').on('click', '.sayfalama-a', function () {
             var pageCount = $(this).attr('data-page');
@@ -145,40 +153,44 @@ define(['jquery',
                 "click #sporcu_ara": "sporcu_ara"
             },
             sporcu_ara: function () {
-                var ad = $("#ara_input").val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/user/getUserListForSearch',
-                    headers: {'kalori_token': $.cookie(constants.token_name)},
-                    data: {'ad': ad, 'checkControl' : checkControl},
-                    success: function (response) {
-                        var page = 0;
-                        var userSize = constants.page_size;
-                        console.log("response.sayi = " + response.sayi);
-                        console.log ("islem = " + Math.ceil((response.sayi / constants.page_size)));
-                        if (response.sayi == 0) {
-                            userSize = 0;
-                        } else if (response.sayi <= constants.page_size) {
-                            page = 1;
-                            userSize = response.result.length;
-                        }
-                        else {
-                            page = Math.ceil((response.sayi / constants.page_size));
-                        }
-
-                        var data = {
-                            users: response.result,
-                            salon: $.cookie(constants.cookie_username),
-                            page: page,
-                            userSize: userSize,
-                            currentPage: 1,
-                            totalUser: response.sayi
-                        };
-                        console.log(response.result);
-                        $(".content").html(_.template(tableTemplate, data));
-                    }
-                });
+                sporcuAra();
             }
         });
+
+        function sporcuAra () {
+            var ad = $("#ara_input").val();
+            $.ajax({
+                type: 'POST',
+                url: '/api/user/getUserListForSearch',
+                headers: {'kalori_token': $.cookie(constants.token_name)},
+                data: {'ad': ad, 'checkControl' : checkControl},
+                success: function (response) {
+                    var page = 0;
+                    var userSize = constants.page_size;
+                    console.log("response.sayi = " + response.sayi);
+                    console.log ("islem = " + Math.ceil((response.sayi / constants.page_size)));
+                    if (response.sayi == 0) {
+                        userSize = 0;
+                    } else if (response.sayi <= constants.page_size) {
+                        page = 1;
+                        userSize = response.result.length;
+                    }
+                    else {
+                        page = Math.ceil((response.sayi / constants.page_size));
+                    }
+
+                    var data = {
+                        users: response.result,
+                        salon: $.cookie(constants.cookie_username),
+                        page: page,
+                        userSize: userSize,
+                        currentPage: 1,
+                        totalUser: response.sayi
+                    };
+                    console.log(response.result);
+                    $(".content").html(_.template(tableTemplate, data));
+                }
+            });
+        }
     }
 );
