@@ -482,11 +482,15 @@ router.post('/register', function (req, res) {
     var tel = req.body.tel;
     var password = crypto.createHash('md5').update(req.body.password).digest('hex');
     var date = moment().format('YYYY-MM-DD');
-    connection.query('insert into kullanici (isim,uyelik_tarihi,password,mail,salon_id,soyisim,tel,yetki) values (?,?,?,?,?,?,?,?)', [name, date, password, mail, salon_id, surname, tel, 1], function (err, result) {
+    var activationKey = require('rand-token').uid(30);
+    connection.query('insert into kullanici (isim,uyelik_tarihi,password,mail,salon_id,soyisim,tel,yetki,status,aktivasyon_kodu) values (?,?,?,?,?,?,?,?,?,?)', [name, date, password, mail, salon_id, surname, tel, 0, 0, activationKey], function (err, result) {
         if (err) {
             throw err;
         } else {
-            mailer.send(mail, 'Kullanıcı Kayıt Başarılı', '');
+            console.log("aktivasyon kodu : " + activationKey)
+            console.log("birazdan mail gönderilmesi lazım");
+            mailer.send(mail, constants.mail_subject, name, activationKey);
+            console.log("gitti mi?");
         }
         res.json(result);
     });
@@ -508,5 +512,6 @@ router.get('/kullaniciKontrol/:mail', function (req, res) {
     });
 
 });
+
 
 module.exports = router;

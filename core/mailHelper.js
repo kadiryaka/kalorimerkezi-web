@@ -8,25 +8,27 @@ mailer.extend(app, {
     port: 465, // port for secure SMTP
     transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
     auth: {
-        user: 'yakakadir@gmail.com',
-        pass: '00125658oguz'
+        user: 'kalorimerkezi@gmail.com',
+        pass: '00125658'
     }
 });
 
 module.exports = {
 
-    send : function(to, subject, other) {
-        app.mailer.send('mailer', {
+    send : function(to, subject, name, activationKey) {
+        app.mailer.send('email',{
             to: to, // REQUIRED. This can be a comma delimited string just like a normal email to field.
             subject: subject, // REQUIRED.
-            otherProperty: other // All additional properties are also passed to the template as local variables.
+            name : name,
+            activationKey : activationKey
         }, function (err) {
             if (err) {
                 // handle error
-                //console.log(err);
+                console.log("hata oluştu : " + err);
                 return;
             }
         });
+        console.log("baiarıyla gitmiş olması lazım")
     }
 }
 

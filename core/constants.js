@@ -24,5 +24,6 @@
                 "activate_success" : "activate_success",
                 "register_success" : "register_success",
                 "empty_user"       : "Kullanıcınız bulunmamaktadır."
-            }
+            },
+            "mail_subject"       : "Üyelik Onayı"
         };

@@ -23,7 +23,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-
 global.connection = connection; // ;)
 
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 //api nin altında herhangi bir url ' e gidersen önce secure ye uğra
 app.all('/api/*', auth.secure);
-
 //aşağıdaki url lere girersen admin mi diye kontrol ettir
 app.all([
   '/api/user/userList',
@@ -53,8 +51,7 @@ app.all([
   '/api/services/getUserSize',
   '/api/services/getUserExersizeDateList',
   '/api/services/getEgzersizByDate',
-  '/api/services/deleteUserSizeById',
-  '/api/user/durumuDegistir'
+  '/api/services/getEgzersizByDate'
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);

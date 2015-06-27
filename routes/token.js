@@ -63,7 +63,6 @@ router.post('/login', function (req, res) {
     });
 });
 
-
 /*
  Get
  Çıkış yapar.
@@ -74,5 +73,19 @@ router.get('/logout', function (req, res) {
     });
 
 });
+
+/**
+ * Kullanıcı mail aktivitasyonu yapılacak
+ */
+router.get('/activation/:kod', function (req, res) {
+    var kod = req.params.kod;
+    console.log("kod : " + kod);
+    connection.query('update kullanici set status = ?, yetki = ? where aktivasyon_kodu = ?', [1, 1, kod], function (err, result) {
+        if (err) throw err;
+        res.end('Aktivasyon islemi tamamlanmistir');
+    });
+
+});
+
 
 module.exports = router;
