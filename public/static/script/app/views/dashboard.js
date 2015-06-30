@@ -29,7 +29,7 @@ define(['jquery',
             $.ajax({
                 type: 'POST',
                 url: '/api/user/durumuDegistir',
-                data: {'durum' : val},
+                data: {'durum': val},
                 headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
                 dataType: 'json',
                 success: function (veri) {
@@ -42,9 +42,8 @@ define(['jquery',
         });
 
         //arama inputundayken entera basılması
-        $('body').on('keyup','#ara_input', function (e) {
-            if(e.keyCode == 13)
-            {
+        $('body').on('keyup', '#ara_input', function (e) {
+            if (e.keyCode == 13) {
                 sporcuAra();
             }
         });
@@ -63,7 +62,7 @@ define(['jquery',
                 type: 'POST',
                 url: '/api/user/getUserListForPage/' + pageCount,
                 headers: {'kalori_token': $.cookie(constants.token_name)},
-                data: {'ad': kriter, 'checkControl' : checkControl},
+                data: {'ad': kriter, 'checkControl': checkControl},
                 success: function (response) {
                     var page = 0;
                     var userSize = constants.page_size;
@@ -95,7 +94,7 @@ define(['jquery',
         //kullanıcı seçildiği zaman
         $('body').on('click', '#users-table tr td', function (e) {
             var id = $(this).attr('data-id');
-            if(id == undefined || id == "-1") {
+            if (id == undefined || id == "-1") {
 
             } else {
                 $.cookie(constants.user, id);
@@ -107,7 +106,7 @@ define(['jquery',
         return Backbone.View.extend({
             el: $('.icerik'),
             initialize: function () {
-                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
+                $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
             render: function () {
                 $("#error-div").hide();
@@ -116,7 +115,7 @@ define(['jquery',
                         type: 'POST',
                         url: '/api/user/getUserList',
                         headers: {'kalori_token': $.cookie(constants.token_name)},
-                        data : {'checkControl' : checkControl},
+                        data: {'checkControl': checkControl},
                         success: function (response) {
                             var page = 0;
                             var userSize = constants.page_size;
@@ -150,25 +149,33 @@ define(['jquery',
                 }
             },
             events: {
-                "click #sporcu_ara": "sporcu_ara"
+                "click #sporcu_ara": "sporcu_ara",
+                "click #edit-button": "kullanici_duzenle"
             },
             sporcu_ara: function () {
                 sporcuAra();
+            },
+            kullanici_duzenle: function () {
+                $('element_to_pop_up').bPopup({
+                    modalClose: false,
+                    opacity: 0.6,
+                    positionStyle: 'fixed' //'fixed' or 'absolute'
+                });
             }
         });
 
-        function sporcuAra () {
+        function sporcuAra() {
             var ad = $("#ara_input").val();
             $.ajax({
                 type: 'POST',
                 url: '/api/user/getUserListForSearch',
                 headers: {'kalori_token': $.cookie(constants.token_name)},
-                data: {'ad': ad, 'checkControl' : checkControl},
+                data: {'ad': ad, 'checkControl': checkControl},
                 success: function (response) {
                     var page = 0;
                     var userSize = constants.page_size;
                     console.log("response.sayi = " + response.sayi);
-                    console.log ("islem = " + Math.ceil((response.sayi / constants.page_size)));
+                    console.log("islem = " + Math.ceil((response.sayi / constants.page_size)));
                     if (response.sayi == 0) {
                         userSize = 0;
                     } else if (response.sayi <= constants.page_size) {

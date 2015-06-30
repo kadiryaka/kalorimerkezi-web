@@ -14,14 +14,20 @@ define(['jquery',
         var temp_id = 0;
         var temp_day_id = 1;
         var tempName = "";
-        var days = [{"gun" : "Pazartesi", "dgr" : "1"},{"gun" : "Salı", "dgr" : "2"},{"gun" : "Çarşamba", "dgr" : "3"},{"gun" : "Perşembe", "dgr" : "4"}, {"gun" : "Cuma", "dgr" : "5"}, {"gun" : "Cumartesi", "dgr" : "6"}, {"gun" : "Pazar", "dgr" : "7"}, {"gun" : "adsada", "dgr" : "8"}]
+        var days = [{"gun": "Pazartesi", "dgr": "1"}, {"gun": "Salı", "dgr": "2"}, {
+            "gun": "Çarşamba",
+            "dgr": "3"
+        }, {"gun": "Perşembe", "dgr": "4"}, {"gun": "Cuma", "dgr": "5"}, {
+            "gun": "Cumartesi",
+            "dgr": "6"
+        }, {"gun": "Pazar", "dgr": "7"}, {"gun": "adsada", "dgr": "8"}]
 
 
         //açılırken burası çalışıyor
         return Backbone.View.extend({
             el: $('.icerik'),
             initialize: function () {
-                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
+                $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
             render: function () {
                 $("#error-div").hide();
@@ -63,8 +69,8 @@ define(['jquery',
                 "click #egz-kaydet-button": "egzIcerikKaydet",
                 "click #template-getir": "templateGetir",
                 "click #egz-sil": "egzSil",
-                "change #egz-temp-list" : "templateGetir",
-                "change #dayList" : "gunDataGetir"
+                "change #egz-temp-list": "templateGetir",
+                "change #dayList": "gunDataGetir"
             },
             showBaslik: function () {
                 $(".tercih-butonlari").hide();
@@ -77,7 +83,7 @@ define(['jquery',
             yeniEgzListButton: function () {
                 tempName = $("#template_baslik").val();
                 if (tempName == undefined || tempName == null || tempName == "") {
-                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color" , "red");
+                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color", "red");
                 } else {
                     $("#feedback-panel").text("");
                     $.ajax({
@@ -100,8 +106,8 @@ define(['jquery',
                                     var data = {
                                         veri: listeler.excersizeList,
                                         egz_ad: tempName,
-                                        selected_day : temp_day_id,
-                                        days : days
+                                        selected_day: temp_day_id,
+                                        days: days
                                     }
                                     console.log("birazdan template yükletçek")
                                     $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
@@ -163,8 +169,8 @@ define(['jquery',
                                         var data = {
                                             veri: egzListesi.excersizeList,
                                             egz_ad: tempName,
-                                            selected_day : temp_day_id,
-                                            days : days
+                                            selected_day: temp_day_id,
+                                            days: days
                                         }
                                         $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
                                     },
@@ -201,8 +207,8 @@ define(['jquery',
                         var data = {
                             veri: egzListesi.excersizeList,
                             egz_ad: tempName,
-                            selected_day : 1,
-                            days : days
+                            selected_day: 1,
+                            days: days
                         }
                         $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
                         $("#ekleme-listesi").show();
@@ -228,8 +234,8 @@ define(['jquery',
                         var data = {
                             veri: egzListesi.excersizeList,
                             egz_ad: tempName,
-                            selected_day : temp_day_id,
-                            days : days
+                            selected_day: temp_day_id,
+                            days: days
                         }
                         $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
                         $("#ekleme-listesi").show();
@@ -239,7 +245,7 @@ define(['jquery',
                     }
                 });
             },
-            gunDataGetir : function() {
+            gunDataGetir: function () {
                 temp_day_id = $('#dayList option:selected').attr('data-dgr');
                 $.ajax({
                     type: 'GET',
@@ -254,8 +260,8 @@ define(['jquery',
                         var data = {
                             veri: egzListesi.excersizeList,
                             egz_ad: tempName,
-                            selected_day : temp_day_id,
-                            days : days
+                            selected_day: temp_day_id,
+                            days: days
                         }
                         $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
                     },

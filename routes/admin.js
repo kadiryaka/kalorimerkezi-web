@@ -13,11 +13,11 @@ connection = global.connection;
  şuan eksik-------
  */
 router.get('/userExcersizeList', function (req, res) {
-  var salon_id = req.user_id;
-  connection.query('SELECT * from  where kalori > -1', function (err, food) {
-    if (err) throw err;
-    res.json(food);
-  });
+    var salon_id = req.user_id;
+    connection.query('SELECT * from  where kalori > -1', function (err, food) {
+        if (err) throw err;
+        res.json(food);
+    });
 });
 
 /*
@@ -26,10 +26,10 @@ router.get('/userExcersizeList', function (req, res) {
  @requestParams    : user_id
  */
 router.get('/userinformation', function (req, res) {
-  connection.query('SELECT * from kullanici where k_id = ?', [req.headers.k_id], function (err, user) {
-    if (err) throw err;
-    res.json(user);
-  });
+    connection.query('SELECT * from kullanici where k_id = ?', [req.headers.k_id], function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
 });
 
 module.exports = router;

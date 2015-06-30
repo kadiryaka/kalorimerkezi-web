@@ -218,7 +218,7 @@ router.get('/deleteUserSizeById', function (req, res) {
     var olcu_id = req.headers.olcu_id;
     connection.query("delete from olculer where id = ?", [olcu_id], function (err, cevap) {
         if (err) throw err;
-        res.json({ });
+        res.json({});
     });
 });
 
@@ -320,9 +320,9 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
     var makina = req.body.makina;
     var temp_id = req.body.temp_id;
     var day_id = req.body.day_id;
-    connection.query("select * from egzersiz_template_icerik where temp_id = ? and gun = ? and adet = ? and egz_id = ?",[temp_id,day_id, set, egz_id],function(err, veriList) {
+    connection.query("select * from egzersiz_template_icerik where temp_id = ? and gun = ? and adet = ? and egz_id = ?", [temp_id, day_id, set, egz_id], function (err, veriList) {
         if (veriList == null || veriList.length == 0) {
-            connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id,day_id], function (err, cevap) {
+            connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id, day_id], function (err, cevap) {
                 if (err) throw err;
                 res.json({
                     'result': "success"
@@ -331,7 +331,7 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
         } else {
             res.json({
                 'result': "failed",
-                'message' : "Lütfen aynı egzersiz ve set bilgisini birden fazla giriş yapmayınız."
+                'message': "Lütfen aynı egzersiz ve set bilgisini birden fazla giriş yapmayınız."
             });
         }
     });
@@ -347,7 +347,7 @@ router.get('/deleteExersizeById', function (req, res) {
     var egz_id = req.headers.egz_id;
     var day_id = req.headers.day_id;
     connection.query("delete from egzersiz_template_icerik where id = ?", [egz_id], function (err, cevap) {
-        connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id,day_id], function (err, list) {
+        connection.query('select icerik.id, icerik.adet, icerik.agirlik, icerik.makina_no, egz.egz_ad from egzersiz_template_icerik icerik inner join egzersiz egz ON icerik.egz_id = egz.egz_id where icerik.temp_id = ? and icerik.gun = ?', [temp_id, day_id], function (err, list) {
             if (err) throw err;
             res.json({
                 'excersizeList': list

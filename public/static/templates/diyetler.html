@@ -19,7 +19,8 @@
         </div>
     </div>
     <% for (var i = 0; i < liste.length; i++) { %>
-    <div data-dgr="<%- liste[i].temp_id %>" data-index="<%- i %>" class="row table-line-row diyet-kayit-table" style="padding: 2px;">
+    <div data-dgr="<%- liste[i].temp_id %>" data-index="<%- i %>" class="row table-line-row diyet-kayit-table"
+         style="padding: 2px;">
         <div class="col-sm-3 push-bottom-xs text-center-xs">
             <h4 class="fa fa-arrow-up" style="font-size: 14px"> <%- liste[i].temp_adi %></h4>
         </div>
@@ -36,14 +37,16 @@
         <div class="col-sm-3 text-center">
             <% if (currentDiyet == 0 && i == 0) { %>
             <i class="fa fa-check-square fa-2x text-success"></i>
+
             <div>Geçerli Egzersiz</div>
             <% } else { %>
             <i class="fa badge badge-danger-lt badge-empty fa-2x text-success"></i>
+
             <div>Geçersiz Egzersiz</div>
             <% } %>
         </div>
     </div>
     <div id="dinamik-alan<%- i %>" style="display: none;"></div>
-    <% }  %>
+    <% } %>
 
 </div>

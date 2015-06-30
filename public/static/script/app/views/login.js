@@ -9,15 +9,15 @@ define(['jquery',
         'jquery.ui',
         'jquery.easing',
         'notify'],
-    function($,Backbone,i18n,loginTemplate,dashboardTemplate,constants,loginModel) {
+    function ($, Backbone, i18n, loginTemplate, dashboardTemplate, constants, loginModel) {
 
         return Backbone.View.extend({
             el: $('.login'),
-            initialize: function(){
-                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
+            initialize: function () {
+                $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
-            render: function(){
-                if($.cookie(constants.token_name)) {
+            render: function () {
+                if ($.cookie(constants.token_name)) {
                     window.location = constants.base_link + "/#dashboard";
                 } else {
                     $('.container').hide(0);
@@ -31,10 +31,10 @@ define(['jquery',
             /**
              *girişe basılınca mail ve şifreyi kontrol eder ve kullanıcı varsa cookie'e değer atar
              */
-            loginSend: function() {
+            loginSend: function () {
                 var mail = $('#mail').val();
                 var pass = $('#password').val();
-                if(!isValidEmailAddress(mail)) {
+                if (!isValidEmailAddress(mail)) {
                     $("#feedback-panel").text("Mail adresini doğru giriniz").css("color", "red");
                     return false;
                 }
@@ -46,11 +46,11 @@ define(['jquery',
                 $.ajax({
                     type: 'POST',
                     url: '/token/login',
-                    dataType : 'json',
-                    headers: { 'platform' : "2"},
-                    data: {'username' : mail, 'password' : pass},
+                    dataType: 'json',
+                    headers: {'platform': "2"},
+                    data: {'username': mail, 'password': pass},
                     success: function (response) {
-                        if(response.result == "success") {
+                        if (response.result == "success") {
                             $.cookie(constants.token_name, response.data);
                             $.cookie(constants.cookie_username, response.username);
                             window.location = constants.hash + 'dashboard';
@@ -60,7 +60,7 @@ define(['jquery',
                             $("#feedback-panel").text("Yetkisiz giriş engellendi").css("color", "red");
                         }
                     },
-                    error: function(response) {
+                    error: function (response) {
                         console.log(response);
                         alert("bir hata oluştu");
                     }

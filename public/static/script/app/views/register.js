@@ -5,37 +5,37 @@ define(['jquery',
         'util/constants',
         'model/register',
         'jquery.cookie'],
-    function($,Backbone,i18n,registerTemplate,constants,registerModel) {
+    function ($, Backbone, i18n, registerTemplate, constants, registerModel) {
 
         return Backbone.View.extend({
             el: $('.container'),
-            initialize: function(){
-                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
+            initialize: function () {
+                $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
-            render: function(){
+            render: function () {
                 $("#error-div").hide();
-                if($.cookie(constants.token_name)) {
+                if ($.cookie(constants.token_name)) {
                     $.ajax({
-                        type : 'GET',
-                        url  : '/api/user/userName',
-                        headers: { 'kalori_token' : $.cookie(constants.token_name)},
-                        success : function(e) {
+                        type: 'GET',
+                        url: '/api/user/userName',
+                        headers: {'kalori_token': $.cookie(constants.token_name)},
+                        success: function (e) {
                             $('.container').show(0);
                             $(".icerik").empty().html(registerTemplate);
                             $("html").i18n();
                         },
-                        error : function(e) {
-                            window.location = constants.hash+"login";
+                        error: function (e) {
+                            window.location = constants.hash + "login";
                         }
                     })
                 } else {
-                    window.location = constants.hash+"login";
+                    window.location = constants.hash + "login";
                 }
             },
             events: {
                 "click #register_ok": "register_ok"
             },
-            register_ok : function() {
+            register_ok: function () {
 
                 var password = $("#password").val().trim();
                 var password2 = $("#password2").val().trim();
@@ -60,7 +60,7 @@ define(['jquery',
 
                         $.ajax({
                             type: 'GET',
-                            url: 'api/user/kullaniciKontrol/'+mail,
+                            url: 'api/user/kullaniciKontrol/' + mail,
                             headers: {'kalori_token': $.cookie("kalori_token")},
                             success: function (data) {
                                 if (data.durum == "success") {
@@ -78,7 +78,7 @@ define(['jquery',
                                             $("#tel").val("");
                                             $("#password").val("");
                                             $("#password2").val("");
-                                            setTimeout(function(){
+                                            setTimeout(function () {
                                                 $.cookie(constants.user, data.insertId);
                                                 window.location = constants.hash + constants.user + "/profile";
                                             }, 2000);
@@ -103,7 +103,6 @@ define(['jquery',
         });
 
     }
-
 );
 
 //mail geçerlilik kontrolü

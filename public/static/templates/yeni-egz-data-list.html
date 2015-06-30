@@ -1,21 +1,20 @@
-
 <div class="form-group">
     <div style="color: blue" class="col-sm-3 control-label">
         Eklenen Program : <%- egz_ad %>
     </div>
 </div>
 <div id="day_list_div" class="form-group">
-    <label  style="color: red" class="col-sm-3 control-label"> Lütfen Şablonun Eklemek istediğiniz Gününü Seçiniz</label>
+    <label style="color: red" class="col-sm-3 control-label"> Lütfen Şablonun Eklemek istediğiniz Gününü Seçiniz</label>
 
     <div class="col-sm-3">
         <select class="form-control" id="dayList">
             <% for (var i=1; i<8; i++) {
-            console.log("i : " + i + " selected_day  : " + selected_day);
+            console.log("i : " + i + " selected_day : " + selected_day);
             var deger = i - 1;
-                if (i == selected_day) { %>
-                    <option selected data-dgr="<%-days[deger].dgr %>"><%-days[deger].gun %></option>
-                <% } else { %>
-                    <option data-dgr="<%-days[deger].dgr%>"><%-days[deger].gun %></option>
+            if (i == selected_day) { %>
+            <option selected data-dgr="<%-days[deger].dgr %>"><%-days[deger].gun %></option>
+            <% } else { %>
+            <option data-dgr="<%-days[deger].dgr%>"><%-days[deger].gun %></option>
             <% }
             }
             %>

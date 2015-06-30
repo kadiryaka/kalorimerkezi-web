@@ -3,26 +3,28 @@ define(['jquery',
         'i18next',
         'jquery.cookie',
         'moment'],
-    function($,Backbone,i18n) {
+    function ($, Backbone, i18n) {
 
         return Backbone.View.extend({
             el: $('html'),
-            initialize: function(){
+            initialize: function () {
             },
-            render: function(){
+            render: function () {
 
             },
             events: {
-                "click #lang_tr" : "tr",
-                "click #lang_en" : "en"
+                "click #lang_tr": "tr",
+                "click #lang_en": "en"
             },
-            tr: function() {
-                i18n.setLng('tr', {fixLng:true}, function(tr) {});
+            tr: function () {
+                i18n.setLng('tr', {fixLng: true}, function (tr) {
+                });
                 moment.lang('tr');
                 $("html").i18n();
             },
-            en: function() {
-                i18n.setLng('en', {fixLng:true}, function(en) {});
+            en: function () {
+                i18n.setLng('en', {fixLng: true}, function (en) {
+                });
                 moment.lang('en');
                 $("html").i18n();
             }

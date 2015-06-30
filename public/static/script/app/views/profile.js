@@ -31,7 +31,7 @@ define(['jquery',
         return Backbone.View.extend({
             el: $('.container'),
             initialize: function () {
-                $("#user_name_index").text(" "+$.cookie(constants.cookie_username));
+                $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
             render: function () {
                 $("#error-div").hide();
@@ -102,7 +102,7 @@ define(['jquery',
                                 console.log(liste.diyetList[0].icerik);
                                 liste.diyetList[0].icerik = liste.diyetList[0].icerik.replace(/\n/g, "<br />")
                                 var data = {
-                                    b : liste.diyetList
+                                    b: liste.diyetList
                                 }
                                 $("#dinamik-alan" + temp_index).toggle();
                                 $("#dinamik-alan" + temp_index).html(_.template(diyetTableTemplate, data));
@@ -165,7 +165,7 @@ define(['jquery',
 
                     console.log(veri[veri2[1]])
                     console.log(veri[veri2[2]])
-                    if (!isIntAndIsNotNull(veri,veri2)) {
+                    if (!isIntAndIsNotNull(veri, veri2)) {
                         $("#feedback-panel").text("Lütfen sayıyla doldurunuz").css("color", "red");
                     } else {
 
@@ -197,7 +197,7 @@ define(['jquery',
                     dataType: 'json',
                     success: function (liste) {
                         var data = {
-                            liste : liste.sizeList
+                            liste: liste.sizeList
                         };
                         $("#dinamik-icerik").html(_.template(olcuTemplate, data));
                     },
@@ -276,7 +276,7 @@ define(['jquery',
                     }
                 });
             },
-            olcu_sil : function(e) {
+            olcu_sil: function (e) {
                 var olcu_id = $(e.currentTarget).attr('data-dgr');
                 var id = $.cookie(constants.user);
                 $.ajax({
@@ -289,7 +289,7 @@ define(['jquery',
                     },
                     dataType: 'json',
                     success: function (liste) {
-                        $("#"+olcu_id).remove();
+                        $("#" + olcu_id).remove();
                     }
                 });
             }
@@ -458,7 +458,7 @@ define(['jquery',
             }
         }
 
-        function isIntAndIsNotNull(dizi,dizi2) {
+        function isIntAndIsNotNull(dizi, dizi2) {
 
             var er = /^-?[0-9]+$/;
 

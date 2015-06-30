@@ -400,11 +400,11 @@ router.post('/getUserListForSearch', function (req, res) {
             var dizi = [];
             //ekranda kaç data listeleneceğiyle alakalı işlem
             if (result.length >= constants.page_size) {
-                for (var i = 0; i<constants.page_size; i++) {
+                for (var i = 0; i < constants.page_size; i++) {
                     dizi.push(result[i]);
                 }
             } else {
-                for (var i = 0; i<result.length; i++) {
+                for (var i = 0; i < result.length; i++) {
                     dizi.push(result[i]);
                 }
             }
@@ -421,11 +421,11 @@ router.post('/getUserListForSearch', function (req, res) {
             var dizi = [];
             //ekranda kaç data listeleneceğiyle alakalı işlem
             if (result.length >= constants.page_size) {
-                for (var i = 0; i<constants.page_size; i++) {
+                for (var i = 0; i < constants.page_size; i++) {
                     dizi.push(result[i]);
                 }
             } else {
-                for (var i = 0; i<result.length; i++) {
+                for (var i = 0; i < result.length; i++) {
                     dizi.push(result[i]);
                 }
             }
