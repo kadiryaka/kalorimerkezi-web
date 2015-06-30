@@ -99,8 +99,10 @@ define(['jquery',
                             headers: {'kalori_token': $.cookie(constants.token_name), 'temp_id': temp_id},
                             dataType: 'json',
                             success: function (liste) {
+                                console.log(liste.diyetList[0].icerik);
+                                liste.diyetList[0].icerik = liste.diyetList[0].icerik.replace(/\n/g, "<br />")
                                 var data = {
-                                    veri: liste.diyetList
+                                    b : liste.diyetList
                                 }
                                 $("#dinamik-alan" + temp_index).toggle();
                                 $("#dinamik-alan" + temp_index).html(_.template(diyetTableTemplate, data));
