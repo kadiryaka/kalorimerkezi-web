@@ -35,11 +35,11 @@ define(['jquery',
                 var mail = $('#mail').val();
                 var pass = $('#password').val();
                 if (!isValidEmailAddress(mail)) {
-                    $("#feedback-panel").text("Mail adresini doğru giriniz").css("color", "red");
+                    $("#feedback-panel").text("Mail adresini doğru giriniz").css("color", "red").hide().show(300);
                     return false;
                 }
                 if (pass.trim() == "") {
-                    $("#feedback-panel").text("Şifreyi boş girmeyiniz").css("color", "red");
+                    $("#feedback-panel").text("Şifreyi boş girmeyiniz").css("color", "red").hide().show(300);
                     return false;
                 }
 
@@ -55,9 +55,9 @@ define(['jquery',
                             $.cookie(constants.cookie_username, response.username);
                             window.location = constants.hash + 'dashboard';
                         } else if (response.data == "user_not_found") {
-                            $("#feedback-panel").text("Kullanıcı adı veya şifre yanlış").css("color", "red");
+                            $("#feedback-panel").text("Kullanıcı adı veya şifre yanlış").css("color", "red").hide().show(300);
                         } else if (response.data == "unauthorized_login") {
-                            $("#feedback-panel").text("Yetkisiz giriş engellendi").css("color", "red");
+                            $("#feedback-panel").text("Yetkisiz giriş engellendi").css("color", "red").hide().show(300);
                         }
                     },
                     error: function (response) {

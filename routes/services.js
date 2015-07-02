@@ -67,6 +67,20 @@ router.get('/userinformation', function (req, res) {
 
 /*
  GET
+ Kullanıcı için kullanıcı profilini getirir.
+ @requestParams    : user_id
+ */
+router.get('/userinformationforUser', function (req, res) {
+    connection.query('SELECT * from kullanici where k_id = ?', [req.headers.k_id], function (err, user) {
+        if (err) throw err;
+        res.json({
+            'user': user
+        });
+    });
+});
+
+/*
+ GET
  kullanıcının o güne kadar eklenmiş egzersiz templatelerinin tamamını getirir
  @requestParams    : user_id
  */
@@ -495,6 +509,25 @@ router.get('/sporSalonuHomepage', function (req, res) {
             'users': users,
             'aktifSayisi': aktifSporcusayisi,
             'pasifSayisi': pasifSporcuSayisi
+        });
+    });
+});
+
+/*
+ POST
+ kullanıcı bilgilerini günceller
+ @requestParams    :
+ */
+router.post('/editUser', function (req, res) {
+    var salon_id = req.user_id;
+    var k_id = req.headers.k_id;
+    var name = req.body.name;
+    var surname = req.body.surname;
+    var tel = req.body.tel;
+    connection.query("update kullanici set isim = ?, soyisim = ?, tel = ? where k_id = ?", [name,surname,tel,k_id], function (err, cevap) {
+        if (err) throw err;
+        res.json({
+            'durum': "success"
         });
     });
 });

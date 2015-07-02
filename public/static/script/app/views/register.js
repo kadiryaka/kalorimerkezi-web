@@ -47,15 +47,15 @@ define(['jquery',
                 if (name == "" || surname == "" || mail == "" || password == "" || password2 == "" || tel == ""
                     || name == undefined || surname == undefined || mail == undefined || password == undefined || password2 == undefined || tel == undefined
                 ) {
-                    $("#feedback-panel").text("Lütfen bilgileri eksiksiz ve doğru giriniz").show(500).css("color", "red");
+                    $("#feedback-panel").text("Lütfen bilgileri eksiksiz ve doğru giriniz").css("color", "red").hide().show(300);
                 } else {
 
                     if (!isValidEmailAddress(mail)) {
-                        $("#feedback-panel").text("Geçersiz mail adresi").show(500).css("color", "red");
+                        $("#feedback-panel").text("Geçersiz mail adresi").css("color", "red").hide().show(300);
                     } else if (password != password2) {
-                        $("#feedback-panel").text("Şifre uyuşmuyor").show(500).css("color", "red");
+                        $("#feedback-panel").text("Şifre uyuşmuyor").css("color", "red").hide().show(300);
                     } else {
-                        $("#feedback-panel").text("").show(0).css("color", "red");
+                        $("#feedback-panel").text("").css("color", "red").hide().show(300);
                         var datas = {'name': name, 'surname': surname, 'mail': mail, 'tel': tel, 'password': password};
 
                         $.ajax({
@@ -71,7 +71,7 @@ define(['jquery',
                                         data: datas,
                                         dataType: 'json',
                                         success: function (data) {
-                                            $("#feedback-panel").text("Kayıt Başarılı").show(0).css("color", "green");
+                                            $("#feedback-panel").text("Kayıt Başarılı").css("color", "green").hide().show(300);
                                             $("#name").val("");
                                             $("#surname").val("");
                                             $("#mail").val("");
@@ -84,15 +84,15 @@ define(['jquery',
                                             }, 2000);
                                         },
                                         error: function () {
-                                            $("#feedback-panel").text("Kayıt Başarısız!").show(0).css("color", "red");
+                                            $("#feedback-panel").text("Kayıt Başarısız!").css("color", "red").hide().show(300);
                                         }
                                     });
                                 } else {
-                                    $("#feedback-panel").text("Mail adresi kullanılmaktadır").show(500).css("color", "red");
+                                    $("#feedback-panel").text("Mail adresi kullanılmaktadır").css("color", "red").hide().show(300);
                                 }
                             },
                             error: function () {
-                                $("#feedback-panel").text("Bir hata oluştu :(").show(500).css("color", "red");
+                                $("#feedback-panel").text("Bir hata oluştu :(").css("color", "red").hide().show(300);
                             }
                         });
 

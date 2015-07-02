@@ -83,7 +83,7 @@ define(['jquery',
             yeniEgzListButton: function () {
                 tempName = $("#template_baslik").val();
                 if (tempName == undefined || tempName == null || tempName == "") {
-                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color", "red");
+                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color", "red").hide().show(300);
                 } else {
                     $("#feedback-panel").text("");
                     $.ajax({
@@ -180,7 +180,7 @@ define(['jquery',
                                 });
                                 //alttaki egzersiz listesi yenilenecek
                             } else if (listeler.result == "failed") {
-                                $("#feedback-panel").text(listeler.message).css("color", "red");
+                                $("#feedback-panel").text(listeler.message).css("color", "red").hide().show(300);
                             }
                         },
                         error: function (err) {
@@ -188,7 +188,7 @@ define(['jquery',
                         }
                     });
                 } else {
-                    $("#feedback-panel").text("Lütfen ağırlık değerini rakam giriniz").css("color", "red");
+                    $("#feedback-panel").text("Lütfen ağırlık değerini rakam giriniz").css("color", "red").hide().show(300);
                 }
             },
             templateGetir: function () {

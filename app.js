@@ -51,7 +51,10 @@ app.all([
   '/api/services/getUserSize',
   '/api/services/getUserExersizeDateList',
   '/api/services/getEgzersizByDate',
-  '/api/services/getEgzersizByDate'
+  '/api/services/getEgzersizByDate',
+  '/api/services/userinformationforUser',
+  '/api/services/userinformation',
+  '/api/services/editUser',
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);

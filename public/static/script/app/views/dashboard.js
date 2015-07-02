@@ -5,13 +5,55 @@ define(['jquery',
         'model/user',
         'text!template/dashboard.html',
         'text!template/table.html',
-        'util/constants',
-        'model/logout',
-        'jquery.cookie'],
-    function ($, Backbone, _, i18n, User, dashboardTemplate, tableTemplate, constants, logoutMdl) {
+        'text!template/user-edit.html',
+        'util/constants'],
+    function ($, Backbone, _, i18n, User, dashboardTemplate, tableTemplate, userEditTemplate, constants) {
 
         var checkControl = true;
-        var k_id = -1;
+
+        $("#diyalog").dialog({
+            autoOpen: false,//otomatik açılmayı iptal ediyor
+            title: "Kullanıcı Düzenleme",//başlık
+            buttons: [
+                { text: "Kaydet", click: function() {
+                    var name = $("#edit-name").val().trim();
+                    var surname = $("#edit-surname").val().trim();
+                    var tel = $('#edit-tel').val().trim();
+                    var k_id = $('#edit-mail').attr('data-value');
+                    if (name == "" || surname == "" || tel == ""
+                        || name == undefined || surname == undefined || tel == undefined) {
+                        $("#feedback-panel-edit").text("Lütfen bilgileri eksiksiz giriniz").hide().show(300).css("color", "red");
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/services/editUser',
+                            data: {'name': name, 'surname' : surname, 'tel' : tel},
+                            headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.durum == "success") {
+                                    $("#feedback-panel").text("Kullanıcı bilgileri başarıyla değiştirildi").css("color", "green").hide().show(300);
+                                } else {
+                                    $("#feedback-panel").text("Tamamlanamadı, Hata oluştu").css("color", "red").hide().show(300);
+                                }
+                            },
+                            error: function () {
+                                $("#feedback-panel").text("Tamamlanamadı, Hata oluştu").css("color", "red").hide().show(300);
+                            }
+                        });
+                        $(this).dialog("close");
+                    }
+                }}  ,
+                { text: "Kapat", click: function() {
+                    $( this ).dialog("close");
+                }}],
+            draggable: false,//diyalog kutusu taşına bilirliği
+            hide: "clip",
+            show: "clip",
+            /*fold-blind-bounce-clip-drop-explode-fade-highlight-puff-pulsate-scale-shake-slide-size-transfer*/
+            resizable: false,//boyutlandırmayı burdan açıp kapata biliriz
+            modal: true//arka planı kitler tıklanmaz yapar
+        });
 
         //check tiki değiştirildiğinde tetiklenir
         $('body').on('click', '#checkControl', function () {
@@ -33,7 +75,7 @@ define(['jquery',
                 headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
                 dataType: 'json',
                 success: function (veri) {
-                    $("#feedback-panel").text("Kullanıcı durumu başarıyla değiştirildi").css("color", "green").toggle(1000).toggle(1000);
+                    $("#feedback-panel").text("Kullanıcı durumu başarıyla değiştirildi").css("color", "green").hide().show(300);
                 },
                 error: function () {
                     alert("bir hata oluştu");
@@ -48,7 +90,7 @@ define(['jquery',
             }
         });
 
-        //saydalama da tıklanıldığı zaman
+        //sayfalama da tıklanıldığı zaman
         $('body').on('click', '.sayfalama-a', function () {
             var pageCount = $(this).attr('data-page');
             var kriter = null;
@@ -150,17 +192,31 @@ define(['jquery',
             },
             events: {
                 "click #sporcu_ara": "sporcu_ara",
-                "click #edit-button": "kullanici_duzenle"
+                "click tr #edit-button": "kullanici_duzenle"
             },
             sporcu_ara: function () {
                 sporcuAra();
             },
-            kullanici_duzenle: function () {
-                $('element_to_pop_up').bPopup({
-                    modalClose: false,
-                    opacity: 0.6,
-                    positionStyle: 'fixed' //'fixed' or 'absolute'
+            kullanici_duzenle: function (e) {
+                var k_id = $(e.currentTarget).attr('veri-id');
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/services/userinformationforUser',
+                    headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
+                    success: function (data) {
+                        $("#diyalog").html(userEditTemplate);
+                        document.getElementById('edit-name').value = data.user[0].isim;
+                        document.getElementById('edit-surname').value = data.user[0].soyisim;
+                        document.getElementById("edit-mail").value = data.user[0].mail;
+                        document.getElementById("edit-mail").setAttribute("data-value", k_id);
+                        document.getElementById("edit-tel").value = data.user[0].tel;
+                        $("#diyalog").dialog("open");
+                    },
+                    error: function() {
+                        alert("bir hata oluştu");
+                    }
                 });
+
             }
         });
 

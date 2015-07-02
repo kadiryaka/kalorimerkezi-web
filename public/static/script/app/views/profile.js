@@ -131,7 +131,7 @@ define(['jquery',
                 if (true) {
                     var baslik = $("#olcu_baslik").val();
                     if (baslik.trim() == "") {
-                        $("#feedback-panel").text("Başlık Giriniz").css("color", "red");
+                        $("#feedback-panel").text("Başlık Giriniz").css("color", "red").hide().show(300);
                         return false;
                     }
                     var kilo = $("#olcu_kilo").val();
@@ -166,7 +166,7 @@ define(['jquery',
                     console.log(veri[veri2[1]])
                     console.log(veri[veri2[2]])
                     if (!isIntAndIsNotNull(veri, veri2)) {
-                        $("#feedback-panel").text("Lütfen sayıyla doldurunuz").css("color", "red");
+                        $("#feedback-panel").text("Lütfen sayıyla doldurunuz").css("color", "red").hide().show(300);
                     } else {
 
                         $.ajax({
@@ -175,13 +175,13 @@ define(['jquery',
                             headers: veri,
                             dataType: 'json',
                             success: function (liste) {
-                                $("#feedback-panel").text("Kayıt Başarılı").css("color", "green");
+                                $("#feedback-panel").text("Kayıt Başarılı").css("color", "green").hide().show(300);
                                 veri2.forEach(function (deger) {
                                     $("#olcu_" + deger).val("");
                                 });
                             },
                             error: function (error) {
-                                $("#feedback-panel").text("Bir Hata oluştu").css("color", "red");
+                                $("#feedback-panel").text("Bir Hata oluştu").css("color", "red").hide().show(300);
                             }
                         });
                     }
@@ -428,11 +428,11 @@ define(['jquery',
             var user_id = $.cookie(constants.user);
 
             if (bas_tarihi < moment().format('YYYY-MM-DD')) {
-                $("#feedback-panel").text("Başlangıç tarihi bugünden itibaren başlayabilir").css("color", "red");
+                $("#feedback-panel").text("Başlangıç tarihi bugünden itibaren başlayabilir").css("color", "red").hide().show(300);
             } else if (bit_tarihi < bas_tarihi) {
-                $("#feedback-panel").text("Bitiş tarihi başlangıç tarihinden sonra olmalıdır...").css("color", "red");
+                $("#feedback-panel").text("Bitiş tarihi başlangıç tarihinden sonra olmalıdır...").css("color", "red").hide().show(300);
             } else if (program == null || program == "") {
-                $("#feedback-panel").text("Lütfen program seçiniz").css("color", "red");
+                $("#feedback-panel").text("Lütfen program seçiniz").css("color", "red").hide().show(300);
             } else {
                 $.ajax({
                     type: 'GET',
@@ -447,11 +447,11 @@ define(['jquery',
                     dataType: 'json',
                     success: function (res) {
                         if (res) {
-                            $("#feedback-panel").text("Kayıt işlemi başarılı").css("color", "green");
+                            $("#feedback-panel").text("Kayıt işlemi başarılı").css("color", "green").hide().show(300);
                             $("#inputBasTarihi").val(moment().subtract(1, 'days').format('YYYY-MM-DD'));
                             $("#inputBitTarihi").val(moment().format('YYYY-MM-DD'));
                         } else {
-                            $("#feedback-panel").text("Bir hata oluştu").css("color", "red");
+                            $("#feedback-panel").text("Bir hata oluştu").css("color", "red").hide().show(300);
                         }
                     }
                 });

@@ -64,7 +64,7 @@ define(['jquery',
                 var icerik = $("#diyet-text-area").val();
                 if (tikKontrol) {
                     if (tempname == undefined || tempname == null || tempname == "" || tempname.trim() == "") {
-                        $("#diyet-feedback-panel").text("Lütfen başlık giriniz").css("color", "red");
+                        $("#diyet-feedback-panel").text("Lütfen başlık giriniz").css("color", "red").hide().show(300);
                     } else {
                         var datas = {"icerik": icerik, 'temp_name': tempname};
                         $.ajax({
@@ -74,7 +74,7 @@ define(['jquery',
                             dataType: 'json',
                             data: datas,
                             success: function (liste) {
-                                $("#diyet-feedback-panel").text("Kayıt Başarılı").css("color", "green");
+                                $("#diyet-feedback-panel").text("Kayıt Başarılı").css("color", "green").hide().show(300);
                                 $("#template_baslik").val("");
                             },
                             error: function () {
@@ -83,7 +83,6 @@ define(['jquery',
                         });
                     }
                 } else {
-                    console.log("false a girdi istek yapacak");
                     var datas = {"icerik": icerik, 'temp_id': temp_id};
                     $.ajax({
                         type: 'POST',
@@ -92,7 +91,7 @@ define(['jquery',
                         dataType: 'json',
                         data: datas,
                         success: function () {
-                            $("#diyet-feedback-panel").text("Kayıt Başarılı").css("color", "green");
+                            $("#diyet-feedback-panel").text("Kayıt Başarılı").css("color", "green").hide().show(300);
                         },
                         error: function () {
                             alert("Bir hata oluştu");
