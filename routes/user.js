@@ -329,7 +329,7 @@ router.get('/information/size/:tarih', function (req, res) {
 router.post('/getUserList', function (req, res) {
     var salon_id = req.user_id;
     var checkControl = req.body.checkControl;
-    if (checkControl == "true") {
+    if (checkControl == "1") {
         connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and yetki = 1 order by uyelik_tarihi desc limit ?', [salon_id, constants.page_size], function (err, result) {
             connection.query('SELECT isim from kullanici where salon_id = ? and yetki = 1', [salon_id], function (err, sayi) {
                 if (err) throw err;
@@ -362,7 +362,7 @@ router.post('/getUserListForPage/:page', function (req, res) {
     var kriter = req.body.ad;
     var checkControl = req.body.checkControl;
     var minSize = (page - 1) * constants.page_size;
-    if (checkControl == "true") {
+    if (checkControl == "1") {
         connection.query('SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? and yetki = 1 order by uyelik_tarihi desc limit ?,?', [salon_id, '%' + kriter + '%', minSize, constants.page_size], function (err, result) {
             connection.query('SELECT isim from kullanici where salon_id = ? and isim like ? and yetki = 1', [salon_id, '%' + kriter + '%'], function (err, sayi) {
                 if (err) throw err;
@@ -394,7 +394,7 @@ router.post('/getUserListForSearch', function (req, res) {
     var salon_id = req.user_id;
     var kriter = req.body.ad;
     var checkControl = req.body.checkControl;
-    if (checkControl == "true") {
+    if (checkControl == "1") {
         connection.query("SELECT k_id,isim, soyisim, mail, tel, yetki FROM kullanici where salon_id = ? and isim like ? and yetki = 1 order by uyelik_tarihi desc", [salon_id, '%' + kriter + '%'], function (err, result) {
             if (err) throw err;
             var dizi = [];

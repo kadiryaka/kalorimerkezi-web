@@ -532,5 +532,19 @@ router.post('/editUser', function (req, res) {
     });
 });
 
+/*
+ GET
+ id si verilen kullanıcıyı siler gibi yapar. halbuki pasif hale getirecek ve statusunu 0 yapacak
+ @requestParams    :
+ */
+router.get('/deleteUserById', function (req, res) {
+    var k_id = req.headers.k_id;
+    connection.query("update kullanici set yetki = ?, status = ?, aktivasyon_kodu = ? where k_id = ?", [0,0,"",k_id], function (err, cevap) {
+        if (err) throw err;
+        res.json({
+            'durum': "success"
+        });
+    });
+});
 
 module.exports = router;

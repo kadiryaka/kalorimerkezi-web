@@ -55,6 +55,7 @@ app.all([
   '/api/services/userinformationforUser',
   '/api/services/userinformation',
   '/api/services/editUser',
+  '/api/services/deleteUserById',
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);

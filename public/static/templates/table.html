@@ -6,6 +6,7 @@
         <th>Mail adresi</th>
         <th>Telefon</th>
         <th>Durum</th>
+        <th>İşlem</th>
     </tr>
     </thead>
     <tbody>
@@ -24,15 +25,22 @@
         <td data-id="<%- users[i].k_id %>"><%- users[i].mail %></td>
         <td data-id="<%- users[i].k_id %>"><%- users[i].tel %></td>
         <td data-id="-1">
-            <select class="form-control" name="" id="durum_combobox" veri-id="<%- users[i].k_id %>">
-                <% if(users[i].yetki) { %>
+            <% if(users[i].yetki) { %>
+            <select class="btn btn-success dropdown-toggle" style="height: 90%" name="" id="durum_combobox_aktif" veri-id="<%- users[i].k_id %>">
                 <option value="1" selected>Aktif</option>
                 <option value="0">Pasif</option>
-                <% } else { %>
+            </select>
+            <% } else { %>
+            <select class="btn btn-danger dropdown-toggle" style="height: 90%" name="" id="durum_combobox_pasif" veri-id="<%- users[i].k_id %>">
                 <option value="1">Aktif</option>
                 <option value="0" selected>Pasif</option>
-                <% } %>
             </select>
+            <% } %>
+
+        </td>
+        <td>
+            <button class="btn btn-warning" id="edit-button" veri-id="<%- users[i].k_id %>">Düzenle</button>
+            <button class="btn btn-danger" id="delete-button" veri-id="<%- users[i].k_id %>">SİL</button>
         </td>
     </tr>
     <% } %>

@@ -9,8 +9,7 @@ define(['jquery',
         'util/constants'],
     function ($, Backbone, _, i18n, User, dashboardTemplate, tableTemplate, userEditTemplate, constants) {
 
-        var checkControl = true;
-
+        var deleteId = null;
         $("#diyalog").dialog({
             autoOpen: false,//otomatik açılmayı iptal ediyor
             title: "Kullanıcı Düzenleme",//başlık
@@ -33,6 +32,8 @@ define(['jquery',
                             success: function (result) {
                                 if (result.durum == "success") {
                                     $("#feedback-panel").text("Kullanıcı bilgileri başarıyla değiştirildi").css("color", "green").hide().show(300);
+                                    var pageCount = $(".sayfalama-current").attr("data-page");
+                                    sayfalamaKullaniciGetir(pageCount);
                                 } else {
                                     $("#feedback-panel").text("Tamamlanamadı, Hata oluştu").css("color", "red").hide().show(300);
                                 }
@@ -55,27 +56,61 @@ define(['jquery',
             modal: true//arka planı kitler tıklanmaz yapar
         });
 
-        //check tiki değiştirildiğinde tetiklenir
-        $('body').on('click', '#checkControl', function () {
-            if (checkControl) {
-                checkControl = false;
-            } else {
-                checkControl = true;
-            }
+        $("#dialogDelete").dialog({
+            autoOpen: false,//otomatik açılmayı iptal ediyor
+            title: "SİL",//başlık
+            open: function() {
+                var markup = 'Kullanıcı Silinecek, Emin misin?';
+                $(this).html(markup);
+            },
+            buttons: [
+                { text: "SİL", click: function() {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/api/services/deleteUserById',
+                        headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': deleteId},
+                        success: function (data) {
+                            if (data.durum == "success") {
+                                $("#feedback-panel").text("Kullanıcı silme işlemi başarılı").hide().show(300).css("color", "green");
+                                var pageCount = $(".sayfalama-current").attr("data-page");
+                                sayfalamaKullaniciGetir(pageCount);
+                            } else {
+                                $("#feedback-panel").text("Tamamlanamadı, Hata oluştu").css("color", "red").hide().show(300);
+                            }
+                        },
+                        error: function() {
+                            $("#feedback-panel").text("Tamamlanamadı, Hata oluştu").css("color", "red").hide().show(300);
+                        }
+                    });
+                    $( this ).dialog("close");
+                }},
+                { text: "İPTAL", click: function() {
+                    $( this ).dialog("close");
+                }}],
+            draggable: false,//diyalog kutusu taşına bilirliği
+            hide: "clip",
+            show: "clip",
+            /*fold-blind-bounce-clip-drop-explode-fade-highlight-puff-pulsate-scale-shake-slide-size-transfer*/
+            resizable: false,//boyutlandırmayı burdan açıp kapata biliriz
+            modal: true//arka planı kitler tıklanmaz yapar
         });
 
         //aktif pasif değiştiğinde tetiklenir
-        $('body').on('change', '#durum_combobox', function () {
-            var val = $(this).val();
+        $('body').on('change', '#durum_combobox_aktif, #durum_combobox_pasif', function () {
+            var durum = $(this).val();
             var k_id = $(this).attr('veri-id');
+            if (durum == 0) {
+                $(this).css("background-color","#e33244")
+            } else if (durum == 1) {
+                $(this).css("background-color","#1aae88")
+            }
             $.ajax({
                 type: 'POST',
                 url: '/api/user/durumuDegistir',
-                data: {'durum': val},
+                data: {'durum': durum},
                 headers: {'kalori_token': $.cookie(constants.token_name), 'k_id': k_id},
                 dataType: 'json',
                 success: function (veri) {
-                    $("#feedback-panel").text("Kullanıcı durumu başarıyla değiştirildi").css("color", "green").hide().show(300);
                 },
                 error: function () {
                     alert("bir hata oluştu");
@@ -93,44 +128,7 @@ define(['jquery',
         //sayfalama da tıklanıldığı zaman
         $('body').on('click', '.sayfalama-a', function () {
             var pageCount = $(this).attr('data-page');
-            var kriter = null;
-            var ad = $("#ara_input").val();
-            if (ad == undefined || ad == null || ad == "") {
-                //
-            } else {
-                kriter = ad;
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/api/user/getUserListForPage/' + pageCount,
-                headers: {'kalori_token': $.cookie(constants.token_name)},
-                data: {'ad': kriter, 'checkControl': checkControl},
-                success: function (response) {
-                    var page = 0;
-                    var userSize = constants.page_size;
-                    if (response.sayi == 0) {
-                        userSize = 0;
-                    }
-                    else if (response.sayi <= constants.page_size) {
-                        page = 1;
-                        userSize = response.result.length;
-                    }
-                    else {
-                        page = Math.ceil((response.sayi / constants.page_size));
-                    }
-
-                    var data = {
-                        users: response.result,
-                        salon: $.cookie(constants.cookie_username),
-                        page: page,
-                        userSize: userSize,
-                        currentPage: pageCount,
-                        totalUser: response.sayi
-                    };
-                    $(".content").html(_.template(tableTemplate, data));
-                }
-            });
-
+            sayfalamaKullaniciGetir(pageCount);
         });
 
         //kullanıcı seçildiği zaman
@@ -149,6 +147,7 @@ define(['jquery',
             el: $('.icerik'),
             initialize: function () {
                 $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
+                deleteId = -2;
             },
             render: function () {
                 $("#error-div").hide();
@@ -157,7 +156,7 @@ define(['jquery',
                         type: 'POST',
                         url: '/api/user/getUserList',
                         headers: {'kalori_token': $.cookie(constants.token_name)},
-                        data: {'checkControl': checkControl},
+                        data: {'checkControl': "1"},
                         success: function (response) {
                             var page = 0;
                             var userSize = constants.page_size;
@@ -192,9 +191,11 @@ define(['jquery',
             },
             events: {
                 "click #sporcu_ara": "sporcu_ara",
-                "click tr #edit-button": "kullanici_duzenle"
+                "click tr #edit-button": "kullanici_duzenle",
+                "click tr #delete-button": "kullanici_sil"
             },
             sporcu_ara: function () {
+                $("#feedback-panel").text("");
                 sporcuAra();
             },
             kullanici_duzenle: function (e) {
@@ -216,7 +217,11 @@ define(['jquery',
                         alert("bir hata oluştu");
                     }
                 });
-
+            },
+            kullanici_sil : function(e) {
+                var k_id = $(e.currentTarget).attr('veri-id');
+                deleteId = k_id;
+                $("#dialogDelete").dialog("open");
             }
         });
 
@@ -226,7 +231,7 @@ define(['jquery',
                 type: 'POST',
                 url: '/api/user/getUserListForSearch',
                 headers: {'kalori_token': $.cookie(constants.token_name)},
-                data: {'ad': ad, 'checkControl': checkControl},
+                data: {'ad': ad, 'checkControl': $( "#checkControl:checked" ).length},
                 success: function (response) {
                     var page = 0;
                     var userSize = constants.page_size;
@@ -251,6 +256,46 @@ define(['jquery',
                         totalUser: response.sayi
                     };
                     console.log(response.result);
+                    $(".content").html(_.template(tableTemplate, data));
+                }
+            });
+        }
+
+        function sayfalamaKullaniciGetir (pageCount) {
+            var kriter = null;
+            var ad = $("#ara_input").val();
+            if (ad == undefined || ad == null || ad == "") {
+                //
+            } else {
+                kriter = ad;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/api/user/getUserListForPage/' + pageCount,
+                headers: {'kalori_token': $.cookie(constants.token_name)},
+                data: {'ad': kriter, 'checkControl': $( "#checkControl:checked" ).length},
+                success: function (response) {
+                    var page = 0;
+                    var userSize = constants.page_size;
+                    if (response.sayi == 0) {
+                        userSize = 0;
+                    }
+                    else if (response.sayi <= constants.page_size) {
+                        page = 1;
+                        userSize = response.result.length;
+                    }
+                    else {
+                        page = Math.ceil((response.sayi / constants.page_size));
+                    }
+
+                    var data = {
+                        users: response.result,
+                        salon: $.cookie(constants.cookie_username),
+                        page: page,
+                        userSize: userSize,
+                        currentPage: pageCount,
+                        totalUser: response.sayi
+                    };
                     $(".content").html(_.template(tableTemplate, data));
                 }
             });
