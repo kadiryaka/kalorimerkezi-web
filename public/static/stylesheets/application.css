@@ -1297,7 +1297,7 @@ input,
 button,
 select,
 textarea {
-  font-family: inherit;
+  font-family: Arial, Sans Serif, Helvetica;
   font-size: inherit;
   line-height: inherit; }
 
@@ -1383,7 +1383,7 @@ hr {
 /* line 10, /home/clyfe/dev/emerald/vendor/assets/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_type.scss */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: inherit;
+  font-family: Arial, Sans Serif, Helvetica;
   font-weight: 500;
   line-height: 1.3;
   color: inherit; }
@@ -4877,8 +4877,8 @@ tbody.collapse.in {
   .pagination > .active > span:focus {
     z-index: 2;
     color: white;
-    background-color: #1aae88;
-    border-color: #1aae88;
+    background-color: #428bca;
+    border-color: #428bca;
     cursor: default; }
   /* line 68, /home/clyfe/dev/emerald/vendor/assets/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_pagination.scss */
   .pagination > .disabled > span,
@@ -33852,7 +33852,8 @@ body .ui-tooltip {
 
 /* line 211, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-folder-plus4:before {
-  content: "\e0a7"; }
+  content: "\e0a7";
+  font-size: 75px; }
 
 /* line 212, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-folder-remove2:before {
@@ -33984,7 +33985,8 @@ body .ui-tooltip {
 
 /* line 244, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-cart-plus:before {
-  content: "\e0c8"; }
+  content: "\e0c8";
+font-size: 75px;}
 
 /* line 245, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-cart-minus:before {
@@ -35076,7 +35078,8 @@ body .ui-tooltip {
 
 /* line 517, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-wrench3:before {
-  content: "\e1d9"; }
+  content: "\e1d9";
+font-size: 60px;}
 
 /* line 518, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-wrench4:before {

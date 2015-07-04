@@ -1,7 +1,7 @@
 define(['jquery',
         'backbone',
         'i18next',
-        'text!template/register.html',
+        'text!template/sporcukayit/register.html',
         'util/constants',
         'model/register',
         'jquery.cookie'],

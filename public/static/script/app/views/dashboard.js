@@ -3,9 +3,9 @@ define(['jquery',
         'underscore',
         'i18next',
         'model/user',
-        'text!template/dashboard.html',
-        'text!template/table.html',
-        'text!template/user-edit.html',
+        'text!template/sporcular/dashboard.html',
+        'text!template/sporcular/table.html',
+        'text!template/dialog/user-edit.html',
         'util/constants'],
     function ($, Backbone, _, i18n, User, dashboardTemplate, tableTemplate, userEditTemplate, constants) {
 

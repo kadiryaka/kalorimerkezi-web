@@ -1,5 +1,5 @@
 <div class="form-group">
-    <div style="color: blue" class="col-sm-3 control-label">
+    <div style="color: #1abc9c" class="col-sm-4  control-label">
         Eklenen Program : <%- egz_ad %>
     </div>
 </div>
@@ -7,7 +7,7 @@
     <label style="color: red" class="col-sm-3 control-label"> Lütfen Şablonun Eklemek istediğiniz Gününü Seçiniz</label>
 
     <div class="col-sm-3">
-        <select class="form-control" id="dayList">
+        <select class="form-control btn dropdown-toggle" id="dayList" style="background-color: #1abc9c; color: white;">
             <% for (var i=1; i<8; i++) {
             console.log("i : " + i + " selected_day : " + selected_day);
             var deger = i - 1;
@@ -46,7 +46,7 @@
                 <td><%- veri[i].agirlik %></td>
                 <td><%- veri[i].makina_no %></td>
                 <td>
-                    <button id="egz-sil" data-dgr="<%- veri[i].id %>">SİL</button>
+                    <button type="button" class="btn btn-danger" id="egz-sil" data-dgr="<%- veri[i].id %>">SİL</button>
                 </td>
             </tr>
             <% } %>

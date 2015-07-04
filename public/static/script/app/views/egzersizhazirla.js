@@ -3,13 +3,15 @@ define(['jquery',
         'underscore',
         'i18next',
         'model/user',
-        'text!template/egzersiz-hazirla.html',
-        'text!template/yeni-egz-data-list.html',
-        'text!template/excersize-table.html',
+        'text!template/egzersizhazirla/egzersiz-hazirla.html',
+        'text!template/egzersizhazirla/yeni-egz-data-list.html',
+        'text!template/profile/excersize-table.html',
+        'text!template/dialog/yeni-egz-kaydet.html',
+        'text!template/dialog/editEgzersiz.html',
         'util/constants',
         'model/logout',
         'jquery.cookie'],
-    function ($, Backbone, _, i18n, User, egzHazTemplate, yeniEgzDataListTemplate, excersizeTable, constants, logoutMdl) {
+    function ($, Backbone, _, i18n, User, egzHazTemplate, yeniEgzDataListTemplate, excersizeTable, yeniEgzkaydetTemplate, editEgzersizTemplate, constants, logoutMdl) {
 
         var temp_id = 0;
         var temp_day_id = 1;
@@ -22,6 +24,50 @@ define(['jquery',
             "dgr": "6"
         }, {"gun": "Pazar", "dgr": "7"}, {"gun": "adsada", "dgr": "8"}]
 
+        $("#dialogNewExcersize").dialog({
+            autoOpen: false,//otomatik açılmayı iptal ediyor
+            title: "BAŞLIK",//başlık
+            buttons: [
+                {
+                    text: "EKLE", click: function () {
+                    tempName = $("#template_baslik").val().trim();
+                    yeniEgzTempKaydet();
+                }
+                },
+                {
+                    text: "İPTAL", click: function () {
+                    $(this).dialog("close");
+                }
+                }],
+            draggable: false,//diyalog kutusu taşına bilirliği
+            hide: "clip",
+            show: "clip",
+            /*fold-blind-bounce-clip-drop-explode-fade-highlight-puff-pulsate-scale-shake-slide-size-transfer*/
+            resizable: false,//boyutlandırmayı burdan açıp kapata biliriz
+            modal: true//arka planı kitler tıklanmaz yapar
+        });
+
+        $("#dialogEditExcersize").dialog({
+            autoOpen: false,//otomatik açılmayı iptal ediyor
+            title: "SEÇ",//başlık
+            buttons: [
+                {
+                    text: "SEÇ", click: function () {
+                    tempGetir();
+                }
+                },
+                {
+                    text: "İPTAL", click: function () {
+                    $(this).dialog("close");
+                }
+                }],
+            draggable: false,//diyalog kutusu taşına bilirliği
+            hide: "clip",
+            show: "clip",
+            /*fold-blind-bounce-clip-drop-explode-fade-highlight-puff-pulsate-scale-shake-slide-size-transfer*/
+            resizable: false,//boyutlandırmayı burdan açıp kapata biliriz
+            modal: true//arka planı kitler tıklanmaz yapar
+        });
 
         //açılırken burası çalışıyor
         return Backbone.View.extend({
@@ -47,10 +93,13 @@ define(['jquery',
                                 dataType: 'json',
                                 success: function (egz) {
                                     var data = {
-                                        veri: liste.excersizeTemplateList,
                                         egz_data: egz.egzersizList
                                     }
+                                    var data2 = {
+                                        veri: liste.excersizeTemplateList
+                                    }
                                     $(".icerik").html(_.template(egzHazTemplate, data));
+                                    $("#dialogEditExcersize").html(_.template(editEgzersizTemplate, data2));
                                     $("#yeni-sablon-baslik").hide();
                                     $("#eski-sablonlar").hide();
                                     $("#ekleme-listesi").hide();
@@ -65,7 +114,6 @@ define(['jquery',
             events: {
                 "click #egzersiz-template-eski": "showDropdown",
                 "click #egzersiz-template-yeni": "showBaslik",
-                "click #egzersiz-baslik-button": "yeniEgzListButton",
                 "click #egz-kaydet-button": "egzIcerikKaydet",
                 "click #template-getir": "templateGetir",
                 "click #egz-sil": "egzSil",
@@ -73,55 +121,13 @@ define(['jquery',
                 "change #dayList": "gunDataGetir"
             },
             showBaslik: function () {
-                $(".tercih-butonlari").hide();
-                $("#yeni-sablon-baslik").show();
+                //$("#yeni-sablon-baslik").show();
+                $("#dialogNewExcersize").html(yeniEgzkaydetTemplate);
+                $("#dialogNewExcersize").dialog("open");
             },
             showDropdown: function () {
-                $(".tercih-butonlari").hide();
-                $("#eski-sablonlar").show();
-            },
-            yeniEgzListButton: function () {
-                tempName = $("#template_baslik").val();
-                if (tempName == undefined || tempName == null || tempName == "") {
-                    $("#feedback-panel").text("Lütfen başlık ismi giriniz").css("color", "red").hide().show(300);
-                } else {
-                    $("#feedback-panel").text("");
-                    $.ajax({
-                        type: 'GET',
-                        url: '/api/services/saveExersizeTemplateName',
-                        headers: {'kalori_token': $.cookie(constants.token_name), 'temp_name': tempName},
-                        dataType: 'json',
-                        success: function (liste) {
-                            temp_id = liste.insertId;
-                            $.ajax({
-                                type: 'GET',
-                                url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
-                                headers: {
-                                    'kalori_token': $.cookie(constants.token_name),
-                                    'temp_id': liste.insertId,
-                                    'day_id': temp_day_id
-                                },
-                                dataType: 'json',
-                                success: function (listeler) {
-                                    var data = {
-                                        veri: listeler.excersizeList,
-                                        egz_ad: tempName,
-                                        selected_day: temp_day_id,
-                                        days: days
-                                    }
-                                    console.log("birazdan template yükletçek")
-                                    $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
-                                    $("#yeni-sablon-baslik").hide();
-                                    $("#ekleme-listesi").show();
-                                }
-                            });
-                        },
-                        error: function () {
-                            alert("Bir hata oluştu");
-                        }
-                    });
-
-                }
+                //$("#eski-sablonlar").show();
+                $("#dialogEditExcersize").dialog("open");
             },
             egzIcerikKaydet: function () {
 
@@ -192,31 +198,7 @@ define(['jquery',
                 }
             },
             templateGetir: function () {
-                temp_id = $('#egz-temp-list option:selected').attr('data-dgr');
-                tempName = $('#egz-temp-list option:selected').val();
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
-                    headers: {
-                        'kalori_token': $.cookie(constants.token_name),
-                        "temp_id": temp_id,
-                        'day_id': 1
-                    },
-                    dataType: 'json',
-                    success: function (egzListesi) {
-                        var data = {
-                            veri: egzListesi.excersizeList,
-                            egz_ad: tempName,
-                            selected_day: 1,
-                            days: days
-                        }
-                        $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
-                        $("#ekleme-listesi").show();
-                    },
-                    error: function (err) {
-                        alert("bir hata oluştu");
-                    }
-                });
+
             },
             egzSil: function (e) {
                 var silId = $(e.currentTarget).attr('data-dgr');
@@ -279,6 +261,82 @@ define(['jquery',
             var er = /^-?[0-9]+$/;
 
             return er.test(value);
+        }
+
+        function yeniEgzTempKaydet() {
+
+            if (tempName == undefined || tempName == null || tempName == "") {
+                $("#feedback-panel-edit").text("Lütfen başlık ismi giriniz").css("color", "red").hide().show(300);
+            } else {
+                $("#feedback-panel-edit").text("");
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/services/saveExersizeTemplateName',
+                    headers: {'kalori_token': $.cookie(constants.token_name), 'temp_name': tempName},
+                    dataType: 'json',
+                    success: function (liste) {
+                        temp_id = liste.insertId;
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
+                            headers: {
+                                'kalori_token': $.cookie(constants.token_name),
+                                'temp_id': liste.insertId,
+                                'day_id': temp_day_id
+                            },
+                            dataType: 'json',
+                            success: function (listeler) {
+                                var data = {
+                                    veri: listeler.excersizeList,
+                                    egz_ad: tempName,
+                                    selected_day: temp_day_id,
+                                    days: days
+                                }
+                                console.log("birazdan template yükletçek")
+                                $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
+                                $("#yeni-sablon-baslik").hide();
+                                $(".tercih-butonlari").hide();
+                                $("#ekleme-listesi").show();
+                                $("#dialogNewExcersize").dialog("close");
+                            }
+                        });
+                    },
+                    error: function () {
+                        alert("Bir hata oluştu");
+                    }
+                });
+            }
+        }
+
+        function tempGetir() {
+            temp_id = $('#egz-temp-list option:selected').attr('data-dgr');
+            tempName = $('#egz-temp-list option:selected').val();
+            $.ajax({
+                type: 'GET',
+                url: '/api/services/getExcersizeByExcersizeTemplateAndDayId',
+                headers: {
+                    'kalori_token': $.cookie(constants.token_name),
+                    "temp_id": temp_id,
+                    'day_id': 1
+                },
+                dataType: 'json',
+                success: function (egzListesi) {
+                    var data = {
+                        veri: egzListesi.excersizeList,
+                        egz_ad: tempName,
+                        selected_day: 1,
+                        days: days
+                    }
+                    $(".tercih-butonlari").hide();
+                    $("#yeni-egz-list").html(_.template(yeniEgzDataListTemplate, data));
+                    $("#ekleme-listesi").show();
+                    $("#dialogEditExcersize").dialog("close");
+                },
+                error: function (err) {
+                    alert("bir hata oluştu");
+                    $("#feedback-panel-edit").text("Bir hata oluştu").css("color", "red").hide().show(300);
+                }
+            });
         }
 
     }

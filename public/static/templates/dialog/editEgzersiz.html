@@ -1,0 +1,14 @@
+<div id="editEgz">
+    <div class="form-group">
+        <label class="col-sm-12 control-label" style="color: #1dc096;">Program Seçiniz</label>
+
+        <div class="col-sm-12">
+            <select style="height: 35px;" class="btn btn-info dropdown-toggle" id="egz-temp-list">
+                <% for (var i = 0; i < veri.length; i++) { %>
+                <option data-dgr="<%- veri[i].temp_id %>"><%- veri[i].temp_adi %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="text-center form-group col-sm-offset-2 col-sm-10" id="feedback-panel-edit"></div>
+    </div>
+</div>

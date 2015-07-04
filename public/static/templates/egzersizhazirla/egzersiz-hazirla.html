@@ -5,7 +5,10 @@
             <div class="col-sm-6 turbo-toggle tercih-butonlari" id="egzersiz-template-yeni">
                 <div class="tile-normal bg-success gradient-diag1">
                     <div class="panel-heading">
-                        <div class="panel-title"><h3>YENİ EGZERSİZ ŞABLONU OLUŞTUR</h3></div>
+                        <i class="oc-partial-icon icm icm-cart-plus"> </i>
+                    </div>
+                    <div class="panel-heading">
+                        <div class="panel-title"><h3>YENİ ŞABLON OLUŞTUR</h3></div>
                     </div>
                     <div class="panel-body">
                         <table class="table-full push-bottom">
@@ -22,7 +25,10 @@
             <div class="col-sm-6 turbo-toggle tercih-butonlari" id="egzersiz-template-eski">
                 <div class="tile-normal bg-info gradient-diag1">
                     <div class="panel-heading">
-                        <div class="panel-title"><h3>ESKİ EGZERSİZ ŞABLONU DÜZENLE</h3></div>
+                        <i class="oc-partial-icon icm icm-wrench3"> </i>
+                    </div>
+                    <div class="panel-heading">
+                        <div class="panel-title"><h3>ESKİ ŞABLONU DÜZENLE</h3></div>
                     </div>
                     <div class="panel-body">
                         <table class="table-full push-bottom">
@@ -40,36 +46,11 @@
 
 
             <!-- yeni - baslik  -->
-            <div id="yeni-sablon-baslik">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Başlık</label>
-
-                    <div class="col-sm-3">
-                        <input maxlength="200" required type="text" value="" class="form-control" id="template_baslik"
-                               placeholder="Başlık   (örn: Zayıflama Programı)">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" id="egzersiz-baslik-button">KAYDET</button>
-                    </div>
-                </div>
-            </div>
             <!-- yeni - baslik  -->
 
             <!-- eskiyi düzenlemek isterse -> dropdown -->
             <div id="eski-sablonlar">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Program</label>
 
-                    <div class="col-sm-3">
-                        <select class="form-control" id="egz-temp-list">
-                            <% for (var i = 0; i < veri.length; i++) { %>
-                            <option data-dgr="<%- veri[i].temp_id %>"><%- veri[i].temp_adi %></option>
-                            <% } %>
-                        </select>
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button class="btn btn-default" id="template-getir">GETİR</button>
@@ -82,7 +63,7 @@
                 <div class="panel-body-collapse collapse in">
                     <div class="panel-body ">
 
-                        <table class="table table-striped">
+                        <table  style="border: 2px solid #1abc9c" class="table table-striped egz-hazirla">
                             <thead>
                             <tr class="row-mid">
                                 <th>Egzersiz Adı</th>
@@ -95,7 +76,7 @@
                             <tbody>
                             <tr class="row-mid">
                                 <td>
-                                    <select class="form-control" id="egz-dropdown">
+                                    <select class="form-control btn dropdown-toggle egz-drop" id="egz-dropdown" style="background-color: #1abc9c; color: white;">
                                         <% for (var i = 0; i < egz_data.length; i++) { %>
                                         <option data-dgr="<%- egz_data[i].egz_id %>"><%- egz_data[i].egz_ad %></option>
                                         <% } %>
@@ -117,7 +98,7 @@
                                            class="form-control" id="egz-makina" placeholder="Makina (örn:5 numara)">
                                 </td>
                                 <td>
-                                    <button id="egz-kaydet-button">KAYDET</button>
+                                    <button type="button" class="btn btn-primary" id="egz-kaydet-button">KAYDET</button>
                                 </td>
                             </tr>
                             </tbody>

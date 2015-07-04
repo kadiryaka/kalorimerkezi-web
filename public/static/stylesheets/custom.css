@@ -53,3 +53,24 @@ a {
     background-color: rgb(189, 195, 199);
     cursor: default;
 }
+
+#users-table thead tr:hover {
+
+    background-color: #428bca;
+}
+
+.register-div input {
+    border: 1px solid #ededed;
+}
+
+.register-div input:hover {
+    border: 1px solid #22ba93;
+}
+
+.register-div input:focus {
+    border: 3px solid #22ba93;
+}
+
+.egz-hazirla input {
+    border: 1px solid #1abc9c;
+}
