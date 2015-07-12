@@ -58,6 +58,7 @@ define(['jquery',
                 tikKontrol = false;
                 $(".tercih-butonlari").hide();
                 $("#eski-sablonlar").show();
+                templateGetir();
             },
             yeniDiyetListButton: function () {
                 var tempname = $("#template_baslik").val();
@@ -100,24 +101,28 @@ define(['jquery',
                 }
             },
             templateGetir: function () {
-                temp_id = $('#diyet-temp-list option:selected').attr('data-dgr');
-                console.log("template id : " + temp_id);
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/services/getDiyetByDiyetTemplate',
-                    headers: {'kalori_token': $.cookie(constants.token_name), "temp_id": temp_id},
-                    dataType: 'json',
-                    success: function (diyetListesi) {
-                        $("#diyet-ekleme-listesi").show();
-                        $("#diyet-text-area").text(diyetListesi.diyetList[0].icerik);
-                    },
-                    error: function (err) {
-                        alert("bir hata oluştu");
-                    }
-                });
+                templateGetir();
             }
 
         });
+
+        function templateGetir() {
+            temp_id = $('#diyet-temp-list option:selected').attr('data-dgr');
+            console.log("template id : " + temp_id);
+            $.ajax({
+                type: 'GET',
+                url: '/api/services/getDiyetByDiyetTemplate',
+                headers: {'kalori_token': $.cookie(constants.token_name), "temp_id": temp_id},
+                dataType: 'json',
+                success: function (diyetListesi) {
+                    $("#diyet-ekleme-listesi").show();
+                    $("#diyet-text-area").text(diyetListesi.diyetList[0].icerik);
+                },
+                error: function (err) {
+                    alert("bir hata oluştu");
+                }
+            });
+        }
 
     }
 );

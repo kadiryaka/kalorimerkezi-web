@@ -1,7 +1,11 @@
 <div class="panel-body-collapse collapse in">
     <div class="panel-body">
 
-
+        <% if (liste.length == 0) { %>
+            <div class="panel-body">Egzersiz kaydı girilmiş gün bulunmamaktadır</div>
+        <%
+        } else {
+        %>
         <div class="form-horizontal" role="form">
 
             <div class="form-group">
@@ -17,11 +21,11 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" id="yap-egz-button">Getir</button>
+                    <button class="btn btn-success" id="yap-egz-button">Getir</button>
                 </div>
             </div>
-
         </div>
+        <% }  %>
     </div>
 </div>
 

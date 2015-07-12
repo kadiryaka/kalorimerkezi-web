@@ -22777,7 +22777,6 @@ h3.em-page-header {
     -moz-transition: -moz-transform 0.15s ease-out 0.25s, opacity 0.2s ease-out 0.1s;
     -o-transition: -o-transform 0.15s ease-out 0.25s, opacity 0.2s ease-out 0.1s;
     transition: transform 0.15s ease-out 0.25s, opacity 0.2s ease-out 0.1s;
-    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -35079,7 +35078,7 @@ font-size: 75px;}
 /* line 517, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-wrench3:before {
   content: "\e1d9";
-font-size: 60px;}
+font-size: 30px;}
 
 /* line 518, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-wrench4:before {
@@ -35419,7 +35418,9 @@ font-size: 60px;}
 
 /* line 602, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-apple-fruit:before {
-  content: "\e22e"; }
+  content: "\e22e";
+  font-size: 60px;
+}
 
 /* line 603, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-tree:before {
@@ -35519,7 +35520,8 @@ font-size: 60px;}
 
 /* line 627, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-dumbbell:before {
-  content: "\e247"; }
+  content: "\e247";
+font-size: 60px}
 
 /* line 628, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-skull:before {
@@ -36637,7 +36639,8 @@ font-size: 60px;}
 
 /* line 906, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-plus-circle:before {
-  content: "\e35e"; }
+  content: "\e35e";
+font-size: 25px}
 
 /* line 907, /home/clyfe/dev/emerald/source/stylesheets/fonts/_icomoon.scss */
 .icm-plus-circle2:before {

@@ -64,13 +64,19 @@ define(['jquery',
                             headers: {'kalori_token': $.cookie("kalori_token")},
                             success: function (data) {
                                 if (data.durum == "success") {
+                                    var url = "";
+                                    if (data.update == "yes")
+                                        url = "api/user/userUpdateForRegister";
+                                    else
+                                        url = "api/user/register";
+
                                     $.ajax({
                                         type: 'POST',
-                                        url: 'api/user/register',
+                                        url: url,
                                         headers: {'kalori_token': $.cookie(constants.token_name)},
                                         data: datas,
                                         dataType: 'json',
-                                        success: function (data) {
+                                        success: function (veri) {
                                             $("#feedback-panel").text("Kayıt Başarılı").css("color", "green").hide().show(300);
                                             $("#name").val("");
                                             $("#surname").val("");
@@ -78,8 +84,15 @@ define(['jquery',
                                             $("#tel").val("");
                                             $("#password").val("");
                                             $("#password2").val("");
+                                            console.log(veri);
+                                            console.log("veri  : " + veri);
+                                            console.log("data.update  : " + data.update);
                                             setTimeout(function () {
-                                                $.cookie(constants.user, data.insertId);
+                                                if (data.update == "yes")
+                                                    $.cookie(constants.user, veri[0].k_id);
+                                                else
+                                                    $.cookie(constants.user, veri.insertId);
+
                                                 window.location = constants.hash + constants.user + "/profile";
                                             }, 2000);
                                         },

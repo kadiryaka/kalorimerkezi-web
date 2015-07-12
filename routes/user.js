@@ -487,10 +487,7 @@ router.post('/register', function (req, res) {
         if (err) {
             throw err;
         } else {
-            console.log("aktivasyon kodu : " + activationKey)
-            console.log("birazdan mail gönderilmesi lazım");
             mailer.send(mail, constants.mail_subject, name, activationKey);
-            console.log("gitti mi?");
         }
         res.json(result);
     });
@@ -502,15 +499,44 @@ router.post('/register', function (req, res) {
 router.get('/kullaniciKontrol/:mail', function (req, res) {
     var salon_id = req.user_id;
     var mail = req.params.mail;
-    connection.query('select mail from kullanici where mail = ? ', [mail], function (err, result) {
+    connection.query('select mail,yetki from kullanici where mail = ?', [mail], function (err, result) {
         if (err) throw err;
+
         if (result.length == 0) {
-            res.json({"durum": "success"});
+            res.json({"durum": "success" , "update" : "no"});
+        } else if (result.length != 0 && result[0].yetki == 0) {
+            res.json({"durum": "success" , "update" : "yes"});
         } else {
             res.json({"durum": "failed"});
         }
     });
 
+});
+
+/*
+ POST
+ kullanıcı bilgilerini günceller
+ @requestParams    :
+ */
+router.post('/userUpdateForRegister', function (req, res) {
+    var salon_id = req.user_id;
+    var name = req.body.name;
+    var surname = req.body.surname;
+    var mail = req.body.mail;
+    var tel = req.body.tel;
+    var password = crypto.createHash('md5').update(req.body.password).digest('hex');
+    var date = moment().format('YYYY-MM-DD');
+    var activationKey = require('rand-token').uid(30);
+    connection.query("update kullanici set isim = ?, soyisim = ?, tel = ?, salon_id = ?, uyelik_tarihi = ?, password = ?, yetki = ?, aktivasyon_kodu = ? where mail = ?", [name,surname,tel,salon_id,date,password,1,activationKey,mail], function (err, cevap) {
+        connection.query("select k_id from kullanici  where mail = ?", [mail], function (err, result) {
+            if (err) {
+                throw err;
+            } else {
+                mailer.send(mail, constants.mail_subject, name, activationKey);
+            }
+            res.json(result);
+        });
+    });
 });
 
 

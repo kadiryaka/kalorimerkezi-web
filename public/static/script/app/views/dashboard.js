@@ -14,6 +14,10 @@ define(['jquery',
             autoOpen: false,//otomatik açılmayı iptal ediyor
             title: "Kullanıcı Düzenleme",//başlık
             buttons: [
+                { text: "Kapat", click: function() {
+                    $( this ).dialog("close");
+                }
+                },
                 { text: "Kaydet", click: function() {
                     var name = $("#edit-name").val().trim();
                     var surname = $("#edit-surname").val().trim();
@@ -44,10 +48,9 @@ define(['jquery',
                         });
                         $(this).dialog("close");
                     }
-                }}  ,
-                { text: "Kapat", click: function() {
-                    $( this ).dialog("close");
-                }}],
+                }
+                }
+            ],
             draggable: false,//diyalog kutusu taşına bilirliği
             hide: "clip",
             show: "clip",
@@ -64,6 +67,9 @@ define(['jquery',
                 $(this).html(markup);
             },
             buttons: [
+                { text: "İPTAL", click: function() {
+                    $( this ).dialog("close");
+                }},
                 { text: "SİL", click: function() {
                     $.ajax({
                         type: 'GET',
@@ -83,10 +89,8 @@ define(['jquery',
                         }
                     });
                     $( this ).dialog("close");
-                }},
-                { text: "İPTAL", click: function() {
-                    $( this ).dialog("close");
-                }}],
+                }}
+            ],
             draggable: false,//diyalog kutusu taşına bilirliği
             hide: "clip",
             show: "clip",

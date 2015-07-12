@@ -29,16 +29,17 @@ define(['jquery',
             title: "BAŞLIK",//başlık
             buttons: [
                 {
+                    text: "İPTAL", click: function () {
+                    $(this).dialog("close");
+                }
+                },
+                {
                     text: "EKLE", click: function () {
                     tempName = $("#template_baslik").val().trim();
                     yeniEgzTempKaydet();
                 }
-                },
-                {
-                    text: "İPTAL", click: function () {
-                    $(this).dialog("close");
                 }
-                }],
+            ],
             draggable: false,//diyalog kutusu taşına bilirliği
             hide: "clip",
             show: "clip",
@@ -52,15 +53,16 @@ define(['jquery',
             title: "SEÇ",//başlık
             buttons: [
                 {
-                    text: "SEÇ", click: function () {
-                    tempGetir();
-                }
-                },
-                {
                     text: "İPTAL", click: function () {
                     $(this).dialog("close");
                 }
-                }],
+                },
+                {
+                    text: "SEÇ", click: function () {
+                    tempGetir();
+                }
+                }
+            ],
             draggable: false,//diyalog kutusu taşına bilirliği
             hide: "clip",
             show: "clip",

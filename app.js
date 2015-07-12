@@ -56,6 +56,7 @@ app.all([
   '/api/services/userinformation',
   '/api/services/editUser',
   '/api/services/deleteUserById',
+  '/api/services/userUpdateForRegister',
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);

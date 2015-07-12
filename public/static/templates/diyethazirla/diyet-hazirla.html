@@ -3,12 +3,46 @@
         <div class="form-horizontal">
             <!-- eski ve yeni butonlar -->
 
-            <div class="form-group tercih-butonlari">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" id="diyet-template-eski">ESKİ DİYET ŞABLONU DÜZENLE</button>
-                    <button style="margin-left: 3%" class="btn btn-default" id="diyet-template-yeni">YENİ DİYET ŞABLONU
-                        EKLE
-                    </button>
+            <div class="col-sm-6 turbo-toggle tercih-butonlari" id="diyet-template-yeni">
+                <div class="tile-normal bg-success gradient-diag1">
+                    <div class="panel-heading">
+                        <i class="oc-partial-icon icm icm-apple-fruit"> </i>
+                        <i  class="oc-partial-icon icm icm-plus-circle"> </i>
+                    </div>
+                    <div class="panel-heading">
+                        <div class="panel-title"><h3>YENİ DİYET OLUŞTUR</h3></div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-full push-bottom">
+                            <tr>
+                                <td>
+                                    <h5 class="base-header major">Buradan yeni diyet şablonlarınızı
+                                        oluşturabilirsiniz</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 turbo-toggle tercih-butonlari" id="diyet-template-eski">
+                <div class="tile-normal bg-info gradient-diag1">
+                    <div class="panel-heading">
+                        <i class="oc-partial-icon icm icm-apple-fruit"> </i>
+                        <i class="oc-partial-icon icm icm-wrench3"> </i>
+                    </div>
+                    <div class="panel-heading">
+                        <div class="panel-title"><h3>ESKİ DİYETİ DÜZENLE</h3></div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-full push-bottom">
+                            <tr>
+                                <td>
+                                    <h5 class="base-header major">Buradan Geçmiş diyet şablonlarınızı
+                                        düzenleyebilirsiniz</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <!-- eski ve yeni butonlar -->
@@ -30,10 +64,10 @@
             <!-- eskiyi düzenlemek isterse -> dropdown -->
             <div id="eski-sablonlar">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Program</label>
+                    <label class="col-sm-2 control-label">Program Seçiniz</label>
 
                     <div class="col-sm-3">
-                        <select class="form-control" id="diyet-temp-list">
+                        <select style="height: 35px;" class="btn btn-primary dropdown-toggle" id="diyet-temp-list">
                             <% for (var i = 0; i < veri.length; i++) { %>
                             <option data-dgr="<%- veri[i].temp_id %>"><%- veri[i].temp_adi %></option>
                             <% } %>
@@ -42,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" id="diyet-template-getir">GETİR</button>
+                        <button class="btn btn-success" id="diyet-template-getir">GETİR</button>
                     </div>
                 </div>
             </div>
@@ -57,7 +91,7 @@
                         <textarea style="resize:none" name="" id="diyet-text-area" cols=100" rows="20"
                                   placeholder="Diyet Listesini Yazınız"></textarea>
                         <br/><br/>
-                        <button class="btn btn-default" id="diyet-kaydet-button">KAYDET</button>
+                        <button class="btn btn-success-lt" id="diyet-kaydet-button">KAYDET</button>
                     </div>
                 </div>
             </div>

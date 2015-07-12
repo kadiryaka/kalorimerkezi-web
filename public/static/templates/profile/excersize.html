@@ -3,6 +3,12 @@
 </script>
 
 
+<% if (liste.length == 0) { %>
+<div class="panel-body">Egzersiz Program kaydı bulunmamaktadır</div>
+<%
+} else {
+%>
+
 <div class="table-line">
 
     <div class="row push-bottom egzersiz-kayit-div">
@@ -51,3 +57,4 @@
     <% } %>
 
 </div>
+<% } %>
