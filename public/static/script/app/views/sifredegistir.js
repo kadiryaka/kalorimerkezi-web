@@ -19,10 +19,10 @@ define(['jquery',
 
             },
             render: function (code) {
-                sifreKodu = code;
                 if ($.cookie(constants.token_name)) {
                     window.location = constants.base_link + "/#dashboard";
                 } else {
+                    sifreKodu = code;
                     $('.container').hide(0);
                     $(".login").html(sifreTemplate);
                     $("html").i18n();

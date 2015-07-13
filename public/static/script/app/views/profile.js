@@ -34,9 +34,13 @@ define(['jquery',
                 $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
             render: function () {
-                $("#error-div").hide();
-                //egzersizProgramiGir();
-                excersizeProgram();
+                if ($.cookie(constants.token_name)) {
+                    $("#error-div").hide();
+                    excersizeProgram();
+                } else {
+                    window.location = constants.hash;
+                }
+
             },
             events: {
                 "click .egzersiz-kayit-table": "egzTemplateIciniGetir",

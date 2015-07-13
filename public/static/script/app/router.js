@@ -23,6 +23,7 @@ define(['jquery',
                 'egzersizhazirla'       :   'egzersizhazirla',
                 'diyethazirla'          :   'diyethazirla',
                 'sifredegistir/:code'   :   'sifredegistir',
+                'iletisim'              :   'iletisim',
                 '*path'                 :   'default'
             },
             index: function() {
@@ -90,6 +91,14 @@ define(['jquery',
                     var sifreDegistirView = new SifreDegistirView();
                     sifreDegistirView.render(code);
                     that.current = sifreDegistirView;
+                });
+            },
+            iletisim: function(code) {
+                require(['view/iletisim'], function(IletisimView) {
+                    if(that.current!==null) { that.current.close(); }
+                    var iletisimView = new IletisimView();
+                    iletisimView.render(code);
+                    that.current = iletisimView;
                 });
             },
             default: function() {

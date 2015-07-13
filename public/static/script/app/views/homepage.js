@@ -18,23 +18,28 @@ define(['jquery',
                 $("#user_name_index").text(" " + $.cookie(constants.cookie_username));
             },
             render: function () {
-                $("#error-div").hide();
-                $('.container').show(0);
-                $.ajax({
-                    type: 'GET',
-                    url: '/api/services/sporSalonuHomepage',
-                    headers: {'kalori_token': $.cookie(constants.token_name)},
-                    dataType: 'json',
-                    success: function (liste) {
-                        var data = {
-                            kullanici_sayisi: liste.users.length,
-                            aktif: liste.aktifSayisi,
-                            pasif: liste.pasifSayisi,
-                            aktif_yuzde: Math.floor(((liste.aktifSayisi) / (liste.users.length)) * 100)
+                if ($.cookie(constants.token_name)) {
+                    $("#error-div").hide();
+                    $('.container').show(0);
+                    $.ajax({
+                        type: 'GET',
+                        url: '/api/services/sporSalonuHomepage',
+                        headers: {'kalori_token': $.cookie(constants.token_name)},
+                        dataType: 'json',
+                        success: function (liste) {
+                            var data = {
+                                kullanici_sayisi: liste.users.length,
+                                aktif: liste.aktifSayisi,
+                                pasif: liste.pasifSayisi,
+                                aktif_yuzde: Math.floor(((liste.aktifSayisi) / (liste.users.length)) * 100)
+                            }
+                            $(".icerik").html(_.template(homePageTemplate, data));
                         }
-                        $(".icerik").html(_.template(homePageTemplate, data));
-                    }
-                });
+                    });
+                } else {
+                    window.location = constants.hash + "login";
+                }
+
             },
             events: {}
 
