@@ -29,6 +29,22 @@ module.exports = {
             }
         });
         console.log("baiarıyla gitmiş olması lazım")
+    },
+
+    passwordChange : function(to, subject, name, sifreKodu) {
+        app.mailer.send('passChange',{
+            to: to, // REQUIRED. This can be a comma delimited string just like a normal email to field.
+            subject: subject, // REQUIRED.
+            name : name,
+            activationKey : sifreKodu
+        }, function (err) {
+            if (err) {
+                // handle error
+                console.log("hata oluştu : " + err);
+                return;
+            }
+        });
+        console.log("baiarıyla gitmiş olması lazım")
     }
 }
 

@@ -515,7 +515,7 @@ router.get('/kullaniciKontrol/:mail', function (req, res) {
 
 /*
  POST
- kullanıcı bilgilerini günceller
+ eskiden kullanılan bir mail adresine yeni kayıt olunma durumunda çalışır
  @requestParams    :
  */
 router.post('/userUpdateForRegister', function (req, res) {

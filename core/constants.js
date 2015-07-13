@@ -25,5 +25,6 @@
                 "register_success" : "register_success",
                 "empty_user"       : "Kullanıcınız bulunmamaktadır."
             },
-            "mail_subject"       : "Üyelik Onayı"
+            "mail_subject"       : "Üyelik Onayı",
+            "passwordChange"     : "Şifre Değişikliği"
         };

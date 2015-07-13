@@ -16,7 +16,7 @@ define(['jquery',
             render: function () {
                 $('.container').hide(0);
                 $("#error-div").show();
-                $('#error-div').html(_.template(errorTemplate, {error: window.location, status: "URL"}));
+                $('#error-div').html(_.template(errorTemplate));
             },
             events: {}
 

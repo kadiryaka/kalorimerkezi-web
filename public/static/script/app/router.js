@@ -12,17 +12,18 @@ define(['jquery',
 
         return Backbone.Router.extend({
             routes: {
-                ''                  :   'index',
-                'dashboard'         :   'dashboard',
-                'homepage'          :   'homepage',
-                'login'             :   'login',
-                'register'          :   'register',
-                'activate/:code'    :   'activate',
-                'settings'          :   'settings',
-                'user/profile'      :   'profile',
-                'egzersizhazirla'   :   'egzersizhazirla',
-                'diyethazirla'      :   'diyethazirla',
-                '*path'             :   'default'
+                ''                      :   'index',
+                'dashboard'             :   'dashboard',
+                'homepage'              :   'homepage',
+                'login'                 :   'login',
+                'register'              :   'register',
+                'activate/:code'        :   'activate',
+                'settings'              :   'settings',
+                'user/profile'          :   'profile',
+                'egzersizhazirla'       :   'egzersizhazirla',
+                'diyethazirla'          :   'diyethazirla',
+                'sifredegistir/:code'   :   'sifredegistir',
+                '*path'                 :   'default'
             },
             index: function() {
                 indexView.render();
@@ -81,6 +82,14 @@ define(['jquery',
                     var diyetHazirlaView = new DiyetHazirlaView();
                     diyetHazirlaView.render();
                     that.current = diyetHazirlaView;
+                });
+            },
+            sifredegistir: function(code) {
+                require(['view/sifredegistir'], function(SifreDegistirView) {
+                    if(that.current!==null) { that.current.close(); }
+                    var sifreDegistirView = new SifreDegistirView();
+                    sifreDegistirView.render(code);
+                    that.current = sifreDegistirView;
                 });
             },
             default: function() {

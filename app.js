@@ -56,7 +56,7 @@ app.all([
   '/api/services/userinformation',
   '/api/services/editUser',
   '/api/services/deleteUserById',
-  '/api/services/userUpdateForRegister',
+  '/api/services/',
 ], auth.haveUser);
 app.use('/api/user', user);
 app.use('/api/services', services);
@@ -65,9 +65,10 @@ app.use('/api/admin', admin);
 app.use('/api/search', search);
 
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  //var err = new Error('Not Found');
+  //err.status = 404;
+  //next(err);
+    res.render('error');
 });
 
 // development error handler

@@ -3,13 +3,57 @@ define(['jquery',
         'i18next',
         'text!template/login/login.html',
         'text!template/sporcular/dashboard.html',
+        'text!template/dialog/mail.html',
         'util/constants',
         'model/login',
         'jquery.cookie',
         'jquery.ui',
         'jquery.easing',
         'notify'],
-    function ($, Backbone, i18n, loginTemplate, dashboardTemplate, constants, loginModel) {
+    function ($, Backbone, i18n, loginTemplate, dashboardTemplate, mailDialogTemplate, constants, loginModel) {
+
+        $("#dialogMail").dialog({
+            autoOpen: false,//otomatik açılmayı iptal ediyor
+            title: "Şifre Değişikliği",//başlık
+            buttons: [
+                { text: "İPTAL", click: function() {
+                    $( this ).dialog("close");
+                }},
+                { text: "GÖNDER", click: function() {
+                    var mail = $("#unut-mail").val();
+                    if (!isValidEmailAddress(mail)) {
+                        $("#feedback-panel-edit").text("Geçerli bir mail adresi giriniz").css("color", "red").hide().show(300);
+                        return false;
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/token/sendMailForPasswordChange',
+                            data: {"mail" : mail},
+                            success: function (data) {
+                                if (data.result == "success") {
+                                    $("#feedback-panel").text("İşlem başlatıldı, Lütfen mailinizi kontrol ediniz").css("color", "green").hide().show(300);
+                                } else if (data.result == "failed") {
+                                    $("#feedback-panel").text("Maile ait kullanıcı bulunamadı").css("color", "red").hide().show(300);
+                                } else {
+                                    $("#feedback-panel").text("Teknik bir hata oluştu").css("color", "red").hide().show(300);
+                                }
+                            },
+                            error: function() {
+                                $( this ).dialog("close");
+                                $("#feedback-panel").text("Teknik bir hata oluştu").css("color", "red").hide().show(300);
+                            }
+                        });
+                        $( this ).dialog("close");
+                    }
+                }}
+            ],
+            draggable: false,//diyalog kutusu taşına bilirliği
+            hide: "clip",
+            show: "clip",
+            /*fold-blind-bounce-clip-drop-explode-fade-highlight-puff-pulsate-scale-shake-slide-size-transfer*/
+            resizable: false,//boyutlandırmayı burdan açıp kapata biliriz
+            modal: true//arka planı kitler tıklanmaz yapar
+        });
 
         return Backbone.View.extend({
             el: $('.login'),
@@ -26,7 +70,8 @@ define(['jquery',
                 }
             },
             events: {
-                "click #login_giris": "loginSend"
+                "click #login_giris": "loginSend",
+                "click #sifre_unuttum": "sifreUnutuldu"
             },
             /**
              *girişe basılınca mail ve şifreyi kontrol eder ve kullanıcı varsa cookie'e değer atar
@@ -65,6 +110,10 @@ define(['jquery',
                         alert("bir hata oluştu");
                     }
                 });
+            },
+            sifreUnutuldu : function () {
+                $("#dialogMail").html(mailDialogTemplate);
+                $("#dialogMail").dialog("open");
             }
         });
 

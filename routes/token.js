@@ -3,6 +3,8 @@ var router = express.Router();
 var moment = require('moment');
 var auth = require('../core/auth');
 var crypto = require('crypto');
+var mailer = require('../core/mailHelper');
+var constants = require('../core/constants');
 
 connection = global.connection;
 
@@ -85,6 +87,52 @@ router.get('/activation/:kod', function (req, res) {
         res.end('Aktivasyon islemi tamamlanmistir');
     });
 
+});
+
+/*
+ POST
+ şifre değişikliği için mail atar
+ @requestParams    :
+ */
+router.post('/sendMailForPasswordChange', function (req, res) {
+    var mail = req.body.mail;
+    var sifreKodu = require('rand-token').uid(30);
+    connection.query("select * from kullanici  where mail = ?", [mail], function (err, user) {
+        if (user.length == 0) {
+            res.json({"result": "failed"});
+        } else {
+            connection.query("update kullanici set sifre_kodu = ? where mail = ?", [sifreKodu, mail], function (err, cevap) {
+                if (err) {
+                    throw err;
+                } else {
+                    mailer.passwordChange(mail, constants.passwordChange, user[0].isim, sifreKodu);
+                }
+                res.json({"result": "success"});
+            });
+        }
+
+    });
+});
+
+/*
+ POST
+ şifre değiştirir
+ @requestParams    :
+ */
+router.post('/changePassword', function (req, res) {
+    var kod = req.headers.kod;
+    var sifreKodu = require('rand-token').uid(30);
+    var password = crypto.createHash('md5').update(req.body.password).digest('hex');
+    connection.query("update kullanici set password = ?, sifre_kodu = ? where sifre_kodu = ?", [password, sifreKodu, kod], function (err, cevap) {
+        if (err) throw err;
+        console.log(cevap);
+        if (cevap.affectedRows == 1) {
+            res.json({"result": "success"});
+        } else {
+            res.json({"result": "failed"});
+        }
+
+    });
 });
 
 
