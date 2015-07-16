@@ -17,8 +17,8 @@ var constants = require('./core/constants');
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host: 'localhost',
-  user: 'kadir',
-  password: '00125658',
+  user: 'root',
+  password: '',
   database: 'kalorimerkezi3'
 });
 
