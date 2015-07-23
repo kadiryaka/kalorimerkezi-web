@@ -12,6 +12,8 @@ define(['jquery',
         var temp_id = 0;
         //tikKontrol eskiyi edit mi yoksa yeni mi template oluşturulacağının kontrolünü tutuyor
         var tikKontrol = true;
+        //1 se demek edit edilecek proğram vardır
+        var editAcilmaliMi = 0;
         //açılırken burası çalışıyor
         return Backbone.View.extend({
             el: $('.icerik'),
@@ -31,6 +33,9 @@ define(['jquery',
                         success: function (liste) {
                             var data = {
                                 veri: liste.diyetTemplateList
+                            }
+                            if (liste.diyetTemplateList.length > 0) {
+                                editAcilmaliMi = 1;
                             }
                             $(".icerik").html(_.template(diyetHazTemplate, data));
                             $("#yeni-sablon-baslik").hide();
@@ -55,10 +60,14 @@ define(['jquery',
                 $("#diyet-ekleme-listesi").show();
             },
             showDropdown: function () {
-                tikKontrol = false;
-                $(".tercih-butonlari").hide();
-                $("#eski-sablonlar").show();
-                templateGetir();
+                if (editAcilmaliMi == 1) {
+                    tikKontrol = false;
+                    $(".tercih-butonlari").hide();
+                    $("#eski-sablonlar").show();
+                    templateGetir();
+                } else {
+                    alert("Öncelikle Yeni Diyet Programı Ekleyiniz")
+                }
             },
             yeniDiyetListButton: function () {
                 var tempname = $("#template_baslik").val();
@@ -116,7 +125,7 @@ define(['jquery',
                 dataType: 'json',
                 success: function (diyetListesi) {
                     $("#diyet-ekleme-listesi").show();
-                    $("#diyet-text-area").text(diyetListesi.diyetList[0].icerik);
+                    $("#diyet-text-area").val(diyetListesi.diyetList[0].icerik);
                 },
                 error: function (err) {
                     alert("bir hata oluştu");

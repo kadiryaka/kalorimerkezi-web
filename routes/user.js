@@ -483,7 +483,7 @@ router.post('/register', function (req, res) {
     var password = crypto.createHash('md5').update(req.body.password).digest('hex');
     var date = moment().format('YYYY-MM-DD');
     var activationKey = require('rand-token').uid(30);
-    connection.query('insert into kullanici (isim,uyelik_tarihi,password,mail,salon_id,soyisim,tel,yetki,status,aktivasyon_kodu) values (?,?,?,?,?,?,?,?,?,?)', [name, date, password, mail, salon_id, surname, tel, 0, 0, activationKey], function (err, result) {
+    connection.query('insert into kullanici (isim,uyelik_tarihi,password,mail,salon_id,soyisim,tel,yetki,status,aktivasyon_kodu) values (?,?,?,?,?,?,?,?,?,?)', [name, date, password, mail, salon_id, surname, tel, 1, 0, activationKey], function (err, result) {
         if (err) {
             throw err;
         } else {

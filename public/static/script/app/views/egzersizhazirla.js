@@ -16,6 +16,7 @@ define(['jquery',
         var temp_id = 0;
         var temp_day_id = 1;
         var tempName = "";
+        var editMenuAcilmaliMi = 0;
         var days = [{"gun": "Pazartesi", "dgr": "1"}, {"gun": "Salı", "dgr": "2"}, {
             "gun": "Çarşamba",
             "dgr": "3"
@@ -100,6 +101,9 @@ define(['jquery',
                                     var data2 = {
                                         veri: liste.excersizeTemplateList
                                     }
+                                    if (liste.excersizeTemplateList.length > 0) {
+                                        editMenuAcilmaliMi = 1;
+                                    }
                                     $(".icerik").html(_.template(egzHazTemplate, data));
                                     $("#dialogEditExcersize").html(_.template(editEgzersizTemplate, data2));
                                     $("#yeni-sablon-baslik").hide();
@@ -129,7 +133,11 @@ define(['jquery',
             },
             showDropdown: function () {
                 //$("#eski-sablonlar").show();
-                $("#dialogEditExcersize").dialog("open");
+                if (editMenuAcilmaliMi == 1) {
+                    $("#dialogEditExcersize").dialog("open");
+                } else {
+                    alert("Öncelikle Yeni Egzersiz Program Ekleyiniz")
+                }
             },
             egzIcerikKaydet: function () {
 
