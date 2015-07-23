@@ -1,1 +1,16 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+npm-debug.log
 node_modules
+.idea
+*.iml
+.DS_Store
+Thumbs.db
