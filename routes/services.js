@@ -309,9 +309,10 @@ router.get('/getAllExcersize', function (req, res) {
  egzersiz template adını kayıt eder
  @requestParams    :
  */
-router.get('/saveExersizeTemplateName', function (req, res) {
-    var tempName = req.headers.temp_name;
+router.post('/saveExersizeTemplateName', function (req, res) {
+    var tempName = req.body.temp_name;
     var salon_id = req.user_id;
+    console.log("tem name = " + tempName);
     connection.query("insert into egzersiztemplate (temp_adi, salon_id) values (?,?)", [tempName, salon_id], function (err, cevap) {
         if (err) throw err;
         var id = cevap.insertId;
@@ -329,14 +330,14 @@ router.get('/saveExersizeTemplateName', function (req, res) {
 router.post('/saveExersizeTemplateContent', function (req, res) {
     var salon_id = req.user_id;
     var egz_id = req.body.egz_id;
-    var set = req.body.set;
+    var setSayi = req.body.set;
     var agirlik = req.body.agirlik;
     var makina = req.body.makina;
     var temp_id = req.body.temp_id;
     var day_id = req.body.day_id;
-    connection.query("select * from egzersiz_template_icerik where temp_id = ? and gun = ? and adet = ? and egz_id = ?", [temp_id, day_id, set, egz_id], function (err, veriList) {
+    connection.query("select * from egzersiz_template_icerik where temp_id = ? and gun = ? and adet = ? and agirlik = ? and egz_id = ?", [temp_id, day_id, setSayi, agirlik, egz_id], function (err, veriList) {
         if (veriList == null || veriList.length == 0) {
-            connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, set, makina, temp_id, day_id], function (err, cevap) {
+            connection.query("insert into egzersiz_template_icerik (egz_id, agirlik, adet, makina_no, temp_id, gun) values (?,?,?,?,?,?)", [egz_id, agirlik, setSayi, makina, temp_id, day_id], function (err, cevap) {
                 if (err) throw err;
                 res.json({
                     'result': "success"
@@ -345,7 +346,7 @@ router.post('/saveExersizeTemplateContent', function (req, res) {
         } else {
             res.json({
                 'result': "failed",
-                'message': "Lütfen aynı egzersiz ve set bilgisini birden fazla giriş yapmayınız."
+                'message': "Lütfen aynı egzersiz, set ve agirlik bilgisini birden fazla giriş yapmayınız."
             });
         }
     });

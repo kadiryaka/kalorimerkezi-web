@@ -36,7 +36,8 @@ define(['jquery',
                 },
                 {
                     text: "EKLE", click: function () {
-                    tempName = $("#template_baslik").val().trim();
+                    tempName = $("#template_baslik").val();
+                    console.log("temp adi : " + tempName);
                     yeniEgzTempKaydet();
                 }
                 }
@@ -280,10 +281,13 @@ define(['jquery',
             } else {
                 $("#feedback-panel-edit").text("");
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: '/api/services/saveExersizeTemplateName',
-                    headers: {'kalori_token': $.cookie(constants.token_name), 'temp_name': tempName},
+                    headers: {'kalori_token': $.cookie(constants.token_name)},
                     dataType: 'json',
+                    data : {
+                        "temp_name" : tempName
+                    },
                     success: function (liste) {
                         temp_id = liste.insertId;
                         $.ajax({
