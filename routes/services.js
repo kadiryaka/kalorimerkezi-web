@@ -296,7 +296,7 @@ router.post('/getEgzersizByDate', function (req, res) {
  @requestParams    :
  */
 router.get('/getAllExcersize', function (req, res) {
-    connection.query("select * from egzersiz", function (err, egzersizList) {
+    connection.query("select * from egzersiz order by sira_no", function (err, egzersizList) {
         if (err) throw err;
         res.json({
             'egzersizList': egzersizList
